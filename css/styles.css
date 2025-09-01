@@ -175,4 +175,38 @@ h1 {
   .player-btn {
     font-size: 0.9rem;
   }
+
+
+
+/* Estilos para pantalla de configuración */
+#setup-screen h2 {
+  margin-bottom: 6px;
+}
+
+.player-setup h3 {
+  margin: 0 0 6px 0;
+}
+
+.token-radio {
+  display: none; /* ocultamos el input real */
+}
+
+/* cuando el token-radio esté checked, estilizamos su label adyacente */
+.token-radio:checked + label {
+  border-color: #6a329f;
+  background: linear-gradient(90deg, #f3e9ff, #fff);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+/* etiqueta del token: hacemos que el label que definimos antes se vea como botón */
+.token-label {
+  user-select: none;
+}
+
+/* adaptaciones para mobile */
+@media (max-width: 600px) {
+  #setup-screen {
+    padding: 12px;
+  }
+}
 }

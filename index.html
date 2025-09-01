@@ -1,48 +1,41 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Monopoly - Inicio</title>
-  <!-- Importamos el CSS externo -->
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <div class="container">
+  <!-- Pantalla de inicio -->
+  <div class="container" id="start-screen">
     <div class="logo-container">
-      <!-- Imagen de Monopoly -->
-      <img src="https://images.unsplash.com/photo-1612993517178-73a83c150b5b?w=400&h=200&fit=crop&crop=center" 
-           alt="Monopoly" 
-           class="monopoly-img">
+      <img src="https://images.unsplash.com/photo-1612993517178-73a83c150b5b?w=400&h=200&fit=crop&crop=center"
+           alt="Monopoly" class="monopoly-img" />
     </div>
 
     <h1>MONOPOLY</h1>
     <p class="subtitle">Selecciona el número de jugadores:</p>
 
+    <!-- Botones: ahora usan data-players en vez de onclick -->
     <div class="options">
-      <button class="player-btn" onclick="iniciarJuego(2)">2 Jugadores</button>
-      <button class="player-btn" onclick="iniciarJuego(3)">3 Jugadores</button>
-      <button class="player-btn" onclick="iniciarJuego(4)">4 Jugadores</button>
+      <button class="player-btn" data-players="2">2 Jugadores</button>
+      <button class="player-btn" data-players="3">3 Jugadores</button>
+      <button class="player-btn" data-players="4">4 Jugadores</button>
     </div>
 
     <div id="message">Esperando selección...</div>
 
     <div class="instructions">
-      <p><strong>Instrucciones:</strong> Selecciona la cantidad de jugadores y haz clic en el botón correspondiente para comenzar la partida.</p>
+      <p><strong>Instrucciones:</strong> Selecciona la cantidad de jugadores y luego configura sus nicks, fichas y países.</p>
     </div>
   </div>
 
-  <script>
-    // Función que arranca el juego según el número de jugadores
-    function iniciarJuego(numJugadores) {
-      const message = document.getElementById('message');
-      message.innerHTML = `¡Perfecto!<br>Iniciando juego con <strong>${numJugadores} jugadores</strong>.<br>Preparando tablero...`;
+  <!-- Pantalla de configuración de jugadores: starts hidden -->
+  <div id="setup-screen" class="container" style="display:none; max-width: 700px;"></div>
 
-      // Aquí irá la lógica del juego (redirección, carga de tablero, etc.)
-      setTimeout(() => {
-        message.innerHTML += "<br>¡Todo listo!";
-      }, 1500);
-    }
-  </script>
+  <!-- JS: API + UI/Setup -->
+  <script src="js/api.js"></script>
+  <script src="js/setup.js"></script>
 </body>
 </html>
