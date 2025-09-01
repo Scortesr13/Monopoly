@@ -1,0 +1,178 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Fondo y tipografía */
+body {
+  font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+  background: linear-gradient(135deg, #6a329f 0%, #3c1361 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  color: #3c1361;
+}
+
+/* Contenedor principal */
+.container {
+  background-color: #f0d483;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  border: 8px solid #c29f40;
+}
+
+/* Caja para logo */
+.logo-container {
+  margin-bottom: 1.5rem;
+  padding: 15px;
+  background: #fff;
+  border-radius: 10px;
+  border: 5px solid #c29f40;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Imagen del logo */
+.monopoly-img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 5px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Título */
+h1 {
+  color: #3c1361;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  text-shadow: 2px 2px 0 #fff;
+  letter-spacing: 2px;
+}
+
+/* Subtítulo */
+.subtitle {
+  color: #3c1361;
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  padding: 0 10px;
+}
+
+/* Opciones de jugadores */
+.options {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 25px 0;
+  flex-wrap: wrap;
+}
+
+/* Botones */
+.player-btn {
+  background: linear-gradient(to bottom, #6a329f 0%, #3c1361 100%);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 10px;
+  min-width: 120px;
+  transition: all 0.3s;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  border: 3px solid #c29f40;
+  white-space: nowrap;
+}
+
+.player-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to bottom, #7d3fb8 0%, #4c1a7a 100%);
+}
+
+.player-btn:active {
+  transform: translateY(0);
+}
+
+/* Mensaje */
+#message {
+  margin-top: 25px;
+  padding: 15px;
+  background-color: #3c1361;
+  color: #f0d483;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #c29f40;
+  text-align: center;
+}
+
+/* Instrucciones */
+.instructions {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .container {
+    padding: 1.5rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+  }
+
+  .options {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .player-btn {
+    width: 100%;
+    max-width: 200px;
+    padding: 10px;
+  }
+
+  #message {
+    font-size: 1rem;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 350px) {
+  .container {
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .player-btn {
+    font-size: 0.9rem;
+  }
+}
