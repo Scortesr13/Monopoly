@@ -30,3 +30,29 @@ async function fetchCountries() {
     }
   }
 }
+
+/**
+ * fetchBoard
+ * - Intenta obtener el tablero desde el backend.
+ * - Si falla, intenta cargar 'assets/mock/board.json' como fallback.
+ * - Devuelve un objeto con la estructura del tablero.
+ */
+async function fetchBoard() {
+  try {
+    const res = await fetch(`${API_BASE}/board`);
+    if (!res.ok) throw new Error('Respuesta del servidor no OK');
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.warn('Error al cargar board desde API, usando mock local. Error:', err);
+    try {
+      const fallback = await fetch('assets/mock/board.json');
+      if (!fallback.ok) return { bottom: [], right: [], top: [], left: [] };
+      const json = await fallback.json();
+      return json;
+    } catch (e) {
+      console.error('Error al cargar mock de board:', e);
+      return { bottom: [], right: [], top: [], left: [] };
+    }
+  }
+}

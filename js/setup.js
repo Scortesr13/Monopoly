@@ -134,6 +134,8 @@ function renderPlayerSetup(numPlayers, countries) {
     alert('Jugadores configurados correctamente. ¡Listo para iniciar la partida!');
     // Aquí podrías redirigir al tablero:
     // window.location.href = 'game.html';
+    localStorage.setItem('monopoly_players', JSON.stringify(result.players));
+    window.location.href = 'board.html';
   });
 
   container.appendChild(startBtn);
@@ -168,3 +170,5 @@ function collectAndValidatePlayers(numPlayers) {
 
   return { ok: errors.length === 0, players, errors };
 }
+
+
