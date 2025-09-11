@@ -338,6 +338,26 @@ h1 {
   }
 }
 }
+.tablero {
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  grid-template-rows: repeat(11, 1fr);
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+  gap: 2px;
+  background-color: #f8f8f8;
+  position: relative;
+}
+
+.casilla {
+  background-color: #e0e0e0;
+  border: 1px solid #333;
+  padding: 6px;
+  font-size: 12px;
+  text-align: center;
+  border-radius: 4px;
+}
 
 
 

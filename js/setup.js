@@ -2,6 +2,8 @@
 // Ajustado a los requisitos: nick, país, money inicial y fichas por color único.
 
 /* Fichas disponibles: colores únicos */
+
+
 const TOKENS = [
   { id: 'red', label: '🔴 Rojo' },
   { id: 'blue', label: '🔵 Azul' },
@@ -152,10 +154,11 @@ function collectAndValidatePlayers(numPlayers) {
     const token = tokenRadio ? tokenRadio.value : null;
     const country = document.querySelector(`.country-select[data-player="${i}"]`).value;
 
+    // Validaciones
     if (!nick) errors.push(`El jugador ${i} necesita un nick.`);
     if (!token) errors.push(`El jugador ${i} debe seleccionar una ficha.`);
     if (token && chosenTokens.has(token)) {
-      errors.push(`La ficha "${token}" ya fue seleccionada. Cada jugador debe tener un color único.`);
+      errors.push(`La ficha "${token}" ya fue seleccionada.`);
     }
     chosenTokens.add(token);
 
@@ -164,7 +167,7 @@ function collectAndValidatePlayers(numPlayers) {
       nick,
       token,
       country,
-      money: 1500 // cada jugador arranca con $1500
+      money: 1500 // arranca con $1500
     });
   }
 

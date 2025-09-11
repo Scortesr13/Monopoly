@@ -37,22 +37,15 @@ async function fetchCountries() {
  * - Si falla, intenta cargar 'assets/mock/board.json' como fallback.
  * - Devuelve un objeto con la estructura del tablero.
  */
-async function fetchBoard() {
+ async function obtenerTablero() {
   try {
-    const res = await fetch(`${API_BASE}/board`);
-    if (!res.ok) throw new Error('Respuesta del servidor no OK');
+    const res = await fetch("http://127.0.0.1:5000/board");
     const data = await res.json();
-    return data;
+    return data; // { bottom: [...], left: [...], top: [...], right: [...] }
   } catch (err) {
-    console.warn('Error al cargar board desde API, usando mock local. Error:', err);
-    try {
-      const fallback = await fetch('assets/mock/board.json');
-      if (!fallback.ok) return { bottom: [], right: [], top: [], left: [] };
-      const json = await fallback.json();
-      return json;
-    } catch (e) {
-      console.error('Error al cargar mock de board:', e);
-      return { bottom: [], right: [], top: [], left: [] };
-    }
+    console.error("Error al obtener el tablero:", err);
+    return { bottom: [], left: [], top: [], right: [] };
   }
 }
+
+
