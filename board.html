@@ -1,23 +1,49 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <title>Tablero Monopoly</title>
   <link rel="stylesheet" href="css/styles.css" />
-      <script src="js/api.js"></script>
-      <script src="js/ui.js"></script>
-</head>
-<body>
-  <h1>Tablero Monopoly</h1>
-  <div id="tablero" class="tablero"></div>
-
   <script type="module" src="js/board.js"></script>
+  <script type="module" src="js/game.js"></script>
+  <script type="module" src="js/api.js"></script>
+  <script type="module" src="js/ui.js"></script>
+</head>
+
+<body>
+  <div class="juego">
+    <!-- Panel lateral izquierdo -->
+    <aside class="jugadores izquierda" id="panel-izq">
+      <h2>Jugadores</h2>
+      <div id="jugadores-lista"></div>
+    </aside>
+
+    <!-- Tablero en el centro -->
+    <main class="tablero-contenedor">
+      <h1 class="titulo-tablero">MONOPOLY</h1>
+      <div id="tablero" class="tablero"></div>
+      <div id="modal-container"></div>
+    </main>
+
+    <!-- Panel lateral derecho -->
+    <aside class="jugadores derecha" id="panel-der">
+      <h2>Información</h2>
+      <div id="info-extra"></div>
+      <h3>🎲 Lanzar dados</h3>
+      <button id="btn-tirar-dados">Tirar</button>
+      <p id="resultado-dados"></p>
+    </aside>
+  </div>
+
 </body>
+
 </html>
 
 
-    <!-- JS: API + Board -->
+<!-- JS: API + Board -->
 
-    <script src="js/board.js"></script>
+
 </body>
+
 </html>

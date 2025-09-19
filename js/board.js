@@ -1,41 +1,56 @@
+import { obtenerJugadores, renderJugadores, dibujarTablero } from "./ui.js";
+import { obtenerTablero } from "./api.js";
+import { colocarFichas } from "./game.js";
+import { jugadorActual } from "./turnos.js";
 
+// 🔹 Ya no usamos async en el DOMContentLoaded
+document.addEventListener("DOMContentLoaded", () => {
+  obtenerTablero()
+    .then((datos) => {
+      // Siempre será un array gracias a la corrección
+      const casillas = [
+        ...datos.bottom,
+        ...datos.left,
+        ...datos.top,
+        ...datos.right,
+      ];
 
+      dibujarTablero(casillas);
 
+      renderJugadores();
 
-document.addEventListener("DOMContentLoaded", async () => {
-  const datos = await obtenerTablero();
-
-  // Siempre será un array gracias a la corrección
-  const casillas = [
-    ...datos.bottom,
-    ...datos.left,
-    ...datos.top,
-    ...datos.right
-  ];
-
-  dibujarTablero(casillas);
-
-  // Jugadores desde localStorage
-  const jugadores =
-    JSON.parse(localStorage.getItem("monopoly_players")) || [];
-  console.log("Jugadores cargados:", jugadores);
+      // Jugadores desde localStorage como instancias de Jugador
+      const jugadores = obtenerJugadores();
+      console.log("Jugadores cargados:", jugadores);
+    })
+    .catch((error) => {
+      console.error("Error inicializando el tablero:", error);
+    });
 });
-function manejarCompra(idCasilla, precio) {
-  const jugadores = JSON.parse(localStorage.getItem('monopoly_players')) || [];
-  const jugadorActual = jugadores[0]; // Por ahora usamos el primero
+
+export function manejarCompra(idCasilla, precio) {
+  const jugadores = obtenerJugadores();
+  const jugadorActual = jugadores[0]; // por ahora usamos el primero
 
   if (jugadorActual.money >= precio) {
-    jugadorActual.money -= precio;
+    jugadorActual.comprarPropiedad(idCasilla, precio);
     alert(`${jugadorActual.nick} compró ${idCasilla} por $${precio}.`);
 
-    // Aquí podrías actualizar el backend o el estado local
-    // Por ahora solo actualizamos localStorage
-    localStorage.setItem('monopoly_players', JSON.stringify(jugadores));
+    // Guardar el estado actualizado (pero como objetos planos)
+    localStorage.setItem(
+      "monopoly_players",
+      JSON.stringify(jugadores.map((j) => ({ ...j })))
+    );
 
     // Opcional: marcar visualmente la casilla como comprada
     const casilla = document.getElementById(`casilla-${idCasilla}`);
-    casilla.querySelector('.comprar-btn').remove();
+    casilla.querySelector(".comprar-btn").remove();
     casilla.innerHTML += `<br/><span>Dueño: ${jugadorActual.nick}</span>`;
+
+    renderJugadores(); // refrescar panel de jugadores
   } else {
-    alert(`${jugadorActual.nick} no tiene suficiente dinero para comprar esta propiedad.`);
-  }}
+    alert(
+      `${jugadorActual.nick} no tiene suficiente dinero para comprar esta propiedad.`
+    );
+  }
+}
