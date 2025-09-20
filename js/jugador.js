@@ -1,4 +1,3 @@
-// Jugador.js
 export class Jugador {
   constructor(id, nick, color, bandera, money, position = 0) {
     this.id = id;
@@ -21,8 +20,23 @@ export class Jugador {
     }
   }
 
-  hipotecar() {
+  hipotecar(propiedad, cantidad) {
     this.hipoteca = true;
+    this.prestamos += cantidad;
+    this.money += cantidad;
+    // Retira la propiedad de la lista de propiedades mientras esté hipotecada
+    this.properties = this.properties.filter(p => p !== propiedad);
+  }
+
+  pagarHipoteca(cantidad, propiedad) {
+    const deuda = this.prestamos + Math.floor(this.prestamos * 0.1);
+    if (this.money >= deuda) {
+      this.money -= deuda;
+      this.prestamos = 0;
+      this.hipoteca = false;
+      // Recupera la propiedad
+      this.properties.push(propiedad);
+    }
   }
 
   pedirPrestamo(cantidad) {
@@ -30,3 +44,4 @@ export class Jugador {
     this.prestamos += cantidad;
   }
 }
+

@@ -6,23 +6,16 @@ document
   .addEventListener("click", jugarTurno);
 
 export function colocarFichas(jugadores) {
-  // Primero limpiamos fichas que no correspondan a jugadores actuales
-  document.querySelectorAll(".ficha").forEach((f) => {
-    const idJugador = f.id.replace("ficha-", "");
-    if (!jugadores.some((j) => j.id == idJugador)) {
-      f.remove();
-    }
-  });
+  // ❌ Elimina TODAS las fichas antes de volver a pintarlas
+  document.querySelectorAll(".ficha").forEach((f) => f.remove());
 
+  // ✅ Ahora pinta de nuevo cada ficha en la posición actual de su jugador
   jugadores.forEach((jugador) => {
     const casilla = document.getElementById(`casilla-${jugador.position}`);
     if (!casilla) return;
 
     const contenedor = casilla.querySelector(".contenedor-fichas");
     if (!contenedor) return;
-
-    // ⚡ Verificamos si ya existe la ficha de este jugador en esta casilla
-    if (contenedor.querySelector(`#ficha-${jugador.id}`)) return;
 
     const ficha = document.createElement("div");
     ficha.classList.add("ficha");
@@ -139,44 +132,74 @@ export function mostrarVentanaAccion(
 
 
 function manejarAccion(jugador, casilla, opcion, jugadores) {
-    console.log("Manejando acción:", opcion, "para jugador:", jugador);
-  console.log("Jugadores en manejarAccion:", jugadores);
+  console.log("Manejando acción:", opcion, "para jugador:", jugador);
   const precio = parseInt(casilla.dataset.precio) || 0;
-  const rentas = casilla.dataset.renta
-    ? JSON.parse(casilla.dataset.renta)
-    : [0];
+  const rentas = casilla.dataset.renta ? JSON.parse(casilla.dataset.renta) : [0];
   const duenoId = casilla.dataset.dueno;
 
   switch (opcion) {
-    case "Comprar":
-      if (jugador.money >= precio) {
-        jugador.money -= precio;
-        casilla.dataset.dueno = jugador.id;
-        jugador.properties.push(casilla.id);
-        renderJugadores();
-      } else {
-        alert(`${jugador.nick} no tiene suficiente dinero para comprar.`);
-      }
-      break;
+   case "Comprar":
+  if (jugador.money >= precio) {
+    jugador.money -= precio;
+    casilla.dataset.dueno = jugador.id;
+
+    // 🔄 Guardar propiedad como objeto completo con datos de la casilla
+    jugador.properties.push({
+      id: casilla.id,
+      nombre: casilla.dataset.nombre || "Propiedad",
+      precio: parseInt(casilla.dataset.precio) || 0,
+      rentas: casilla.dataset.renta ? JSON.parse(casilla.dataset.renta) : [0],
+      casas: 0,
+      hotel: false,
+      hipotecada: false
+    });
+     localStorage.setItem("monopoly_players", JSON.stringify(jugadores));
+
+    renderJugadores();
+  } else {
+    alert(`${jugador.nick} no tiene suficiente dinero para comprar.`);
+  }
+  break;
 
     case "Pagar Renta":
-      if (!duenoId) return;
-      const dueno = jugadores.find((j) => j.id == duenoId);
-      const nivel = parseInt(casilla.dataset.casas) || 0;
-      const renta = rentas[nivel] || 0;
-      if (jugador.money >= renta) {
-        jugador.money -= renta;
-        if (dueno) dueno.money += renta;
-      } else {
-        alert(`${jugador.nick} no tiene suficiente dinero para pagar renta.`);
-      }
-      renderJugadores();
-      break;
+  if (!duenoId) return;
+  const dueno = jugadores.find((j) => j.id == duenoId);
+
+  // 🔎 Buscar la propiedad en el dueño
+  const propiedadDueno = dueno?.properties.find((p) => p.id === casilla.id);
+
+  // 🚫 Si no existe o está hipotecada, no se cobra
+  if (!propiedadDueno || propiedadDueno.hipotecada) {
+    alert("La propiedad está hipotecada, no se paga renta.");
+    break;
+  }
+
+  // 📊 Obtener array de rentas desde la casilla
+  const rentas = JSON.parse(casilla.dataset.renta || "[0]");
+
+  // Nivel de casas/hotel según el dueño
+  const nivel = propiedadDueno.hotel ? 5 : propiedadDueno.casas; // ej: rentas[5] para hotel
+  const renta = rentas[nivel] || 0;
+
+  if (jugador.money >= renta) {
+    jugador.money -= renta;
+    dueno.money += renta;
+    alert(`${jugador.nick} pagó $${renta} a ${dueno.nick}`);
+  } else {
+    alert(`${jugador.nick} no tiene suficiente dinero para pagar la renta de $${renta}.`);
+  }
+
+  renderJugadores();
+  break;
+
 
     case "Construir Casa/Hotel":
-      if (!jugador.properties.includes(casilla.id)) return;
+      const propiedadC = jugador.properties.find((p) => p.id === casilla.id);
+      if (!propiedadC) return;
+
       let casas = parseInt(casilla.dataset.casas) || 0;
       let hotel = casilla.dataset.hotel === "true";
+
       if (!hotel) {
         if (casas < 4 && jugador.money >= 100) {
           jugador.money -= 100;
@@ -188,6 +211,11 @@ function manejarAccion(jugador, casilla, opcion, jugadores) {
           casilla.dataset.casas = 0;
         }
       }
+
+      // 🔄 sincronizar con jugador.properties
+      propiedadC.casas = parseInt(casilla.dataset.casas);
+      propiedadC.hotel = casilla.dataset.hotel === "true";
+
       renderJugadores();
       colocarFichas(jugadores);
       break;
@@ -199,9 +227,74 @@ function manejarAccion(jugador, casilla, opcion, jugadores) {
       break;
 
     case "Sacar Carta":
-      const cambio = Math.floor(Math.random() * 201) - 100;
+      const cambio = Math.floor(Math.random() * 401) - 200;
       jugador.money += cambio;
+
+      if (cambio > 0) {
+        alert(`${jugador.nick} sacó una carta y ganó $${cambio}`);
+      } else if (cambio < 0) {
+        alert(`${jugador.nick} sacó una carta y perdió $${Math.abs(cambio)}`);
+      } else {
+        alert(`${jugador.nick} sacó una carta pero no ganó ni perdió dinero.`);
+      }
+
       renderJugadores();
+      break;
+
+    case "Hipotecar Propiedad":
+      if (jugador.properties.length === 0) return;
+
+      const propH = prompt(
+        `${jugador.nick}, ¿qué propiedad deseas hipotecar?\n${jugador.properties.map((p) => p.id).join(", ")}`
+      );
+
+      const propiedadH = jugador.properties.find((p) => p.id === propH);
+      if (propiedadH && !propiedadH.hipotecada) {
+        const mortgageValue = Math.floor(precio / 2) || 100;
+        jugador.money += mortgageValue;
+        jugador.prestamos += mortgageValue;
+
+        propiedadH.hipotecada = true;
+
+        // 🔄 actualizar casilla
+        const casillaH = document.getElementById(propiedadH.id);
+        if (casillaH) casillaH.dataset.hipoteca = "true";
+
+        alert(`${jugador.nick} hipotecó ${propH} y recibió $${mortgageValue}`);
+        renderJugadores();
+      }
+      break;
+
+    case "Pagar Hipoteca":
+      if (jugador.prestamos <= 0) {
+        alert(`${jugador.nick} no tiene hipotecas activas.`);
+        break;
+      }
+
+      const propD = prompt(
+        `${jugador.nick}, ¿qué propiedad quieres recuperar?\n${jugador.properties.filter((p) => p.hipotecada).map((p) => p.id).join(", ")}`
+      );
+
+      const propiedadD = jugador.properties.find((p) => p.id === propD);
+      if (propiedadD && propiedadD.hipotecada) {
+        const mortgageValue = Math.floor(precio / 2) || 100;
+        const deuda = mortgageValue + Math.floor(mortgageValue * 0.1);
+
+        if (jugador.money >= deuda) {
+          jugador.money -= deuda;
+          jugador.prestamos -= mortgageValue;
+          propiedadD.hipotecada = false;
+
+          // 🔄 actualizar casilla
+          const casillaD = document.getElementById(propiedadD.id);
+          if (casillaD) casillaD.dataset.hipoteca = "false";
+
+          alert(`${jugador.nick} pagó la hipoteca de ${propD} por $${deuda}`);
+          renderJugadores();
+        } else {
+          alert(`${jugador.nick} no tiene suficiente dinero para pagar la hipoteca.`);
+        }
+      }
       break;
 
     case "Ir a la Cárcel":
@@ -216,6 +309,5 @@ function manejarAccion(jugador, casilla, opcion, jugadores) {
       break;
   }
 
-  // Siempre persistir al localStorage
   localStorage.setItem("monopoly_players", JSON.stringify(jugadores));
 }

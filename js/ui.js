@@ -4,7 +4,7 @@ import { colocarFichas } from "./game.js";
 
 export function renderJugadores() {
   const jugadores = obtenerJugadores();
-
+console.log("jugadores en tablero propiedades:", jugadores);
   // 1️⃣ Actualizar el sidebar
   const contenedor = document.getElementById("jugadores-lista");
   contenedor.innerHTML = "";
@@ -14,9 +14,24 @@ export function renderJugadores() {
     div.classList.add("jugador-card");
     div.style.setProperty("--color-ficha", j.color || "#000");
 
+    // 🏠 Mostrar propiedades con detalles
+    const listaPropiedades =
+      j.properties.length > 0
+        ? j.properties
+            .map(
+              (p) => `
+                <li>
+                  ${p.nombre || "Sin nombre"} 
+                  - 💵 $${p.price || 0}
+                  ${p.mortgage ? "🔒 (Hipotecada)" : ""}
+                </li>`
+            )
+            .join("")
+        : "<li>Ninguna</li>";
+
     div.innerHTML = `
       <div class="jugador-header">
-        <span class="iniciales">${j.nick.slice(0, 2).toUpperCase()}</span>
+        <span class="iniciales">${j.nick.slice(0, 6).toUpperCase()}</span>
         <span class="bandera">${j.bandera || "🌍"}</span>
       </div>
 
@@ -25,17 +40,12 @@ export function renderJugadores() {
       <div class="propiedades">
         <strong>Propiedades:</strong>
         <ul>
-          ${
-            j.properties.length > 0
-              ? j.properties.map((p) => `<li>${p}</li>`).join("")
-              : "<li>Ninguna</li>"
-          }
+          ${listaPropiedades}
         </ul>
       </div>
 
       <div class="estado">
-        <p>🏦 Hipoteca: ${j.hipoteca ? "Sí" : "No"}</p>
-        <p>💳 Préstamos: ${j.prestamos || 0}</p>
+        <p>💳 Préstamos: $${j.prestamos || 0}</p>
       </div>
     `;
     contenedor.appendChild(div);
@@ -44,6 +54,8 @@ export function renderJugadores() {
   // 2️⃣ Actualizar fichas en el tablero
   colocarFichas(jugadores);
 }
+
+
 export function guardarJugadores(jugadores) {
   const planos = jugadores.map(j => ({
     id: j.id,
@@ -62,26 +74,50 @@ export function guardarJugadores(jugadores) {
   localStorage.setItem("monopoly_players", JSON.stringify(planos));
 }
 // 🔹 Recuperar jugadores como instancias de la clase Jugador
+
+
 export function obtenerJugadores() {
   const dataRaw = localStorage.getItem("monopoly_players");
   if (!dataRaw) return [];
 
   try {
     const data = JSON.parse(dataRaw);
-    return data.map(j => new Jugador(
-      j.id,
-      j.nick,
-      j.color,
-      j.bandera,
-      j.money,
-      j.position
-    ));
+    return data.map(j => {
+      const jugador = new Jugador(
+        j.id,
+        j.nick,
+        j.color,
+        j.bandera,
+        j.money,
+        j.position
+      );
+
+      // 🔄 Cargar propiedades si existen
+      jugador.properties = Array.isArray(j.properties)
+        ? j.properties.map(p => ({
+            id: p.id,
+            nombre: p.nombre || "Propiedad",
+            precio: p.precio || 0,
+            rentas: Array.isArray(p.rentas) ? p.rentas : [0],
+            casas: p.casas || 0,
+            hotel: p.hotel || false,
+            hipotecada: p.hipotecada || false
+          }))
+        : [];
+
+      // 🔄 Cargar hipoteca y préstamos
+      jugador.hipoteca = j.hipoteca || false;
+      jugador.prestamos = j.prestamos || 0;
+      jugador.inJail = j.inJail || false;
+      jugador.jailTurns = j.jailTurns || 0;
+
+      return jugador;
+    });
   } catch (e) {
     console.error("Error al obtener jugadores:", e);
     return [];
   }
 }
-
 
 // 🔹 Renderizar el tablero
 export function dibujarTablero(casillas) {
