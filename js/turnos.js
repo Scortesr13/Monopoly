@@ -5,7 +5,7 @@ import { renderJugadores, obtenerJugadores } from "./ui.js";
 let jugadores = obtenerJugadores();
 let turno = 0;
 const totalCasillas = 40;
-
+console.log("Turnos iniciados con jugadores:", jugadores);
 export function tirarDados() {
   const dado1 = Math.floor(Math.random() * 6) + 1;
   const dado2 = Math.floor(Math.random() * 6) + 1;
@@ -36,7 +36,7 @@ export function jugarTurno() {
   const pasos = tirarDados();
 
   // Mover jugador y pasar `pasarTurno` al modal
-  moverJugador(jugadorActual, pasos, totalCasillas, jugadores, pasarTurno);
+  moverJugador(jugadorActual, pasos, totalCasillas,jugadores);
 }
 
 // ⚡ Pasar turno

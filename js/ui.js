@@ -44,14 +44,44 @@ export function renderJugadores() {
   // 2️⃣ Actualizar fichas en el tablero
   colocarFichas(jugadores);
 }
+export function guardarJugadores(jugadores) {
+  const planos = jugadores.map(j => ({
+    id: j.id,
+    nick: j.nick,
+    color: j.color,
+    bandera: j.bandera,
+    money: j.money,
+    position: j.position,
+    properties: j.properties,
+    inJail: j.inJail,
+    jailTurns: j.jailTurns,
+    hipoteca: j.hipoteca,
+    prestamos: j.prestamos
+  }));
 
+  localStorage.setItem("monopoly_players", JSON.stringify(planos));
+}
 // 🔹 Recuperar jugadores como instancias de la clase Jugador
 export function obtenerJugadores() {
-  const data = JSON.parse(localStorage.getItem("monopoly_players")) || [];
-  return data.map(
-    (j) => new Jugador(j.id, j.nick, j.color, j.bandera, j.money)
-  );
+  const dataRaw = localStorage.getItem("monopoly_players");
+  if (!dataRaw) return [];
+
+  try {
+    const data = JSON.parse(dataRaw);
+    return data.map(j => new Jugador(
+      j.id,
+      j.nick,
+      j.color,
+      j.bandera,
+      j.money,
+      j.position
+    ));
+  } catch (e) {
+    console.error("Error al obtener jugadores:", e);
+    return [];
+  }
 }
+
 
 // 🔹 Renderizar el tablero
 export function dibujarTablero(casillas) {

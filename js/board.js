@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 export function manejarCompra(idCasilla, precio) {
   const jugadores = obtenerJugadores();
+  
   const jugadorActual = jugadores[0]; // por ahora usamos el primero
 
   if (jugadorActual.money >= precio) {

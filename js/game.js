@@ -1,5 +1,5 @@
 import { obtenerJugadores, renderJugadores } from "./ui.js";
-import { jugarTurno } from "./turnos.js";
+import { jugarTurno,pasarTurno } from "./turnos.js";
 
 document
   .getElementById("btn-tirar-dados")
@@ -34,60 +34,74 @@ export function colocarFichas(jugadores) {
   });
 }
 
-export function moverJugador(jugador, pasos, totalCasillas) {
+export function moverJugador(jugador, pasos, totalCasillas, jugadores) {
   const casillaAnterior = document.getElementById(
     `casilla-${jugador.position}`
   );
 
+  console.log("Moviendo jugador:", jugador, "Pasos:", pasos, "Total Casillas:", totalCasillas);
+
   // actualizar posición con wrap-around
   jugador.position = (jugador.position + pasos) % totalCasillas;
 
-  colocarFichas(obtenerJugadores()); // re-renderizar fichas en nuevas posiciones
+  // Usar el array que ya tienes en memoria
+  colocarFichas(jugadores);
 
   const casillaActual = document.getElementById(`casilla-${jugador.position}`);
-  accionCasilla(jugador, casillaActual); // dispara la acción de la casilla
+  accionCasilla(jugador, casillaActual, jugadores); // ⚡ ahora sí pasa jugadores
 }
-export function accionCasilla(jugador, casilla) {
-  if (!casilla) return;
 
-  const tipo = casilla.dataset.tipo; // "propiedad", "impuesto", "sorpresa", "comunidad", "carcel", etc.
+export function accionCasilla(jugador, casilla, jugadores) {
+  if (!casilla) return;
+  console.log(`${jugador.nick} cayó en casilla:`, casilla);
+
+  const tipo = casilla.dataset.tipo;
 
   switch (tipo) {
-    case "propiedad":
+    case "property":
+    case "railroad":
       if (!casilla.dataset.dueno) {
-        // propiedad libre → preguntar si compra
-        mostrarVentanaAccion(jugador, casilla, ["Comprar", "Cancelar"]);
+        mostrarVentanaAccion(jugador, casilla, ["Comprar", "Cancelar"], jugadores, pasarTurno);
       } else if (casilla.dataset.dueno !== jugador.id) {
-        // propiedad de otro jugador → pagar renta
-        mostrarVentanaAccion(jugador, casilla, ["Pagar Renta"]);
+        mostrarVentanaAccion(jugador, casilla, ["Pagar Renta"], jugadores, pasarTurno);
       } else {
-        // propiedad propia → opción de construir casa/hotel
-        mostrarVentanaAccion(jugador, casilla, ["Construir Casa/Hotel"]);
+        mostrarVentanaAccion(jugador, casilla, ["Construir Casa/Hotel"], jugadores, pasarTurno);
       }
       break;
 
-    case "impuesto":
-      mostrarVentanaAccion(jugador, casilla, ["Pagar Impuesto"]);
+    case "tax":
+      mostrarVentanaAccion(jugador, casilla, ["Pagar Impuesto"], jugadores, pasarTurno);
       break;
 
-    case "sorpresa":
-    case "comunidad":
-      mostrarVentanaAccion(jugador, casilla, ["Sacar Carta"]);
+    case "community_chest":
+    case "chance":
+      mostrarVentanaAccion(jugador, casilla, ["Sacar Carta"], jugadores, pasarTurno);
       break;
 
-    case "carcel":
-      mostrarVentanaAccion(jugador, casilla, ["Ir a la Cárcel"]);
-      break;
-
-    case "salida":
-      // nada que hacer, solo mostrar mensaje
-      alert(`${jugador.nick} pasó por Salida`);
+    case "special":
+      const nombre = casilla.dataset.nombre.toLowerCase();
+      if (nombre.includes("salida")) {
+        jugador.money += 200;
+        alert(`${jugador.nick} pasó por Salida y recibe $200`);
+      } else if (nombre.includes("cárcel")) {
+        alert(`${jugador.nick} está solo de visita en la Cárcel`);
+      } else if (nombre.includes("parqueo")) {
+        alert(`${jugador.nick} está en Parqueo Gratis`);
+      } else if (nombre.includes("ve a la cárcel")) {
+        jugador.position = 10;
+        jugador.inJail = true;
+        jugador.jailTurns = 2;
+        alert(`${jugador.nick} va a la Cárcel`);
+        colocarFichas(jugadores);
+      }
       break;
 
     default:
       console.log("Tipo de casilla desconocido:", tipo);
   }
 }
+
+
 export function mostrarVentanaAccion(
   jugador,
   casilla,
@@ -108,8 +122,8 @@ export function mostrarVentanaAccion(
     btn.textContent = opcion;
     btn.addEventListener("click", () => {
       manejarAccion(jugador, casilla, opcion, jugadores);
-      modal.remove(); // cerrar modal
-      pasarTurno(); // ⚡ PASAR TURNO después de la acción
+      modal.remove();
+      pasarTurno();
     });
     modal.appendChild(btn);
   });
@@ -123,7 +137,10 @@ export function mostrarVentanaAccion(
   }
 }
 
+
 function manejarAccion(jugador, casilla, opcion, jugadores) {
+    console.log("Manejando acción:", opcion, "para jugador:", jugador);
+  console.log("Jugadores en manejarAccion:", jugadores);
   const precio = parseInt(casilla.dataset.precio) || 0;
   const rentas = casilla.dataset.renta
     ? JSON.parse(casilla.dataset.renta)
@@ -197,10 +214,8 @@ function manejarAccion(jugador, casilla, opcion, jugadores) {
 
     case "Cancelar":
       break;
-
-    default:
-      console.log("Opción desconocida:", opcion);
   }
 
+  // Siempre persistir al localStorage
   localStorage.setItem("monopoly_players", JSON.stringify(jugadores));
 }

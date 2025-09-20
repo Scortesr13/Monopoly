@@ -126,9 +126,22 @@ function renderPlayerSetup(numPlayers, countries) {
     }
 
     // Guardar jugadores como objetos planos, no instancias
-    const jugadoresPlanos = result.players.map((j) => ({ ...j }));
-    localStorage.setItem("monopoly_players", JSON.stringify(jugadoresPlanos));
+   const jugadoresPlanos = result.players.map(j => ({
+  id: j.id,
+  nick: j.nick,
+  color: j.color,
+  bandera: j.bandera,
+  money: j.money,
+  position: j.position || 0,
+  properties: j.properties || [],
+  inJail: j.inJail || false,
+  jailTurns: j.jailTurns || 0,
+  hipoteca: j.hipoteca || false,
+  prestamos: j.prestamos || 0
+}));
 
+localStorage.setItem("monopoly_players", JSON.stringify(jugadoresPlanos));
+console.log("Jugadoressss guardados en localStorage:", jugadoresPlanos);
     alert(
       "Jugadores configurados correctamente. ¡Listo para iniciar la partida!"
     );
@@ -142,6 +155,7 @@ function collectAndValidatePlayers(numPlayers) {
   const errors = [];
   const players = [];
   const chosenTokens = new Set();
+
 
   for (let i = 1; i <= numPlayers; i++) {
     const nick = document
@@ -164,7 +178,7 @@ function collectAndValidatePlayers(numPlayers) {
     chosenTokens.add(token);
 
     // Crear jugador con la clase
-    players.push(new Jugador(i, nick, token, country));
+    players.push(new Jugador(i, nick, token, country, 1500,0));
   }
 
   return { ok: errors.length === 0, players, errors };
