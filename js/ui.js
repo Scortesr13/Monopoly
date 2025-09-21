@@ -22,7 +22,7 @@ console.log("jugadores en tablero propiedades:", jugadores);
               (p) => `
                 <li>
                   ${p.nombre || "Sin nombre"} 
-                  - 💵 $${p.price || 0}
+                  - 💵 $${p.precio || 0} - color-${p.color}
                   ${p.mortgage ? "🔒 (Hipotecada)" : ""}
                 </li>`
             )
@@ -101,7 +101,8 @@ export function obtenerJugadores() {
             rentas: Array.isArray(p.rentas) ? p.rentas : [0],
             casas: p.casas || 0,
             hotel: p.hotel || false,
-            hipotecada: p.hipotecada || false
+            hipotecada: p.hipotecada || false,
+            color: p.color
           }))
         : [];
 
@@ -136,8 +137,13 @@ export function dibujarTablero(casillas) {
     div.dataset.casas = casilla.houses || 0;
     div.dataset.hotel = casilla.hotel || false;
     div.dataset.dueno = casilla.owner ? casilla.owner.id : "";
-    div.dataset.renta = JSON.stringify(casilla.rent || [0]);
-    div.dataset.impuesto = casilla.tax || 0;
+   div.dataset.renta = casilla.rent?.base ?? 0;
+
+
+
+   div.dataset.impuesto = casilla.action?.money || 0;
+    div.dataset.color = casilla.color || "none";
+
 
     // 👉 Colocar la casilla en la posición correcta
     const pos = getGridPosition(index);

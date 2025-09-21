@@ -159,10 +159,7 @@ h1 {
   }
 }
 
-@media (max-width: 350px) {
-  .container {
-    padding: 1rem;
-  }
+
 
   h1 {
     font-size: 1.8rem;
@@ -210,43 +207,29 @@ h1 {
 
 .monopoly-board {
     position: relative;
-    width: 800px;
-    height: 800px;
+    width: 90vw;        /* adaptable al ancho de la pantalla */
+    max-width: 800px;
+    aspect-ratio: 1/1;  /* mantiene forma cuadrada */
     margin: 20px auto;
     border: 2px solid #333;
-    background-color: #f0f0f0;
     display: grid;
     grid-template-areas: 
         "top top top"
         "left center right"
         "bottom bottom bottom";
-    grid-template-columns: 1fr 400px 1fr;
-    grid-template-rows: 1fr 400px 1fr;
+    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-rows: 1fr 4fr 1fr;
+    background-color: #f0f0f0;
 }
 
 .board-side {
     display: flex;
 }
 
-.board-bottom {
-    grid-area: bottom;
-    flex-direction: row;
-}
-
-.board-right {
-    grid-area: right;
-    flex-direction: column;
-}
-
-.board-top {
-    grid-area: top;
-    flex-direction: row-reverse;
-}
-
-.board-left {
-    grid-area: left;
-    flex-direction: column-reverse;
-}
+.board-bottom { grid-area: bottom; flex-direction: row; }
+.board-right  { grid-area: right; flex-direction: column; }
+.board-top    { grid-area: top; flex-direction: row-reverse; }
+.board-left   { grid-area: left; flex-direction: column-reverse; }
 
 .board-center {
     grid-area: center;
@@ -255,34 +238,50 @@ h1 {
     align-items: center;
     background-color: #d32f2f;
     color: white;
-    font-size: 24px;
+    font-size: 2vw;
     font-weight: bold;
     border: 2px solid #333;
 }
 
+.tablero {
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+    grid-template-rows: repeat(11, 1fr);
+    width: 100%;
+    max-width: 800px;
+    aspect-ratio: 1/1;
+    margin: auto;
+    gap: 2px;
+    background-color: #f8f8f8;
+    position: relative;
+}
+
 .board-cell {
-    width: 80px;
-    height: 80px;
-    border: 1px solid #ccc;
-    padding: 5px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    padding: 0.2em;
+    border: 1px solid #ccc;
     background-color: white;
-    font-size: 10px;
+    font-size: 0.8em;
     text-align: center;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
-/* Estilos específicos por tipo de casilla */
 .cell-property {
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .property-color {
     width: 100%;
-    height: 15px;
+    height: 15%;
+    flex-shrink: 0;
+    border-radius: 4px 4px 0 0;
 }
 
 .property-color.brown { background-color: #8B4513; }
@@ -296,58 +295,41 @@ h1 {
 
 .property-name {
     font-weight: bold;
-    font-size: 8px;
+    font-size: 0.8em;
     line-height: 1;
+    word-wrap: break-word; /* ajusta texto largo */
 }
 
 .property-price {
-    font-size: 9px;
+    font-size: 0.7em;
     color: #666;
 }
 
-.cell-special {
-    background-color: #e0e0e0;
-}
-
-.cell-community_chest, .cell-chance {
-    background-color: #ffe0b2;
-}
-
-.cell-tax {
-    background-color: #ffcdd2;
-}
-
-.cell-jail, .cell-go_to_jail {
-    background-color: #bdbdbd;
-}
-
-.cell-free_parking {
-    background-color: #c8e6c9;
+.cell-special, .cell-community_chest, .cell-chance, .cell-tax,
+.cell-jail, .cell-go_to_jail, .cell-free_parking {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8em;
+    text-align: center;
 }
 
 .loading, .error {
     text-align: center;
-    padding: 20px;
-    font-size: 18px;
+    padding: 1em;
+    font-size: 1em;
 }
 
-/* adaptaciones para mobile */
+/* Responsive */
 @media (max-width: 600px) {
-  #setup-screen {
-    padding: 12px;
-  }
-}
-}
-.tablero {
-  display: grid;
-  grid-template-columns: repeat(11, 1fr);
-  grid-template-rows: repeat(11, 1fr);
-  width: 100%;
-  max-width: 800px;
-  margin: auto;
-  gap: 2px;
-  background-color: #f8f8f8;
-  position: relative;
+    .board-center {
+        font-size: 4vw;
+    }
+    .board-cell {
+        font-size: 0.6em;
+        padding: 0.1em;
+    }
+    .property-price { font-size: 0.6em; }
 }
 
 .casilla {
@@ -475,20 +457,8 @@ h1 {
 .casilla .estado.dueño {
   color: white;
 }
-.contenedor-fichas {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2px;
-  justify-content: center;
-  align-items: center;
-}
 
-.ficha {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  border: 1px solid #000;
-}
+
 .modal {
   position: fixed;
   top: 50%;
@@ -511,7 +481,7 @@ h1 {
 .contenedor-fichas {
   position: relative; /* Para posicionar las fichas dentro */
   width: 100%;
-  height: 100%;
+  height: 30%;
   display: flex;        /* Para alinear varias fichas en fila */
   flex-wrap: wrap;      /* Permite que las fichas se ajusten si hay muchas */
   justify-content: center;
@@ -521,8 +491,8 @@ h1 {
 
 /* Cada ficha de jugador */
 .ficha {
-  width: 20px;           /* Tamaño de la ficha */
-  height: 20px;
+  width: 30%;           /* Tamaño de la ficha */
+  height: 100%;
   border-radius: 50%;    /* Hace la ficha circular */
   border: 2px solid #000; /* Contorno para distinguir */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);

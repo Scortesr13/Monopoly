@@ -52,7 +52,14 @@ export function accionCasilla(jugador, casilla, jugadores) {
 
   switch (tipo) {
     case "property":
-    case "railroad":
+    case "railroad":    if (casilla.dataset.dueno) {
+  if (casilla.dataset.dueno == jugador.id) {
+    alert("Ya eres dueño de esta propiedad.");
+    pasarTurno();
+    break;
+  } 
+
+}
       if (!casilla.dataset.dueno) {
         mostrarVentanaAccion(jugador, casilla, ["Comprar", "Cancelar"], jugadores, pasarTurno);
       } else if (casilla.dataset.dueno !== jugador.id) {
@@ -139,6 +146,7 @@ function manejarAccion(jugador, casilla, opcion, jugadores) {
 
   switch (opcion) {
    case "Comprar":
+
   if (jugador.money >= precio) {
     jugador.money -= precio;
     casilla.dataset.dueno = jugador.id;
@@ -148,6 +156,7 @@ function manejarAccion(jugador, casilla, opcion, jugadores) {
       id: casilla.id,
       nombre: casilla.dataset.nombre || "Propiedad",
       precio: parseInt(casilla.dataset.precio) || 0,
+        color: casilla.dataset.color || "none",
       rentas: casilla.dataset.renta ? JSON.parse(casilla.dataset.renta) : [0],
       casas: 0,
       hotel: false,
@@ -176,17 +185,18 @@ function manejarAccion(jugador, casilla, opcion, jugadores) {
 
   // 📊 Obtener array de rentas desde la casilla
   const rentas = JSON.parse(casilla.dataset.renta || "[0]");
+  console.log("Rentas disponibles:", rentas);
 
   // Nivel de casas/hotel según el dueño
   const nivel = propiedadDueno.hotel ? 5 : propiedadDueno.casas; // ej: rentas[5] para hotel
   const renta = rentas[nivel] || 0;
 
-  if (jugador.money >= renta) {
-    jugador.money -= renta;
-    dueno.money += renta;
-    alert(`${jugador.nick} pagó $${renta} a ${dueno.nick}`);
+  if (jugador.money >= rentas) {
+    jugador.money -= rentas;
+    dueno.money += rentas;
+    alert(`${jugador.nick} pagó $${rentas} a ${dueno.nick}`);
   } else {
-    alert(`${jugador.nick} no tiene suficiente dinero para pagar la renta de $${renta}.`);
+    alert(`${jugador.nick} no tiene suficiente dinero para pagar la renta de $${rentas}.`);
   }
 
   renderJugadores();
@@ -222,7 +232,7 @@ function manejarAccion(jugador, casilla, opcion, jugadores) {
 
     case "Pagar Impuesto":
       const impuesto = parseInt(casilla.dataset.impuesto) || 0;
-      jugador.money -= impuesto;
+      jugador.money += impuesto;
       renderJugadores();
       break;
 
@@ -300,8 +310,9 @@ function manejarAccion(jugador, casilla, opcion, jugadores) {
     case "Ir a la Cárcel":
       jugador.inJail = true;
       jugador.jailTurns = 2;
-      jugador.position = 10;
-      colocarFichas(jugadores);
+      localStorage.setItem("monopoly_players", JSON.stringify(jugadores));
+    
+      
       renderJugadores();
       break;
 
