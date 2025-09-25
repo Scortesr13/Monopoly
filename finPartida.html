@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css"/>
+    <script type="module" src="js/board.js"></script>
+    <script type="module" src="js/game.js"></script>
+    <script type="module" src="js/api.js"></script>
+    <script type="module" src="js/ui.js"></script>
+    <script type="module" src="js/finPartida.js"></script>
+    <title>Fin de la partida</title>
+</head>
+<body>
+    <div class="background-image">
+        <img src="resources/images/fondo.webp"/>
+    </div>
+
+    
+    <div class="container" id="end-screen">
+        <h1>La partida ha finalizado. ¡Gracias por jugar!</h1>
+        <p> </p>
+        <div class="logo-container">
+            <img src="resources/images/logo.webp" alt="Monopoly" class="monopoly-img"/>
+        </div>
+        
+        <div class="options">
+            <button class="player-btn" id="btn-cargar-ranking">Ver Ranking del juego </button>
+            <button class="player-btn" id="btn-restart">Reiniciar Juego</button>
+        </div>
+    </div>
+</body>
+</html>

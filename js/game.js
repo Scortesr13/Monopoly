@@ -1,9 +1,15 @@
 import { obtenerJugadores, renderJugadores } from "./ui.js";
 import { jugarTurno,pasarTurno } from "./turnos.js";
 
+// Botón para finalizar la partida y redirigir a finPartida.html
+document.getElementById('btn-finPartida').addEventListener('click', function() {
+  window.location.href = 'finPartida.html';
+});
+
 document
   .getElementById("btn-tirar-dados")
   .addEventListener("click", jugarTurno);
+  
 
 export function colocarFichas(jugadores) {
   // ❌ Elimina TODAS las fichas antes de volver a pintarlas
