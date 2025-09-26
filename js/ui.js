@@ -32,7 +32,7 @@ console.log("jugadores en tablero propiedades:", jugadores);
     div.innerHTML = `
       <div class="jugador-header">
         <span class="iniciales">${j.nick.slice(0, 6).toUpperCase()}</span>
-        <span class="bandera">${j.bandera || "🌍"}</span>
+        <img src="https://flagsapi.com/${j.bandera}/shiny/64.png">
       </div>
 
       <div class="dinero">💵 $${j.money}</div>
