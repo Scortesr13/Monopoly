@@ -1,4 +1,4 @@
-import { obtenerJugadores } from "./ui.js";
+// import { obtenerJugadores } from "./ui.js";
 import { Jugador } from "./jugador.js";
 
 console.log("finPartida.js cargado");
@@ -12,8 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById('btn-cargar-ranking').addEventListener('click', () => {
         alert('Cargando ranking desde localStorage...');
-        const jugadores = obtenerJugadores();
-        console.log(jugadores);
+        // const jugadores = obtenerJugadores();
+        // console.log(jugadores);
     });
 });
 

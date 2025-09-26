@@ -4,7 +4,7 @@ import { colocarFichas } from "./game.js";
 
 export function renderJugadores() {
   const jugadores = obtenerJugadores();
-console.log("jugadores en tablero propiedades:", jugadores);
+  console.log("jugadores en tablero propiedades:", jugadores);
   // 1️⃣ Actualizar el sidebar
   const contenedor = document.getElementById("jugadores-lista");
   contenedor.innerHTML = "";
