@@ -408,6 +408,10 @@ h1 {
 
 .jugador-header .bandera {
   font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height:24px
 }
 
 .jugador-header .iniciales {
