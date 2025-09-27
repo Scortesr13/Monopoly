@@ -141,6 +141,7 @@ export function dibujarTablero(casillas) {
     div.dataset.hotel = casilla.hotel || false;
     div.dataset.dueno = casilla.owner ? casilla.owner.id : "";
    div.dataset.renta = casilla.rent?.base ?? 0;
+   div.dataset.banco= casilla.mortgage ||0;
 
 
 
