@@ -22,7 +22,7 @@ export function renderJugadores() {
               (p) => `
                 <li>
                   ${p.nombre || "Sin nombre"} 
-                  - 💵 $${p.precio || 0} - color-${p.color}
+                  - 💵 $${p.precio || 0} - color-${p.color}-${p.hipotecada ? "🔒 (Hipotecada)" : "✅ (Libre)"}
                   ${p.mortgage ? "🔒 (Hipotecada)" : ""}
                 </li>`
             )
@@ -142,6 +142,9 @@ export function dibujarTablero(casillas) {
     div.dataset.dueno = casilla.owner ? casilla.owner.id : "";
    div.dataset.renta = casilla.rent?.base ?? 0;
    div.dataset.banco= casilla.mortgage ||0;
+   div.dataset.action = casilla.action ? JSON.stringify(casilla.action) : "";
+
+
 
 
 

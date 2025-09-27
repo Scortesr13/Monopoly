@@ -83,24 +83,26 @@ export function accionCasilla(jugador, casilla, jugadores) {
     case "chance":
       mostrarVentanaAccion(jugador, casilla, ["Sacar Carta"], jugadores, pasarTurno);
       break;
+case "special":
+  const action = casilla.dataset.action ? JSON.parse(casilla.dataset.action) : null;
+  const nombre = casilla.dataset.nombre.toLowerCase();
 
-    case "special":
-      const nombre = casilla.dataset.nombre.toLowerCase();
-      if (nombre.includes("salida")) {
-        jugador.money += 200;
-        alert(`${jugador.nick} pasó por Salida y recibe $200`);
-      } else if (nombre.includes("cárcel")) {
-        alert(`${jugador.nick} está solo de visita en la Cárcel`);
-      } else if (nombre.includes("parqueo")) {
-        alert(`${jugador.nick} está en Parqueo Gratis`);
-      } else if (nombre.includes("ve a la cárcel")) {
-        jugador.position = 10;
-        jugador.inJail = true;
-        jugador.jailTurns = 2;
-        alert(`${jugador.nick} va a la Cárcel`);
-        colocarFichas(jugadores);
-      }
-      break;
+  if (action && action.goTo === "jail") {
+    // 👉 "Ve a la cárcel"
+    jugador.position = 10; // posición de la cárcel
+    jugador.inJail = true;
+    jugador.jailTurns = 2;
+    alert(`${jugador.nick} va directo a la Cárcel`);
+    colocarFichas(jugadores);
+  } else if (nombre.includes("salida")) {
+    jugador.money += 200;
+    alert(`${jugador.nick} pasó por Salida y recibe $200`);
+  } else if (nombre.includes("cárcel")) {
+    alert(`${jugador.nick} está solo de visita en la Cárcel`);
+  } else if (nombre.includes("parqueo")) {
+    alert(`${jugador.nick} está en Parqueo Gratis`);
+  }
+  break;
 
     default:
       console.log("Tipo de casilla desconocido:", tipo);
@@ -120,7 +122,7 @@ export function mostrarVentanaAccion(
 
   const modal = document.createElement("div");
   modal.id = "modal-accion";
-  modal.classList.add("modal");
+  modal.classList.add("modal1");
   modal.innerHTML = `<h3>${jugador.nick} cayó en ${casilla.dataset.nombre}</h3>`;
 
   opciones.forEach((opcion) => {

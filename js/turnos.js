@@ -92,7 +92,7 @@ function mostrarVentanaHipoteca(accion) {
         .map(
           (p) => `
         <li>
-          ${p.id} 
+          ${p.nombre || "Sin nombre"} - 💵 $${p.precio|| 0} - color-${p.color}
           <button class="btnAccion" data-id="${p.id}" data-accion="${accion}">
             ${accion === "hipotecar" ? "💣" : "💲"}
           </button>
@@ -134,6 +134,7 @@ function manejarHipoteca(jugador, idProp, accion) {
     propiedad.hipotecada = true;
     casilla.dataset.banco = mortgageValue; // 💰 se registra en dataset
     jugador.money += mortgageValue;
+    jugador.prestamos += mortgageValue;
     alert(`${jugador.nick} hipotecó ${idProp} por $${mortgageValue}`);
     localStorage.setItem("monopoly_players", JSON.stringify(jugadores));
   }
@@ -144,6 +145,7 @@ function manejarHipoteca(jugador, idProp, accion) {
       propiedad.hipotecada = false;
       casilla.dataset.banco = 0; // 🔄 limpiar deuda
       jugador.money -= deuda;
+      jugador.prestamos -= mortgageValue;
       localStorage.setItem("monopoly_players", JSON.stringify(jugadores));
       alert(`${jugador.nick} liberó la hipoteca de ${idProp} pagando $${deuda}`);
     } else {
