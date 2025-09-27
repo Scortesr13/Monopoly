@@ -50,3 +50,109 @@ export function pasarTurno() {
 export function jugadorActual() {
   return jugadores[turno];
 }
+// 🎯 Botones principales
+const btnHipotecar = document.getElementById("btnHipotecar");
+const btnDeshipotecar = document.getElementById("btnDeshipotecar");
+
+// ✅ Evento para hipotecar
+btnHipotecar.addEventListener("click", () => {
+  mostrarVentanaHipoteca("hipotecar");
+});
+
+// ✅ Evento para deshipotecar
+btnDeshipotecar.addEventListener("click", () => {
+  mostrarVentanaHipoteca("deshipotecar");
+});
+
+
+// 🪟 Función que crea la ventana
+function mostrarVentanaHipoteca(accion) {
+  const jugador = jugadores[turno]; // jugador actual
+  let propiedadesDisponibles = [];
+
+  if (accion === "hipotecar") {
+    propiedadesDisponibles = jugador.properties.filter(p => !p.hipotecada);
+  } else {
+    propiedadesDisponibles = jugador.properties.filter(p => p.hipotecada);
+  }
+
+  if (propiedadesDisponibles.length === 0) {
+    alert(`No tienes propiedades para ${accion}.`);
+    return;
+  }
+
+  // 🔄 Renderizar ventana
+  const contenedor = document.createElement("div");
+  contenedor.classList.add("ventana-acciones");
+
+  contenedor.innerHTML = `
+    <h3>${accion === "hipotecar" ? "Hipotecar propiedades" : "Liberar hipotecas"}</h3>
+    <ul>
+      ${propiedadesDisponibles
+        .map(
+          (p) => `
+        <li>
+          ${p.id} 
+          <button class="btnAccion" data-id="${p.id}" data-accion="${accion}">
+            ${accion === "hipotecar" ? "💣" : "💲"}
+          </button>
+        </li>`
+        )
+        .join("")}
+    </ul>
+    <button id="cerrarVentana">❌ Cerrar</button>
+  `;
+
+  document.body.appendChild(contenedor);
+
+  // 📌 Eventos de los botones dinámicos
+  contenedor.querySelectorAll(".btnAccion").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const idProp = e.target.dataset.id;
+      const accionProp = e.target.dataset.accion;
+      manejarHipoteca(jugador, idProp, accionProp);
+      contenedor.remove(); // cerrar ventana después de la acción
+    });
+  });
+
+  // ❌ cerrar ventana
+  document.getElementById("cerrarVentana").addEventListener("click", () => {
+    contenedor.remove();
+  });
+}
+
+
+// ⚙️ Lógica hipotecar/deshipotecar
+function manejarHipoteca(jugador, idProp, accion) {
+  const propiedad = jugador.properties.find((p) => p.id === idProp);
+  const casilla = document.getElementById(idProp);
+
+  const precio = parseInt(casilla.dataset.precio) || 200;
+  const mortgageValue = Math.floor(precio / 2);
+
+  if (accion === "hipotecar" && !propiedad.hipotecada) {
+    propiedad.hipotecada = true;
+    casilla.dataset.banco = mortgageValue; // 💰 se registra en dataset
+    jugador.money += mortgageValue;
+    alert(`${jugador.nick} hipotecó ${idProp} por $${mortgageValue}`);
+    localStorage.setItem("monopoly_players", JSON.stringify(jugadores));
+  }
+
+  if (accion === "deshipotecar" && propiedad.hipotecada) {
+    const deuda = mortgageValue + Math.floor(mortgageValue * 0.1);
+    if (jugador.money >= deuda) {
+      propiedad.hipotecada = false;
+      casilla.dataset.banco = 0; // 🔄 limpiar deuda
+      jugador.money -= deuda;
+      localStorage.setItem("monopoly_players", JSON.stringify(jugadores));
+      alert(`${jugador.nick} liberó la hipoteca de ${idProp} pagando $${deuda}`);
+    } else {
+      alert("No tienes suficiente dinero para liberar esta hipoteca.");
+    }
+  }
+
+  renderJugadores();
+}
+
+
+

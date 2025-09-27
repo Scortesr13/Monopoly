@@ -523,3 +523,126 @@ h1 {
   transform: scale(1.2);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
+/* === Ventana de Hipotecas === */
+.ventana-acciones {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 25px 30px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+  z-index: 2000;
+  width: 380px;
+  max-width: 90%;
+  animation: fadeIn 0.3s ease;
+}
+
+.ventana-acciones h3 {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: #333;
+  font-weight: bold;
+}
+
+.ventana-acciones ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 15px 0;
+}
+
+.ventana-acciones li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f9fa;
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  font-size: 15px;
+}
+
+/* Botones de acción (hipotecar/deshipotecar) */
+.btnAccion {
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 6px 10px;
+  font-size: 14px;
+  transition: 0.2s ease;
+}
+
+/* 💣 Hipotecar → rojo */
+.btnAccion[data-accion="hipotecar"] {
+  background: #e74c3c;
+  color: white;
+}
+
+.btnAccion[data-accion="hipotecar"]:hover {
+  background: #c0392b;
+}
+
+/* 💲 Deshipotecar → verde */
+.btnAccion[data-accion="deshipotecar"] {
+  background: #2ecc71;
+  color: white;
+}
+
+.btnAccion[data-accion="deshipotecar"]:hover {
+  background: #27ae60;
+}
+
+/* ❌ Botón cerrar */
+#cerrarVentana {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #6c757d;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+#cerrarVentana:hover {
+  background: #5a6268;
+}
+
+/* Animación */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -48%) scale(0.95); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+.hidden {
+  display: none !important;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-contenido {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  text-align: center;
+}

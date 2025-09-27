@@ -328,3 +328,4 @@ function manejarAccion(jugador, casilla, opcion, jugadores) {
 
   localStorage.setItem("monopoly_players", JSON.stringify(jugadores));
 }
+
