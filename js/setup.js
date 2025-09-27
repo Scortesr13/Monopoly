@@ -36,10 +36,10 @@ async function handlePlayersChosen(numPlayers) {
 
 function renderPlayerSetup(numPlayers, countries) {
   const container = document.getElementById("setup-screen");
-  container.innerHTML = "";
+  container.innerHTML = '';
 
   const title = document.createElement("h2");
-  title.textContent = "Configura los jugadores";
+  title.textContent = "Configuración de Jugadores";
   container.appendChild(title);
 
   const form = document.createElement("div");
@@ -47,108 +47,110 @@ function renderPlayerSetup(numPlayers, countries) {
   container.appendChild(form);
 
   for (let i = 1; i <= numPlayers; i++) {
-    const block = document.createElement("div");
-    block.className = "player-setup";
-    block.dataset.player = i;
-    block.style =
-      "border:1px solid #ccc; padding:12px; margin:8px 0; border-radius:8px; background:#fff;";
+    const playerBlock = document.createElement("div");
+    playerBlock.className = "player-setup";
 
-    const h = document.createElement("h3");
-    h.textContent = `Jugador ${i}`;
-    block.appendChild(h);
+    const playerTitle = document.createElement("h3");
+    playerTitle.textContent = `Jugador ${i}`;
+    playerBlock.appendChild(playerTitle);
 
-    // Nickname
-    const nickLabel = document.createElement("label");
-    nickLabel.innerHTML = `Nick: <input type="text" class="nick-input" data-player="${i}" placeholder="Nombre del jugador ${i}" />`;
-    block.appendChild(nickLabel);
+    // Nickname - SOLO PLACEHOLDER, SIN VALOR PREDETERMINADO
+    const nickGroup = document.createElement("div");
+    nickGroup.className = "config-group";
+    nickGroup.innerHTML = `
+  <label>Nombre:</label>
+  <input type="text" class="nick-input" data-player="${i}" 
+         placeholder="Jugador ${i}" />
+`;
+    playerBlock.appendChild(nickGroup);
 
-    // Fichas (radio buttons)
-    const tokenDiv = document.createElement("div");
-    tokenDiv.innerHTML = `<p><strong>Ficha (color único):</strong></p>`;
-    TOKENS.forEach((tok) => {
-      const id = `token-${tok.id}-p${i}`;
-      const radio = document.createElement("input");
-      radio.type = "radio";
-      radio.name = `token-player-${i}`;
-      radio.value = tok.id;
-      radio.id = id;
-      radio.className = "token-radio";
+    // Fichas mejoradas
+    const tokenGroup = document.createElement("div");
+    tokenGroup.className = "config-group";
+    tokenGroup.innerHTML = `<label>Elige tu color:</label>`;
 
-      const label = document.createElement("label");
-      label.htmlFor = id;
-      label.innerHTML = `${tok.label}`;
-      label.style = "margin-right: 10px; cursor:pointer;";
+    const tokensContainer = document.createElement("div");
+    tokensContainer.className = "tokens-container";
 
-      tokenDiv.appendChild(radio);
-      tokenDiv.appendChild(label);
+    const tokenConfigs = [
+      { id: 'red', label: 'Rojo', emoji: '🔴' },
+      { id: 'blue', label: 'Azul', emoji: '🔵' },
+      { id: 'green', label: 'Verde', emoji: '🟢' },
+      { id: 'yellow', label: 'Amarillo', emoji: '🟡' }
+    ];
+
+    tokenConfigs.forEach((token, index) => {
+      const tokenId = `token-${token.id}-p${i}`;
+      const tokenDiv = document.createElement("div");
+      tokenDiv.className = "token-item";
+      tokenDiv.innerHTML = `
+        <input type="radio" id="${tokenId}" name="token-player-${i}" 
+               value="${token.id}" class="token-radio" ${i === 1 && index === 0 ? 'checked' : ''}>
+        <label for="${tokenId}" class="token-option token-${token.id}" title="${token.label}">
+          ${token.emoji}
+        </label>
+        <span class="token-label">${token.label}</span>
+      `;
+      tokensContainer.appendChild(tokenDiv);
     });
-    block.appendChild(tokenDiv);
+
+    tokenGroup.appendChild(tokensContainer);
+    playerBlock.appendChild(tokenGroup);
 
     // País
-    const countryLabel = document.createElement("label");
-    const select = document.createElement("select");
-    select.className = "country-select";
-    select.dataset.player = i;
+    const countryGroup = document.createElement("div");
+    countryGroup.className = "config-group";
+    countryGroup.innerHTML = `<label>País:</label>`;
 
-    if (!countries || countries.length === 0) {
-      const opt = document.createElement("option");
-      opt.value = "CO";
-      opt.textContent = "Colombia (fallback)";
-      select.appendChild(opt);
-    } else {
-      countries.forEach((c) => {
-        const opt = document.createElement("option");
-        const code = Object.keys(c)[0];
-        const name = c[code];
-        opt.value = code.toUpperCase();
-        opt.textContent = name;
-        select.appendChild(opt);
-      });
-    }
+    const countrySelect = document.createElement("select");
+    countrySelect.className = "country-select";
+    countrySelect.dataset.player = i;
 
-    countryLabel.innerHTML = `<p><strong>País:</strong></p>`;
-    countryLabel.appendChild(select);
-    block.appendChild(countryLabel);
+    countries.forEach((country) => {
+      const code = Object.keys(country)[0];
+      const name = country[code];
+      const option = document.createElement("option");
+      option.value = code.toUpperCase();
+      option.textContent = name;
+      countrySelect.appendChild(option);
+    });
 
-    form.appendChild(block);
+    countryGroup.appendChild(countrySelect);
+    playerBlock.appendChild(countryGroup);
+
+    form.appendChild(playerBlock);
   }
 
-  // Botón comenzar partida
-  const startBtn = document.createElement("button");
-  startBtn.textContent = "Comenzar partida";
-  startBtn.className = "player-btn";
-  startBtn.style = "margin-top: 15px;";
-  startBtn.addEventListener("click", () => {
+  const startButton = document.createElement("button");
+  startButton.textContent = "🎮 Comenzar Juego";
+  startButton.className = "start-game-btn";
+  startButton.addEventListener("click", handleStartGame);
+  container.appendChild(startButton);
+
+  function handleStartGame() {
     const result = collectAndValidatePlayers(numPlayers);
     if (!result.ok) {
-      alert(result.errors[0]);
+      alert(result.errors.join('\n'));
       return;
     }
 
-    // Guardar jugadores como objetos planos, no instancias
-   const jugadoresPlanos = result.players.map(j => ({
-  id: j.id,
-  nick: j.nick,
-  color: j.color,
-  bandera: j.bandera,
-  money: j.money,
-  position: j.position || 0,
-  properties: j.properties || [],
-  inJail: j.inJail || false,
-  jailTurns: j.jailTurns || 0,
-  hipoteca: j.hipoteca || false,
-  prestamos: j.prestamos || 0
-}));
+    const jugadoresPlanos = result.players.map(j => ({
+      id: j.id,
+      nick: j.nick,
+      color: j.color,
+      bandera: j.bandera,
+      money: j.money,
+      position: j.position || 0,
+      properties: j.properties || [],
+      inJail: j.inJail || false,
+      jailTurns: j.jailTurns || 0,
+      hipoteca: j.hipoteca || false,
+      prestamos: j.prestamos || 0
+    }));
 
-localStorage.setItem("monopoly_players", JSON.stringify(jugadoresPlanos));
-console.log("Jugadoressss guardados en localStorage:", jugadoresPlanos);
-    alert(
-      "Jugadores configurados correctamente. ¡Listo para iniciar la partida!"
-    );
+    localStorage.setItem("monopoly_players", JSON.stringify(jugadoresPlanos));
     window.location.href = "board.html";
-  });
-
-  container.appendChild(startBtn);
+  }
 }
 
 function collectAndValidatePlayers(numPlayers) {
@@ -178,7 +180,7 @@ function collectAndValidatePlayers(numPlayers) {
     chosenTokens.add(token);
 
     // Crear jugador con la clase
-    players.push(new Jugador(i, nick, token, country, 1500,0));
+    players.push(new Jugador(i, nick, token, country, 1500, 0));
   }
 
   return { ok: errors.length === 0, players, errors };

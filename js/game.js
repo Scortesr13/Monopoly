@@ -328,3 +328,48 @@ function manejarAccion(jugador, casilla, opcion, jugadores) {
 
   localStorage.setItem("monopoly_players", JSON.stringify(jugadores));
 }
+
+export function lanzarDados() {
+  const dado1 = Math.floor(Math.random() * 6) + 1;
+  const dado2 = Math.floor(Math.random() * 6) + 1;
+  const total = dado1 + dado2;
+  
+  // Animación de dados
+  const dadosContainer = document.getElementById('dados-container');
+  if (!dadosContainer) {
+    crearDados();
+  }
+  
+  animarDados(dado1, dado2);
+  
+  return { dado1, dado2, total };
+}
+
+function crearDados() {
+  const infoExtra = document.getElementById('info-extra');
+  infoExtra.innerHTML = `
+    <div class="dados-container">
+      <div class="dado" id="dado1">?</div>
+      <div class="dado" id="dado2">?</div>
+    </div>
+  `;
+}
+
+function animarDados(dado1, dado2) {
+  const dadoElement1 = document.getElementById('dado1');
+  const dadoElement2 = document.getElementById('dado2');
+  const resultado = document.getElementById('resultado-dados');
+  
+  // Animación
+  dadoElement1.classList.add('lanzando');
+  dadoElement2.classList.add('lanzando');
+  
+  setTimeout(() => {
+    dadoElement1.textContent = dado1;
+    dadoElement2.textContent = dado2;
+    dadoElement1.classList.remove('lanzando');
+    dadoElement2.classList.remove('lanzando');
+    
+    resultado.textContent = `Resultado: ${dado1} + ${dado2} = ${dado1 + dado2}`;
+  }, 500);
+}

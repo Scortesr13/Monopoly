@@ -9,13 +9,19 @@
   <script type="module" src="js/game.js"></script>
   <script type="module" src="js/api.js"></script>
   <script type="module" src="js/ui.js"></script>
+  <script type="module" src="js/turnos.js"></script>
 </head>
 
 <body>
+  <!-- Fondo igual que la página de inicio -->
+  <div class="background-image">
+    <img src="resources/images/fondo.webp" alt="Fondo Monopoly" style="display: none;" />
+  </div>
+
   <div class="juego">
     <!-- Panel lateral izquierdo -->
     <aside class="jugadores izquierda" id="panel-izq">
-      <h2>Jugadores</h2>
+      <h2>🎮 Jugadores</h2>
       <div id="jugadores-lista"></div>
     </aside>
 
@@ -24,31 +30,104 @@
       <h1 class="titulo-tablero">MONOPOLY</h1>
       <div id="tablero" class="tablero"></div>
       <div id="modal-container"></div>
+      
+      <!-- Información del turno actual -->
+      <div id="turno-info" style="margin-top: 15px; padding: 10px; background: #f0d483; border-radius: 8px; border: 3px solid #c29f40;">
+        <h3 style="margin: 0; color: #3c1361;">Turno de: <span id="jugador-actual">Cargando...</span></h3>
+      </div>
     </main>
 
     <!-- Panel lateral derecho -->
     <aside class="jugadores derecha" id="panel-der">
-      <h2>Información</h2>
-      <div id="info-extra"></div>
+      <h2>📊 Información</h2>
+      <div id="info-extra">
+        <!-- Los dados se insertarán aquí dinámicamente -->
+      </div>
+      
       <h3>🎲 Lanzar dados</h3>
       
       <div class="options">
-        <button class="player-btn" id="btn-tirar-dados">Tirar</button>
-        <p id="resultado-dados"></p>
+        <button class="player-btn" id="btn-tirar-dados">🎯 Tirar Dados</button>
+        <p id="resultado-dados" style="min-height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #3c1361;"></p>
+        
+        <!-- Botones de acciones -->
+        <button class="player-btn" id="btn-comprar" style="background: linear-gradient(to bottom, #28a745 0%, #1e7e34 100%); display: none;">
+          🏠 Comprar Propiedad
+        </button>
+        
+        <button class="player-btn" id="btn-finalizar-turno" style="background: linear-gradient(to bottom, #ffc107 0%, #fd7e14 100%); display: none;">
+          ⏭️ Finalizar Turno
+        </button>
+        
         <!-- Botón para finalizar la partida -->
-        <button class="player-btn" id="btn-finPartida">Finalizar partida</button>
+        <button class="player-btn" id="btn-finPartida" style="background: linear-gradient(to bottom, #dc3545 0%, #c82333 100%);">
+          ⏹️ Finalizar Partida
+        </button>
+      </div>
+
+      <!-- Información de la casilla actual -->
+      <div id="info-casilla" style="margin-top: 15px; padding: 10px; background: white; border-radius: 8px; border: 2px solid #c29f40;">
+        <h4 style="margin: 0 0 8px 0; color: #3c1361;">Casilla Actual:</h4>
+        <p id="nombre-casilla" style="margin: 0; font-weight: bold;">-</p>
+        <p id="precio-casilla" style="margin: 4px 0; font-size: 0.9em;">-</p>
       </div>
 
     </aside>
   </div>
 
-</body>
+  <!-- Modal para acciones -->
+  <div id="modal-acciones" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 5px solid #c29f40; border-radius: 15px; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+    <h3 id="modal-titulo" style="color: #3c1361; margin-bottom: 15px;"></h3>
+    <p id="modal-mensaje" style="margin-bottom: 20px;"></p>
+    <div style="display: flex; gap: 10px; justify-content: center;">
+      <button id="modal-btn-ok" class="player-btn" style="background: linear-gradient(to bottom, #28a745 0%, #1e7e34 100%);">Aceptar</button>
+      <button id="modal-btn-cancel" class="player-btn" style="background: linear-gradient(to bottom, #6c757d 0%, #545b62 100%);">Cancelar</button>
+    </div>
+  </div>
 
-</html>
+  <!-- Overlay para modal -->
+  <div id="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999;"></div>
 
+  <script>
+    // Script para manejar el modal
+    document.addEventListener('DOMContentLoaded', function() {
+      const modal = document.getElementById('modal-acciones');
+      const overlay = document.getElementById('modal-overlay');
+      const modalTitulo = document.getElementById('modal-titulo');
+      const modalMensaje = document.getElementById('modal-mensaje');
+      const modalBtnOk = document.getElementById('modal-btn-ok');
+      const modalBtnCancel = document.getElementById('modal-btn-cancel');
 
-<!-- JS: API + Board -->
+      function mostrarModal(titulo, mensaje, onOk, onCancel = null) {
+        modalTitulo.textContent = titulo;
+        modalMensaje.textContent = mensaje;
+        modal.style.display = 'block';
+        overlay.style.display = 'block';
 
+        modalBtnOk.onclick = function() {
+          modal.style.display = 'none';
+          overlay.style.display = 'none';
+          if (onOk) onOk();
+        };
+
+        modalBtnCancel.onclick = function() {
+          modal.style.display = 'none';
+          overlay.style.display = 'none';
+          if (onCancel) onCancel();
+        };
+
+        // Si no hay función cancel, ocultar el botón
+        if (!onCancel) {
+          modalBtnCancel.style.display = 'none';
+        } else {
+          modalBtnCancel.style.display = 'block';
+        }
+      }
+
+      // Hacer la función global para uso en otros archivos
+      window.mostrarModal = mostrarModal;
+    });
+  </script>
 
 </body>
 

@@ -4,8 +4,6 @@ import { colocarFichas } from "./game.js";
 
 export function renderJugadores() {
   const jugadores = obtenerJugadores();
-  console.log("jugadores en tablero propiedades:", jugadores);
-  // 1️⃣ Actualizar el sidebar
   const contenedor = document.getElementById("jugadores-lista");
   contenedor.innerHTML = "";
 
@@ -14,47 +12,39 @@ export function renderJugadores() {
     div.classList.add("jugador-card");
     div.style.setProperty("--color-ficha", j.color || "#000");
 
-    // 🏠 Mostrar propiedades con detalles
-    const listaPropiedades =
-      j.properties.length > 0
-        ? j.properties
-            .map(
-              (p) => `
-                <li>
-                  ${p.nombre || "Sin nombre"} 
-                  - 💵 $${p.precio || 0} - color-${p.color}
-                  ${p.mortgage ? "🔒 (Hipotecada)" : ""}
-                </li>`
-            )
-            .join("")
-        : "<li>Ninguna</li>";
+    const listaPropiedades = j.properties.length > 0 
+      ? j.properties.map(p => `
+          <li>${p.nombre || "Sin nombre"} - 💵 $${p.precio || 0}</li>`
+        ).join("")
+      : "<li>Ninguna</li>";
 
     div.innerHTML = `
       <div class="jugador-header">
-        <span class="iniciales">${j.nick.slice(0, 6).toUpperCase()}</span>
+        <!-- NOMBRE COMPLETO SIN RECORTE -->
+        <span class="iniciales">${j.nick}</span>
+        
+        <!-- BANDERA CON CÓDIGO DE PAÍS DEBAJO -->
         <span class="bandera">
-        ${j.bandera}
-        <img src="https://flagsapi.com/${j.bandera}/shiny/64.png" alt="${j.bandera}"/>
-      </span>
+          <img src="https://flagsapi.com/${j.bandera}/shiny/64.png" alt="${j.bandera}"/>
+          <span class="codigo-pais">${j.bandera}</span>
+        </span>
       </div>
 
-      <div class="dinero">💵 $${j.money}</div>
+      <div class="dinero">💰 $${j.money}</div>
 
       <div class="propiedades">
         <strong>Propiedades:</strong>
-        <ul>
-          ${listaPropiedades}
-        </ul>
+        <ul>${listaPropiedades}</ul>
       </div>
 
       <div class="estado">
         <p>💳 Préstamos: $${j.prestamos || 0}</p>
+        ${j.inJail ? '<p style="color: red;">🔒 En la cárcel</p>' : ''}
       </div>
     `;
     contenedor.appendChild(div);
   });
 
-  // 2️⃣ Actualizar fichas en el tablero
   colocarFichas(jugadores);
 }
 
