@@ -2,9 +2,9 @@ import { obtenerJugadores, renderJugadores } from "./ui.js";
 import { jugarTurno,pasarTurno } from "./turnos.js";
 
 // Botón para finalizar la partida y redirigir a finPartida.html
-document
-  .getElementById('btn-finPartida')
-  .addEventListener('click', window.location.href = 'finPartida.html');
+document.getElementById('btn-finPartida').addEventListener('click', function() {
+  window.location.href = 'finPartida.html';
+});
   
 document
   .getElementById("btn-tirar-dados")
