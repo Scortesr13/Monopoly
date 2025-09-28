@@ -62,10 +62,7 @@ const railroadsDueno = jugador.properties.filter((p) => p.tipo === "railroad");
 if (puedeConstruir(jugador, casilla)) {
   construirEnPropiedad(jugador, casilla,pasarTurno);
   break;
-} else {
-  alert("No puedes construir porque no tienes suficientes propiedades del mismo color.");
-}
-
+} else 
       
     
     
@@ -216,21 +213,28 @@ if (!propiedadDueno || propiedadDueno.hipotecada) {
   alert("La propiedad está hipotecada, no se paga renta.");
   break;
 }
-
+const hotell = casilla.dataset.hotel === "true";
 const rentData = JSON.parse(casilla.dataset.rent || "{}");
 const casa = parseInt(propiedadDueno.casas || "0");
-
+const rentacasas = JSON.parse(casilla.dataset.rentasCasas || "{}");
+console.log("Renta base:", rentData);
+console.log("Renta con casas:", rentacasas);
+console.log("Número de casas:", casa);
+console.log("¿Tiene hotel?", hotell);
 // 👉 si no hay casas → renta = dataset.renta (base)
 let renta;
+if (hotell) {
+  renta = parseInt(casilla.dataset.rentaHotel || "0");
+  console.log("Renta con hotel:", renta);
+}else
 if (casa === 0) {
   renta = parseInt(casilla.dataset.renta || "0");
 } else {
   renta = rentData[casa] || 0;
-}
-
-if (renta === 0) {
-  alert(`No se cobra renta porque no hay casas construidas en ${casilla.dataset.nombre}`);
-  break;
+}if (renta === 0) {
+  renta = rentacasas[casa-1] || 0;
+  console.log("Renta con casas:", renta);
+  
 }
 
 if (jugador.money >= renta) {
@@ -402,8 +406,8 @@ function construirEnPropiedad(jugador, casilla,pasarTurno) {
 
     
         alert(`${jugador.nick} construyó una casa en ${propiedad.nombre}. Total casas: ${propiedad.casas}`);
-    pasarTurno();
-    
+   pasarTurno();
+        renderJugadores();
       } else {
         alert("No tienes suficiente dinero para construir una casa.");
       }
@@ -419,11 +423,14 @@ function construirEnPropiedad(jugador, casilla,pasarTurno) {
         casilla.dataset.hotel = true;
 
         alert(`${jugador.nick} construyó un HOTEL en ${propiedad.nombre}.`);
+      renderJugadores();
+      pasarTurno();
       } else {
         alert("No tienes suficiente dinero para construir un hotel.");
       }
     } else {
       alert("No puedes construir más aquí.");
+      pasarTurno();
     }
 
     renderJugadores();
