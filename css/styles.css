@@ -17,18 +17,19 @@ body {
   color: #3c1361;
 }
 
-   /* Fondo con imagen */
-   .background-image {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.3; /* Opacidad del fondo */
-    z-index: -1;
+/* Fondo con imagen */
+.background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.3;
+  /* Opacidad del fondo */
+  z-index: -1;
 }
 
 /* Contenedor principal */
@@ -175,17 +176,17 @@ h1 {
 
 
 
-  h1 {
-    font-size: 1.8rem;
-  }
+h1 {
+  font-size: 1.8rem;
+}
 
-  .subtitle {
-    font-size: 1rem;
-  }
+.subtitle {
+  font-size: 1rem;
+}
 
-  .player-btn {
-    font-size: 0.9rem;
-  }
+.player-btn {
+  font-size: 0.9rem;
+}
 
 
 
@@ -199,14 +200,15 @@ h1 {
 }
 
 .token-radio {
-  display: none; /* ocultamos el input real */
+  display: none;
+  /* ocultamos el input real */
 }
 
 /* cuando el token-radio esté checked, estilizamos su label adyacente */
-.token-radio:checked + label {
+.token-radio:checked+label {
   border-color: #6a329f;
   background: linear-gradient(90deg, #f3e9ff, #fff);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
 /* etiqueta del token: hacemos que el label que definimos antes se vea como botón */
@@ -220,225 +222,345 @@ h1 {
 /* styles.css - Añadir estas reglas para el tablero */
 
 .monopoly-board {
-    position: relative;
-    width: 90vw;        /* adaptable al ancho de la pantalla */
-    max-width: 800px;
-    aspect-ratio: 1/1;  /* mantiene forma cuadrada */
-    margin: 20px auto;
-    border: 2px solid #333;
-    display: grid;
-    grid-template-areas: 
-        "top top top"
-        "left center right"
-        "bottom bottom bottom";
-    grid-template-columns: 1fr 4fr 1fr;
-    grid-template-rows: 1fr 4fr 1fr;
-    background-color: #f0f0f0;
+  position: relative;
+  width: 90vw;
+  /* adaptable al ancho de la pantalla */
+  max-width: 800px;
+  aspect-ratio: 1/1;
+  /* mantiene forma cuadrada */
+  margin: 20px auto;
+  border: 2px solid #333;
+  display: grid;
+  grid-template-areas:
+    "top top top"
+    "left center right"
+    "bottom bottom bottom";
+  grid-template-columns: 1fr 4fr 1fr;
+  grid-template-rows: 1fr 4fr 1fr;
+  background-color: #f0f0f0;
 }
 
 .board-side {
-    display: flex;
+  display: flex;
 }
 
-.board-bottom { grid-area: bottom; flex-direction: row; }
-.board-right  { grid-area: right; flex-direction: column; }
-.board-top    { grid-area: top; flex-direction: row-reverse; }
-.board-left   { grid-area: left; flex-direction: column-reverse; }
+.board-bottom {
+  grid-area: bottom;
+  flex-direction: row;
+}
+
+.board-right {
+  grid-area: right;
+  flex-direction: column;
+}
+
+.board-top {
+  grid-area: top;
+  flex-direction: row-reverse;
+}
+
+.board-left {
+  grid-area: left;
+  flex-direction: column-reverse;
+}
 
 .board-center {
-    grid-area: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #d32f2f;
-    color: white;
-    font-size: 2vw;
-    font-weight: bold;
-    border: 2px solid #333;
+  grid-area: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #d32f2f;
+  color: white;
+  font-size: 2vw;
+  font-weight: bold;
+  border: 2px solid #333;
 }
 
 .tablero {
-    display: grid;
-    grid-template-columns: repeat(11, 1fr);
-    grid-template-rows: repeat(11, 1fr);
-    width: 100%;
-    max-width: 800px;
-    aspect-ratio: 1/1;
-    margin: auto;
-    gap: 2px;
-    background-color: #f8f8f8;
-    position: relative;
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  grid-template-rows: repeat(11, 1fr);
+  width: 100%;
+  max-width: 800px;
+  min-width: 650px;
+  aspect-ratio: 1/1;
+  background: #8B4513;
+  border: 18px solid #c29f40;
+  border-radius: 20px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+  padding: 10px;
+  gap: 1px;
+  margin: 0 auto;
 }
 
 .board-cell {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.2em;
-    border: 1px solid #ccc;
-    background-color: white;
-    font-size: 0.8em;
-    text-align: center;
-    box-sizing: border-box;
-    overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.2em;
+  border: 1px solid #ccc;
+  background-color: white;
+  font-size: 0.8em;
+  text-align: center;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .cell-property {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .property-color {
-    width: 100%;
-    height: 15%;
-    flex-shrink: 0;
-    border-radius: 4px 4px 0 0;
+  width: 100%;
+  height: 15%;
+  flex-shrink: 0;
+  border-radius: 4px 4px 0 0;
 }
 
-.property-color.brown { background-color: #8B4513; }
-.property-color.lightblue { background-color: #87CEEB; }
-.property-color.pink { background-color: #FFC0CB; }
-.property-color.orange { background-color: #FFA500; }
-.property-color.red { background-color: #FF0000; }
-.property-color.yellow { background-color: #FFFF00; }
-.property-color.green { background-color: #008000; }
-.property-color.blue { background-color: #0000FF; }
+.property-color.brown {
+  background-color: #8B4513;
+}
+
+.property-color.lightblue {
+  background-color: #87CEEB;
+}
+
+.property-color.pink {
+  background-color: #FFC0CB;
+}
+
+.property-color.orange {
+  background-color: #FFA500;
+}
+
+.property-color.red {
+  background-color: #FF0000;
+}
+
+.property-color.yellow {
+  background-color: #FFFF00;
+}
+
+.property-color.green {
+  background-color: #008000;
+}
+
+.property-color.blue {
+  background-color: #0000FF;
+}
 
 .property-name {
-    font-weight: bold;
-    font-size: 0.8em;
-    line-height: 1;
-    word-wrap: break-word; /* ajusta texto largo */
+  font-weight: bold;
+  font-size: 0.8em;
+  line-height: 1;
+  word-wrap: break-word;
+  /* ajusta texto largo */
 }
 
 .property-price {
-    font-size: 0.7em;
-    color: #666;
+  font-size: 0.7em;
+  color: #666;
 }
 
-.cell-special, .cell-community_chest, .cell-chance, .cell-tax,
-.cell-jail, .cell-go_to_jail, .cell-free_parking {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.8em;
-    text-align: center;
+.cell-special,
+.cell-community_chest,
+.cell-chance,
+.cell-tax,
+.cell-jail,
+.cell-go_to_jail,
+.cell-free_parking {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8em;
+  text-align: center;
 }
 
-.loading, .error {
-    text-align: center;
-    padding: 1em;
-    font-size: 1em;
+.loading,
+.error {
+  text-align: center;
+  padding: 1em;
+  font-size: 1em;
 }
 
 /* Responsive */
 @media (max-width: 600px) {
-    .board-center {
-        font-size: 4vw;
-    }
-    .board-cell {
-        font-size: 0.6em;
-        padding: 0.1em;
-    }
-    .property-price { font-size: 0.6em; }
+  .board-center {
+    font-size: 4vw;
+  }
+
+  .board-cell {
+    font-size: 0.6em;
+    padding: 0.1em;
+  }
+
+  .property-price {
+    font-size: 0.6em;
+  }
 }
 
 .casilla {
-  background-color: #e0e0e0;
+  background: #f9f9f9;
   border: 1px solid #333;
-  padding: 6px;
-  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
   text-align: center;
+  position: relative;
+  padding: 6px;
+  transition: all 0.3s;
   border-radius: 4px;
 }
+
+.casilla:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: 0 0 20px rgba(240, 212, 131, 0.9);
+  background: #fff;
+}
+
 .juego {
   display: grid;
-  grid-template-columns: 1fr auto 1fr; /* izq - tablero - der */
-  gap: 20px;
+  grid-template-columns: 240px 1fr 240px; /* Reducido de 280px */
+  gap: 20px; /* Un poco más de espacio entre paneles */
+  padding: 20px;
+  min-height: 100vh;
   align-items: start;
-  justify-content: center;
-  margin: 20px;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 
 .tablero-contenedor {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  min-height: 85vh;
+  width: 100%;
 }
 
 .titulo-tablero {
   text-align: center;
-  margin-bottom: 10px;
-  font-size: 2rem;
+  margin-bottom: 2.5rem;
+  font-size: 3rem;
   font-weight: bold;
+  color: #f0d483;
+  text-shadow: 4px 4px 0 #3c1361;
+  letter-spacing: 3px;
 }
+
 .jugadores {
-  background: #f4f4f4;
-  border: 2px solid #333;
+  background: #f0d483; /* Color consistente con el tema */
+  border: 4px solid #c29f40; /* Borde más delgado y elegante */
   border-radius: 12px;
-  padding: 10px;
-  min-width: 220px;
+  padding: 12px; /* Reducido de 10px */
+  min-width: 200px; /* Reducido de 220px */
   max-height: 90vh;
   overflow-y: auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra más suave */
 }
 
 .jugadores h2 {
   text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 12px; /* Reducido de 15px */
+  font-size: 1.3rem; /* Un poco más pequeño */
+  color: #3c1361;
+  text-shadow: 1px 1px 0 #fff;
 }
 
 .jugador-card {
   background: #fff;
   border-radius: 10px;
-  padding: 12px;
-  margin-bottom: 15px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-  border-left: 6px solid var(--color-ficha, #000);
+  padding: 10px; /* Reducido de 12px */
+  margin-bottom: 12px; /* Reducido de 15px */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Sombra más sutil */
+  border-left: 5px solid var(--color-ficha, #000); /* Borde más delgado */
 }
 
 .jugador-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 8px; /* Reducido de 10px */
 }
 
 .jugador-header .bandera {
-  font-size: 1.8rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 6px;
-  height:24px
+  gap: 4px;
+  height: auto; /* Eliminado height fijo */
+}
+
+.jugador-header .bandera img {
+  width: 35px; /* Reducido de 40px */
+  height: 25px; /* Reducido de 30px */
+  border: 2px solid #c29f40;
+  border-radius: 4px;
 }
 
 .jugador-header .iniciales {
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1.1rem; /* Reducido de 1.2rem */
+  color: #3c1361;
+  max-width: 110px; /* Reducido de 120px */
+  word-wrap: break-word;
 }
 
 .dinero {
   font-weight: bold;
   color: #2e7d32;
-  margin: 6px 0;
+  font-size: 1rem; /* Reducido de 1.2rem */
+  margin: 5px 0; /* Reducido de 6px */
+  text-align: center;
+  background: rgba(46, 125, 50, 0.1);
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .propiedades {
-  margin-top: 8px;
+  margin-top: 6px; /* Reducido de 8px */
+}
+
+.propiedades strong {
+  display: block;
+  text-align: center;
+  margin-bottom: 4px;
+  color: #3c1361;
+  font-size: 0.9rem;
 }
 
 .propiedades ul {
-  padding-left: 20px;
-  margin: 5px 0;
+  padding-left: 16px; /* Reducido de 20px */
+  margin: 4px 0; /* Reducido de 5px */
+  font-size: 0.8rem; /* Un poco más pequeño */
 }
 
-.estado {
-  margin-top: 8px;
-  font-size: 0.9rem;
-  color: #555;
+.propiedades li {
+  margin-bottom: 2px; /* Reducido de 3px */
+  padding-left: 4px;
+  border-left: 2px solid #3c1361;
+  font-size: 0.8rem;
 }
+
+
+.estado {
+  margin-top: 6px; /* Reducido de 8px */
+  font-size: 0.8rem;
+  color: #555;
+  text-align: center;
+  padding: 4px;
+  background: rgba(60, 19, 97, 0.1);
+  border-radius: 4px;
+}
+
 .casilla {
   border: 2px solid #333;
   background: #fafafa;
@@ -450,6 +572,14 @@ h1 {
   text-align: center;
   position: relative;
   padding: 2px;
+}
+
+.color-strip {
+  width: 100%;
+  height: 14px;
+  border-radius: 3px 3px 0 0;
+  margin-bottom: 4px;
+  border: 1px solid rgba(0,0,0,0.1);
 }
 
 .casilla .color-strip {
@@ -494,25 +624,32 @@ h1 {
   padding: 5px 10px;
   cursor: pointer;
 }
-/* Contenedor de fichas dentro de cada casilla */
+
 /* Contenedor de fichas dentro de cada casilla */
 .contenedor-fichas {
-  position: relative; /* Para posicionar las fichas dentro */
+  position: relative;
+  /* Para posicionar las fichas dentro */
   width: 100%;
   height: 30%;
-  display: flex;        /* Para alinear varias fichas en fila */
-  flex-wrap: wrap;      /* Permite que las fichas se ajusten si hay muchas */
+  display: flex;
+  /* Para alinear varias fichas en fila */
+  flex-wrap: wrap;
+  /* Permite que las fichas se ajusten si hay muchas */
   justify-content: center;
   align-items: center;
-  gap: 2px;             /* Espacio entre fichas */
+  gap: 2px;
+  /* Espacio entre fichas */
 }
 
 /* Cada ficha de jugador */
 .ficha {
-  width: 30%;           /* Tamaño de la ficha */
+  width: 30%;
+  /* Tamaño de la ficha */
   height: 100%;
-  border-radius: 50%;    /* Hace la ficha circular */
-  border: 2px solid #000; /* Contorno para distinguir */
+  border-radius: 50%;
+  /* Hace la ficha circular */
+  border: 2px solid #000;
+  /* Contorno para distinguir */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
@@ -523,6 +660,144 @@ h1 {
   transform: scale(1.2);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
+
+/* Responsive solo para el tablero */
+@media (max-width: 1400px) {
+  .juego {
+    grid-template-columns: 260px 1fr 260px;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .tablero {
+    max-width: 750px;
+    min-width: 600px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .juego {
+    grid-template-columns: 240px 1fr 240px;
+    gap: 18px;
+  }
+  
+  .tablero {
+    max-width: 700px;
+    min-width: 550px;
+  }
+  
+  .titulo-tablero {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .juego {
+    grid-template-columns: 220px 1fr 220px;
+  }
+  
+  .tablero {
+    max-width: 650px;
+    min-width: 500px;
+    border-width: 15px;
+  }
+}
+
+@media (max-width: 900px) {
+  .juego {
+    grid-template-columns: 200px 1fr 200px;
+  }
+  
+  .tablero {
+    max-width: 580px;
+    min-width: 450px;
+  }
+  
+  .titulo-tablero {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .juego {
+    grid-template-columns: 180px 1fr 180px;
+    gap: 15px;
+    padding: 15px;
+  }
+  
+  .tablero {
+    max-width: 500px;
+    min-width: 400px;
+    border-width: 12px;
+    padding: 8px;
+  }
+  
+  .casilla {
+    font-size: 0.75rem;
+    padding: 4px;
+  }
+  
+  .contenedor-fichas {
+    height: 35px;
+  }
+  
+  .ficha {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 600px) {
+  .juego {
+    grid-template-columns: 160px 1fr 160px;
+  }
+  
+  .tablero {
+    max-width: 420px;
+    min-width: 350px;
+  }
+  
+  .titulo-tablero {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .juego {
+    grid-template-columns: 140px 1fr 140px;
+    gap: 10px;
+    padding: 10px;
+  }
+  
+  .tablero {
+    max-width: 360px;
+    min-width: 300px;
+    border-width: 10px;
+  }
+  
+  .casilla {
+    font-size: 0.7rem;
+    padding: 3px;
+  }
+  
+  .color-strip {
+    height: 12px;
+  }
+  
+  .contenedor-fichas {
+    height: 30px;
+    gap: 2px;
+  }
+  
+  .ficha {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+
 /* === Ventana de Hipotecas === */
 .ventana-acciones {
   position: fixed;
@@ -617,9 +892,17 @@ h1 {
 
 /* Animación */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translate(-50%, -48%) scale(0.95); }
-  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
+
 .hidden {
   display: none !important;
 }
@@ -643,6 +926,6 @@ h1 {
   padding: 20px;
   max-width: 400px;
   width: 90%;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
   text-align: center;
 }
