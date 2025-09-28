@@ -58,7 +58,14 @@ export function accionCasilla(jugador, casilla, jugadores) {
   console.log("Tipo de casilla:", tipo);
 const railroadsDueno = jugador.properties.filter((p) => p.tipo === "railroad");
   switch (tipo) {
-    case "property":
+    case "property": if (!casilla.dataset.dueno) {
+        mostrarVentanaAccion(jugador, casilla, ["Comprar", "Cancelar"], jugadores, pasarTurno);
+      } else if (casilla.dataset.dueno !== jugador.id) {
+        mostrarVentanaAccion(jugador, casilla, ["Pagar Renta"], jugadores, pasarTurno);
+      } else {
+        mostrarVentanaAccion(jugador, casilla, ["Construir Casa/Hotel"], jugadores, pasarTurno);
+      }
+      break;
     case "railroad":   
       // Si ya es dueño de la propiedad
     if (casilla.dataset.dueno) {  
@@ -348,4 +355,185 @@ document.getElementById("btnConstruir").addEventListener("click", () => {
 
   modal.remove();
 });
+}
+function construirEnPropiedad(jugador, casilla) {
+  const modalExistente = document.getElementById("modal-construccion");
+  if (modalExistente) modalExistente.remove();
+
+  const modal = document.createElement("div");
+  modal.id = "modal-construccion";
+  modal.classList.add("modal1");
+
+  modal.innerHTML = `
+    <h3>${jugador.nick}, ¿quieres construir en ${casilla.dataset.nombre}?</h3>
+    <button id="btnConstruir">Construir</button>
+    <button id="btnCancelarConstruir">Cancelar</button>
+  `;
+
+  document.body.appendChild(modal);
+
+  document.getElementById("btnConstruir").addEventListener("click", () => {
+    const propiedad = jugador.properties.find((p) => p.id == casilla.id);
+    if (!propiedad) return;
+
+    if (!propiedad.casas) propiedad.casas = 0;
+    if (!propiedad.hotel) propiedad.hotel = false;
+
+    // 🔎 verificar que el jugador tiene todas las propiedades del mismo color
+    const colorGrupo = casilla.dataset.color; // asegúrate de tener esta info en el dataset
+    const propiedadesColor = jugador.properties.filter((p) => p.color === colorGrupo);
+
+    const todasDelColor = tablero.filter((c) => c.type === "property" && c.color === colorGrupo);
+    if (propiedadesColor.length < todasDelColor.length) {
+      alert("Debes tener todas las propiedades del mismo color para construir.");
+      modal.remove();
+      return;
+    }
+
+    // 🏠 Construcción de casas
+    if (propiedad.casas < 4 && !propiedad.hotel) {
+      const costoConstruccion = 100; // o sacarlo de casilla.price
+      if (jugador.money >= costoConstruccion) {
+        jugador.money -= costoConstruccion;
+        propiedad.casas++;
+        casilla.dataset.casas = propiedad.casas;
+
+        alert(`${jugador.nick} construyó una casa en ${propiedad.nombre}. Total casas: ${propiedad.casas}`);
+      } else {
+        alert("No tienes suficiente dinero para construir una casa.");
+      }
+    }
+    // 🏨 Construcción de hotel
+    else if (propiedad.casas === 4 && !propiedad.hotel) {
+      const costoHotel = 200;
+      if (jugador.money >= costoHotel) {
+        jugador.money -= costoHotel;
+        propiedad.casas = 0;
+        propiedad.hotel = true;
+        casilla.dataset.casas = 0;
+        casilla.dataset.hotel = true;
+
+        alert(`${jugador.nick} construyó un HOTEL en ${propiedad.nombre}.`);
+      } else {
+        alert("No tienes suficiente dinero para construir un hotel.");
+      }
+    } else {
+      alert("No puedes construir más aquí.");
+    }
+
+    renderJugadores();
+    pasarTurno();
+    modal.remove();
+  });
+
+  document.getElementById("btnCancelarConstruir").addEventListener("click", () => {
+    pasarTurno();
+    modal.remove();
+  });
+}
+function construirEnPropiedad(jugador, casilla) {
+  const modalExistente = document.getElementById("modal-construccion");
+  if (modalExistente) modalExistente.remove();
+
+  const modal = document.createElement("div");
+  modal.id = "modal-construccion";
+  modal.classList.add("modal1");
+
+  modal.innerHTML = `
+    <h3>${jugador.nick}, ¿quieres construir en ${casilla.dataset.nombre}?</h3>
+    <button id="btnConstruir">Construir</button>
+    <button id="btnCancelarConstruir">Cancelar</button>
+  `;
+
+  document.body.appendChild(modal);
+
+  document.getElementById("btnConstruir").addEventListener("click", () => {
+    const propiedad = jugador.properties.find((p) => p.id == casilla.id);
+    if (!propiedad) return;
+
+    if (!propiedad.casas) propiedad.casas = 0;
+    if (!propiedad.hotel) propiedad.hotel = false;
+
+    // 🔎 verificar que el jugador tiene todas las propiedades del mismo color
+    const colorGrupo = casilla.dataset.color; // asegúrate de tener esta info en el dataset
+    const propiedadesColor = jugador.properties.filter((p) => p.color === colorGrupo);
+
+    const todasDelColor = tablero.filter((c) => c.type === "property" && c.color === colorGrupo);
+    if (propiedadesColor.length < todasDelColor.length) {
+      alert("Debes tener todas las propiedades del mismo color para construir.");
+      modal.remove();
+      return;
+    }
+
+    // 🏠 Construcción de casas
+    if (propiedad.casas < 4 && !propiedad.hotel) {
+      const costoConstruccion = 100; // o sacarlo de casilla.price
+      if (jugador.money >= costoConstruccion) {
+        jugador.money -= costoConstruccion;
+        propiedad.casas++;
+        casilla.dataset.casas = propiedad.casas;
+
+        alert(`${jugador.nick} construyó una casa en ${propiedad.nombre}. Total casas: ${propiedad.casas}`);
+      } else {
+        alert("No tienes suficiente dinero para construir una casa.");
+      }
+    }
+    // 🏨 Construcción de hotel
+    else if (propiedad.casas === 4 && !propiedad.hotel) {
+      const costoHotel = 200;
+      if (jugador.money >= costoHotel) {
+        jugador.money -= costoHotel;
+        propiedad.casas = 0;
+        propiedad.hotel = true;
+        casilla.dataset.casas = 0;
+        casilla.dataset.hotel = true;
+
+        alert(`${jugador.nick} construyó un HOTEL en ${propiedad.nombre}.`);
+      } else {
+        alert("No tienes suficiente dinero para construir un hotel.");
+      }
+    } else {
+      alert("No puedes construir más aquí.");
+    }
+
+    renderJugadores();
+    pasarTurno();
+    modal.remove();
+  });
+
+  document.getElementById("btnCancelarConstruir").addEventListener("click", () => {
+    pasarTurno();
+    modal.remove();
+  });
+}
+function puedeConstruir(jugador, casilla, tablero) {
+  const colorGrupo = casilla.dataset.color;
+  if (!colorGrupo) return false; // sin color no se puede construir
+
+  // Filtrar propiedades del jugador con ese color
+  const propiedadesColor = jugador.properties.filter(p => p.color === colorGrupo);
+
+  // Contar cuántas propiedades del mismo color existen en el tablero
+  const propiedadesTotalesColor = tablero.filter(c => c.type === "property" && c.color === colorGrupo);
+
+  // Condicional según la cantidad de propiedades del jugador
+  if (propiedadesColor.length < 2) {
+    // 🟥 Solo tiene 1 propiedad del color → no puede construir
+    return false;
+  } else if (propiedadesColor.length === 2) {
+    // 🟨 Tiene 2 propiedades → puede construir parcialmente (quizá solo cobrar renta incrementada)
+    return true;
+  } else if (propiedadesColor.length >= 3) {
+    // 🟩 Tiene 3 o más propiedades → puede construir casas normalmente
+    return true;
+  }
+
+  return false;
+}
+
+// Uso dentro de tu acción:
+if (puedeConstruir(jugador, casilla, tablero)) {
+  construirEnPropiedad(jugador, casilla);
+} else {
+  alert("No puedes construir porque no tienes suficientes propiedades del mismo color.");
 }
