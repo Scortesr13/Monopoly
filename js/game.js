@@ -59,46 +59,58 @@ export function accionCasilla(jugador, casilla, jugadores) {
 const railroadsDueno = jugador.properties.filter((p) => p.tipo === "railroad");
   switch (tipo) {
     case "property":// Uso dentro de tu acción:
-if (puedeConstruir(jugador, casilla)) {
-  construirEnPropiedad(jugador, casilla,pasarTurno);
+  // Si puede construir, abrir modal de construcción
+  if (puedeConstruir(jugador, casilla)) {
+    construirEnPropiedad(jugador, casilla, pasarTurno);
+    break;
+  }
+
+  // Si ya es dueño pero no puede construir
+  if (casilla.dataset.dueno == jugador.id) {
+    alert("Ya eres dueño de esta propiedad.");
+    pasarTurno(); // ⚡ termina el turno
+    break;        // ⚡ salir del switch
+  }
+
+  // Si la propiedad no tiene dueño
+  if (!casilla.dataset.dueno) {
+    mostrarVentanaAccion(jugador, casilla, ["Comprar", "Cancelar"], jugadores, pasarTurno);
+  } 
+  // Si la propiedad tiene dueño diferente, pagar renta
+  else if (casilla.dataset.dueno !== jugador.id) {
+    mostrarVentanaAccion(jugador, casilla, ["Pagar Renta"], jugadores, pasarTurno);
+  }
   break;
-} else 
-      
-    
-    
-    
-    if (!casilla.dataset.dueno) {
-        mostrarVentanaAccion(jugador, casilla, ["Comprar", "Cancelar"], jugadores, pasarTurno);
-      } else if (casilla.dataset.dueno !== jugador.id) {
-        mostrarVentanaAccion(jugador, casilla, ["Pagar Renta"], jugadores, pasarTurno);
-      } else {
-        mostrarVentanaAccion(jugador, casilla, ["Construir Casa/Hotel"], jugadores, pasarTurno);
-      }
-      break;
+
     case "railroad":   
       // Si ya es dueño de la propiedad
     if (casilla.dataset.dueno) {  
-  if (casilla.dataset.dueno == jugador.id) {if (railroadsDueno.length >= 2) {
-        construirEnRailroads(jugador, casilla);
-      
-      
-        
-      } else {
-    alert("Ya eres dueño de esta propiedad.");
-     
-    
-    break;
-  } break;  }
-
+  if (casilla.dataset.dueno == jugador.id) {
+    if (railroadsDueno.length >= 2) {
+      construirEnRailroads(jugador, casilla);
+    } else {
+      alert("Ya eres dueño de esta propiedad.");
+      pasarTurno(); // ⚡ termina el turno
+      break;        // ⚡ salir del switch
+    }
+    break; // ⚡ salir después de construir
+  }
 }
-      if (!casilla.dataset.dueno) {
-        mostrarVentanaAccion(jugador, casilla, ["Comprar", "Cancelar"], jugadores, pasarTurno);
-      } else if (casilla.dataset.dueno !== jugador.id) {
-        mostrarVentanaAccion(jugador, casilla, ["Pagar Renta"], jugadores, pasarTurno);
-      } else {
-        mostrarVentanaAccion(jugador, casilla, ["Construir Casa/Hotel"], jugadores, pasarTurno);
-      }
-      break;
+
+// Si la propiedad no tiene dueño
+if (!casilla.dataset.dueno) {
+  mostrarVentanaAccion(jugador, casilla, ["Comprar", "Cancelar"], jugadores, pasarTurno);
+} 
+// Si la propiedad tiene dueño diferente, pagar renta
+else if (casilla.dataset.dueno !== jugador.id) {
+  mostrarVentanaAccion(jugador, casilla, ["Pagar Renta"], jugadores, pasarTurno);
+} 
+// Si la propiedad es del jugador y puede construir casas/hoteles
+else {
+  mostrarVentanaAccion(jugador, casilla, ["Construir Casa/Hotel"], jugadores, pasarTurno);
+}
+break;
+
 
     case "tax":
       mostrarVentanaAccion(jugador, casilla, ["Pagar Impuesto"], jugadores, pasarTurno);
