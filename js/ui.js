@@ -99,6 +99,7 @@ export function obtenerJugadores() {
       jugador.properties = Array.isArray(j.properties)
         ? j.properties.map(p => ({
             id: p.id,
+            tipo: p.tipo || "property",
             nombre: p.nombre || "Propiedad",
             precio: p.precio || 0,
             rentas: Array.isArray(p.rentas) ? p.rentas : [0],

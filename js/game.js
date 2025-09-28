@@ -55,15 +55,23 @@ export function accionCasilla(jugador, casilla, jugadores) {
   console.log(`${jugador.nick} cayó en casilla:`, casilla);
 
   const tipo = casilla.dataset.tipo;
-
+  console.log("Tipo de casilla:", tipo);
+const railroadsDueno = jugador.properties.filter((p) => p.tipo === "railroad");
   switch (tipo) {
     case "property":
-    case "railroad":    if (casilla.dataset.dueno) {
-  if (casilla.dataset.dueno == jugador.id) {
+    case "railroad":   
+      // Si ya es dueño de la propiedad
+    if (casilla.dataset.dueno) {  
+  if (casilla.dataset.dueno == jugador.id) {if (railroadsDueno.length >= 2) {
+        construirEnRailroads(jugador, casilla);
+        break;
+        
+      } else {
     alert("Ya eres dueño de esta propiedad.");
+     
     pasarTurno();
     break;
-  } 
+  } }
 
 }
       if (!casilla.dataset.dueno) {
@@ -162,6 +170,7 @@ function manejarAccion(jugador, casilla, opcion, jugadores) {
     // 🔄 Guardar propiedad como objeto completo con datos de la casilla
     jugador.properties.push({
       id: casilla.id,
+      tipo: casilla.dataset.tipo || "property",
       nombre: casilla.dataset.nombre || "Propiedad",
       precio: parseInt(casilla.dataset.precio) || 0,
         color: casilla.dataset.color || "none",
@@ -260,60 +269,9 @@ function manejarAccion(jugador, casilla, opcion, jugadores) {
       break;
 
     case "Hipotecar Propiedad":
-      if (jugador.properties.length === 0) return;
-
-      const propH = prompt(
-        `${jugador.nick}, ¿qué propiedad deseas hipotecar?\n${jugador.properties.map((p) => p.id).join(", ")}`
-      );
-
-      const propiedadH = jugador.properties.find((p) => p.id === propH);
-      if (propiedadH && !propiedadH.hipotecada) {
-        const mortgageValue = Math.floor(precio / 2) || 100;
-        jugador.money += mortgageValue;
-        jugador.prestamos += mortgageValue;
-
-        propiedadH.hipotecada = true;
-
-        // 🔄 actualizar casilla
-        const casillaH = document.getElementById(propiedadH.id);
-        if (casillaH) casillaH.dataset.hipoteca = "true";
-
-        alert(`${jugador.nick} hipotecó ${propH} y recibió $${mortgageValue}`);
-        renderJugadores();
-      }
-      break;
-
+      
     case "Pagar Hipoteca":
-      if (jugador.prestamos <= 0) {
-        alert(`${jugador.nick} no tiene hipotecas activas.`);
-        break;
-      }
-
-      const propD = prompt(
-        `${jugador.nick}, ¿qué propiedad quieres recuperar?\n${jugador.properties.filter((p) => p.hipotecada).map((p) => p.id).join(", ")}`
-      );
-
-      const propiedadD = jugador.properties.find((p) => p.id === propD);
-      if (propiedadD && propiedadD.hipotecada) {
-        const mortgageValue = Math.floor(precio / 2) || 100;
-        const deuda = mortgageValue + Math.floor(mortgageValue * 0.1);
-
-        if (jugador.money >= deuda) {
-          jugador.money -= deuda;
-          jugador.prestamos -= mortgageValue;
-          propiedadD.hipotecada = false;
-
-          // 🔄 actualizar casilla
-          const casillaD = document.getElementById(propiedadD.id);
-          if (casillaD) casillaD.dataset.hipoteca = "false";
-
-          alert(`${jugador.nick} pagó la hipoteca de ${propD} por $${deuda}`);
-          renderJugadores();
-        } else {
-          alert(`${jugador.nick} no tiene suficiente dinero para pagar la hipoteca.`);
-        }
-      }
-      break;
+     
 
     case "Ir a la Cárcel":
       jugador.inJail = true;
@@ -331,3 +289,54 @@ function manejarAccion(jugador, casilla, opcion, jugadores) {
   localStorage.setItem("monopoly_players", JSON.stringify(jugadores));
 }
 
+function construirEnRailroads(jugador, casilla) {
+  const modalExistente = document.getElementById("modal-construccion");
+  if (modalExistente) modalExistente.remove();
+
+  const modal = document.createElement("div");
+  modal.id = "modal-construccion";
+  modal.classList.add("modal1");
+
+  modal.innerHTML = `
+    <h3>${jugador.nick}, ¿quieres construir en ${casilla.dataset.nombre}?</h3>
+    <button id="btnConstruir">Construir</button>
+    <button id="btnCancelarConstruir">Cancelar</button>
+  `;
+
+  document.body.appendChild(modal);
+
+  // evento construir
+  document.getElementById("btnConstruir").addEventListener("click", () => {
+    const propiedadR = jugador.properties.find((p) => p.id === casilla.id);
+    if (!propiedadR) return;
+
+    if (!propiedadR.casas) propiedadR.casas = 0;
+
+    const costoConstruccion = 100; // 💰 cada estación vale 100
+    if (jugador.money >= costoConstruccion) {
+      jugador.money -= costoConstruccion;
+      propiedadR.casas++; // usamos "casas" como contador de estaciones
+
+      alert(`${jugador.nick} construyó en ${propiedadR.nombre}. Total construcciones: ${propiedadR.casas}`);
+      
+      
+      renderJugadores();
+      pasarTurno();
+    } else {
+      alert(`${jugador.nick} no tiene suficiente dinero para construir.`);
+      pasarTurno();
+    }
+
+    modal.remove();
+  });
+
+  // evento cancelar
+  document.getElementById("btnCancelarConstruir").addEventListener("click", () => {
+
+
+pasarTurno();
+    modal.remove();
+
+    
+  });
+}
