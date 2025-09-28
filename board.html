@@ -3,16 +3,19 @@
 
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tablero Monopoly</title>
   <link rel="stylesheet" href="css/styles.css" />
-  <script type="module" src="js/turnos.js"></script>
-  <script type="module" src="js/board.js"></script>
-  <script type="module" src="js/game.js"></script>
-  <script type="module" src="js/api.js"></script>
-  <script type="module" src="js/ui.js"></script>
 </head>
 
 <body>
+  <!-- Fondo con imagen -->
+  <div class="background-image">
+    <div class="background-image">
+      <img src="resources/images/fondo.webp" />
+    </div>
+  </div>
+
   <div class="juego">
     <!-- Panel lateral izquierdo -->
     <aside class="jugadores izquierda" id="panel-izq">
@@ -24,38 +27,47 @@
     <main class="tablero-contenedor">
       <h1 class="titulo-tablero">MONOPOLY</h1>
       <div id="tablero" class="tablero"></div>
-      <div id="modal-container"></div>
+
+      <!-- Contenedor para dados -->
+      <div class="dados-container">
+        <div class="dado" id="dado1">0</div>
+        <div class="dado" id="dado2">0</div>
+      </div>
+
+      <div id="resultado-dados"></div>
     </main>
 
     <!-- Panel lateral derecho -->
     <aside class="jugadores derecha" id="panel-der">
       <h2>Información</h2>
       <div id="info-extra"></div>
-      <h3>🎲 Lanzar dados</h3>
-      
+
+      <h3>🎲 Acciones</h3>
       <div class="options">
-        <button class="player-btn" id="btn-tirar-dados">Tirar</button>
-        <p id="resultado-dados"></p>
-        <!-- Botón para finalizar la partida -->
-       <button class="btnHipotecar" id="btnHipotecar">Hipotecar</button>
-<button class="btnDeshipotecar" id="btnDeshipotecar">Deshipotecar</button>
-<div id="modal-hipoteca" class="modal hidden"></div>
-
-
-        <button class="player-btn" id="btn-finPartida">Finalizar partida</button>
+        <button class="player-btn" id="btn-tirar-dados">Tirar Dados</button>
+        <button class="player-btn" id="btnHipotecar">Hipotecar</button>
+        <button class="player-btn" id="btnDeshipotecar">Deshipotecar</button>
+        <button class="player-btn" id="btn-finPartida">Finalizar Partida</button>
       </div>
-
     </aside>
   </div>
 
-</body>
+  <!-- Ventana de hipotecas -->
+  <div id="modal-hipoteca" class="modal hidden">
+    <div class="modal-contenido">
+      <div id="contenido-hipoteca"></div>
+    </div>
+  </div>
 
-</html>
+  <!-- Contenedor para otros modales -->
+  <div id="modal-container"></div>
 
-
-<!-- JS: API + Board -->
-
-
+  <!-- Scripts al final del body para mejor rendimiento -->
+  <script type="module" src="js/api.js"></script>
+  <script type="module" src="js/board.js"></script>
+  <script type="module" src="js/game.js"></script>
+  <script type="module" src="js/ui.js"></script>
+  <script type="module" src="js/turnos.js"></script>
 </body>
 
 </html>

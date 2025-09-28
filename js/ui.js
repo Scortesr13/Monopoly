@@ -22,7 +22,7 @@ export function renderJugadores() {
               (p) => `
                 <li>
                   ${p.nombre || "Sin nombre"} 
-                  - 💵 $${p.precio || 0} - color-${p.color}-${p.hipotecada ? "🔒 (Hipotecada)" : "✅ (Libre)"}
+                  - 💵 $${p.precio || 0}-${p.hipotecada ? "🔒 (Hipotecada)" : "✅ (Sin hipotecar)"}
                   ${p.mortgage ? "🔒 (Hipotecada)" : ""}
                 </li>`
             )
