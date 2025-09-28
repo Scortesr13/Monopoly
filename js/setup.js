@@ -1,7 +1,6 @@
-import { Jugador } from "./jugador.js"; // asegúrate de que el archivo tenga la extensión .js
+import { Jugador } from "./jugador.js"; 
 import { fetchCountries } from "./api.js";
 
-// Fichas disponibles
 const TOKENS = [
   { id: "red", label: "🔴 Rojo" },
   { id: "blue", label: "🔵 Azul" },
@@ -24,13 +23,11 @@ async function handlePlayersChosen(numPlayers) {
   const message = document.getElementById("message");
 
   message.textContent = `Cargando configuración para ${numPlayers} jugador(es)...`;
-
   const countries = await fetchCountries();
-
   renderPlayerSetup(numPlayers, countries);
 
-  startScreen.style.display = "none";
-  setupScreen.style.display = "block";
+  startScreen.classList.add("hidden");
+  setupScreen.classList.remove("hidden");
   message.textContent = "";
 }
 
@@ -40,6 +37,7 @@ function renderPlayerSetup(numPlayers, countries) {
 
   const title = document.createElement("h2");
   title.textContent = "Configura los jugadores";
+  title.className = "setup-title";
   container.appendChild(title);
 
   const form = document.createElement("div");
@@ -48,10 +46,8 @@ function renderPlayerSetup(numPlayers, countries) {
 
   for (let i = 1; i <= numPlayers; i++) {
     const block = document.createElement("div");
-    block.className = "player-setup";
+    block.className = "player-setup-block";
     block.dataset.player = i;
-    block.style =
-      "border:1px solid #ccc; padding:12px; margin:8px 0; border-radius:8px; background:#fff;";
 
     const h = document.createElement("h3");
     h.textContent = `Jugador ${i}`;
@@ -64,6 +60,7 @@ function renderPlayerSetup(numPlayers, countries) {
 
     // Fichas (radio buttons)
     const tokenDiv = document.createElement("div");
+    tokenDiv.className = "token-container";
     tokenDiv.innerHTML = `<p><strong>Ficha (color único):</strong></p>`;
     TOKENS.forEach((tok) => {
       const id = `token-${tok.id}-p${i}`;
@@ -76,8 +73,8 @@ function renderPlayerSetup(numPlayers, countries) {
 
       const label = document.createElement("label");
       label.htmlFor = id;
-      label.innerHTML = `${tok.label}`;
-      label.style = "margin-right: 10px; cursor:pointer;";
+      label.className = "token-label";
+      label.textContent = tok.label;
 
       tokenDiv.appendChild(radio);
       tokenDiv.appendChild(label);
@@ -86,6 +83,7 @@ function renderPlayerSetup(numPlayers, countries) {
 
     // País
     const countryLabel = document.createElement("label");
+    countryLabel.className = "country-label";
     const select = document.createElement("select");
     select.className = "country-select";
     select.dataset.player = i;
@@ -97,9 +95,9 @@ function renderPlayerSetup(numPlayers, countries) {
       select.appendChild(opt);
     } else {
       countries.forEach((c) => {
-        const opt = document.createElement("option");
         const code = Object.keys(c)[0];
         const name = c[code];
+        const opt = document.createElement("option");
         opt.value = code.toUpperCase();
         opt.textContent = name;
         select.appendChild(opt);
@@ -116,8 +114,7 @@ function renderPlayerSetup(numPlayers, countries) {
   // Botón comenzar partida
   const startBtn = document.createElement("button");
   startBtn.textContent = "Comenzar partida";
-  startBtn.className = "player-btn";
-  startBtn.style = "margin-top: 15px;";
+  startBtn.className = "player-btn start-game-btn";
   startBtn.addEventListener("click", () => {
     const result = collectAndValidatePlayers(numPlayers);
     if (!result.ok) {
@@ -125,26 +122,22 @@ function renderPlayerSetup(numPlayers, countries) {
       return;
     }
 
-    // Guardar jugadores como objetos planos, no instancias
-   const jugadoresPlanos = result.players.map(j => ({
-  id: j.id,
-  nick: j.nick,
-  color: j.color,
-  bandera: j.bandera,
-  money: j.money,
-  position: j.position || 0,
-  properties: j.properties || [],
-  inJail: j.inJail || false,
-  jailTurns: j.jailTurns || 0,
-  hipoteca: j.hipoteca || false,
-  prestamos: j.prestamos || 0
-}));
+    const jugadoresPlanos = result.players.map(j => ({
+      id: j.id,
+      nick: j.nick,
+      color: j.color,
+      bandera: j.bandera,
+      money: j.money,
+      position: j.position || 0,
+      properties: j.properties || [],
+      inJail: j.inJail || false,
+      jailTurns: j.jailTurns || 0,
+      hipoteca: j.hipoteca || false,
+      prestamos: j.prestamos || 0
+    }));
 
-localStorage.setItem("monopoly_players", JSON.stringify(jugadoresPlanos));
-console.log("Jugadoressss guardados en localStorage:", jugadoresPlanos);
-    alert(
-      "Jugadores configurados correctamente. ¡Listo para iniciar la partida!"
-    );
+    localStorage.setItem("monopoly_players", JSON.stringify(jugadoresPlanos));
+    alert("Jugadores configurados correctamente. ¡Listo para iniciar la partida!");
     window.location.href = "board.html";
   });
 
@@ -156,28 +149,17 @@ function collectAndValidatePlayers(numPlayers) {
   const players = [];
   const chosenTokens = new Set();
 
-
   for (let i = 1; i <= numPlayers; i++) {
-    const nick = document
-      .querySelector(`.nick-input[data-player="${i}"]`)
-      .value.trim();
-    const tokenRadio = document.querySelector(
-      `input[name="token-player-${i}"]:checked`
-    );
+    const nick = document.querySelector(`.nick-input[data-player="${i}"]`).value.trim();
+    const tokenRadio = document.querySelector(`input[name="token-player-${i}"]:checked`);
     const token = tokenRadio ? tokenRadio.value : null;
-    const country = document.querySelector(
-      `.country-select[data-player="${i}"]`
-    ).value;
+    const country = document.querySelector(`.country-select[data-player="${i}"]`).value;
 
-    // Validaciones
     if (!nick) errors.push(`El jugador ${i} necesita un nick.`);
     if (!token) errors.push(`El jugador ${i} debe seleccionar una ficha.`);
-    if (token && chosenTokens.has(token)) {
-      errors.push(`La ficha "${token}" ya fue seleccionada.`);
-    }
+    if (token && chosenTokens.has(token)) errors.push(`La ficha "${token}" ya fue seleccionada.`);
     chosenTokens.add(token);
 
-    // Crear jugador con la clase
     players.push(new Jugador(i, nick, token, country, 1500,0));
   }
 

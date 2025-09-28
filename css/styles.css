@@ -1,60 +1,76 @@
-/* Reset básico */
+/* === Variables CSS === */
+:root {
+  --primary-metal: #b0b7c6; /* Plata metalizado */
+  --secondary-metal: #c29f40; /* Dorado original */
+  --accent-metal: #8b6f47; /* Bronce metalizado */
+  --background-dark: #3c1361; /* Morado oscuro original */
+  --background-light: #f0d483; /* Dorado claro original */
+  --text-dark: #3c1361; /* Texto morado */
+  --text-light: #ffffff; /* Texto blanco */
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --border-radius: 10px;
+  --transition: all 0.3s ease;
+}
+
+/* === Reset y Base === */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* Fondo y tipografía */
 body {
   font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
-  background: linear-gradient(135deg, #6a329f 0%, #3c1361 100%);
+  background: linear-gradient(135deg, var(--primary-metal) 0%, var(--background-dark) 100%);
+  min-height: 100vh;
+  color: var(--text-dark);
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  padding: 20px;
-  color: #3c1361;
 }
 
-/* Fondo con imagen */
+/* === Fondo con imagen === */
 .background-image {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   opacity: 0.3;
-  /* Opacidad del fondo */
   z-index: -1;
 }
 
-/* Contenedor principal */
-.container {
-  background-color: #f0d483;
-  padding: 2rem;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  text-align: center;
-  max-width: 500px;
+.background-image img {
   width: 100%;
-  border: 8px solid #c29f40;
+  height: 100%;
+  object-fit: cover;
 }
 
-/* Caja para logo */
+/* === Contenedor principal (inicio, configuración, fin de partida) === */
+.container {
+  background: var(--background-light);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  text-align: center;
+  max-width: 90%;
+  width: clamp(300px, 80vw, 600px);
+  border: 4px solid var(--secondary-metal);
+  margin: 1rem auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* === Logo === */
 .logo-container {
   margin-bottom: 1.5rem;
-  padding: 15px;
-  background: #fff;
-  border-radius: 10px;
-  border: 5px solid #c29f40;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  background: var(--text-light);
+  border-radius: var(--border-radius);
+  border: 3px solid var(--secondary-metal);
+  box-shadow: var(--shadow);
 }
 
-/* Imagen del logo */
 .monopoly-img {
   width: 100%;
   max-width: 300px;
@@ -64,868 +80,777 @@ body {
   margin: 0 auto;
 }
 
-/* Título */
+/* === Tipografía === */
 h1 {
-  color: #3c1361;
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  color: var(--text-dark);
   margin-bottom: 0.5rem;
-  text-shadow: 2px 2px 0 #fff;
+  text-shadow: 2px 2px 0 var(--text-light);
   letter-spacing: 2px;
 }
 
-/* Subtítulo */
 .subtitle {
-  color: #3c1361;
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  color: var(--text-dark);
   margin-bottom: 1.5rem;
-  font-size: 1.2rem;
-  padding: 0 10px;
 }
 
-/* Opciones de jugadores */
+/* === Opciones de jugadores === */
 .options {
   display: flex;
   justify-content: center;
-  gap: 15px;
-  margin: 25px 0;
+  gap: 1rem;
+  margin: 1.5rem 0;
   flex-wrap: wrap;
 }
 
-/* Botones */
+/* === Botones === */
 .player-btn {
-  background: linear-gradient(to bottom, #6a329f 0%, #3c1361 100%);
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  font-size: 1rem;
+  background: linear-gradient(to bottom, var(--primary-metal) 0%, var(--background-dark) 100%);
+  color: var(--text-light);
+  border: 3px solid var(--secondary-metal);
+  padding: 0.75rem 1.5rem;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
   font-weight: bold;
   cursor: pointer;
-  border-radius: 10px;
+  border-radius: var(--border-radius);
   min-width: 120px;
-  transition: all 0.3s;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  border: 3px solid #c29f40;
-  white-space: nowrap;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+  pointer-events: auto;
 }
 
 .player-btn:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(to bottom, #7d3fb8 0%, #4c1a7a 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to bottom, var(--secondary-metal) 0%, var(--background-dark) 100%);
 }
 
 .player-btn:active {
   transform: translateY(0);
 }
 
-/* Mensaje */
+.player-btn a {
+  color: var(--text-light);
+  text-decoration: none;
+}
+
+/* === Mensaje === */
 #message {
-  margin-top: 25px;
-  padding: 15px;
-  background-color: #3c1361;
-  color: #f0d483;
-  border-radius: 10px;
-  font-size: 1.1rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: var(--background-dark);
+  color: var(--background-light);
+  border-radius: var(--border-radius);
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
   font-weight: bold;
-  min-height: 60px;
+  min-height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid #c29f40;
-  text-align: center;
+  border: 3px solid var(--secondary-metal);
 }
 
-/* Instrucciones */
+/* === Instrucciones === */
 .instructions {
-  margin-top: 20px;
-  padding: 15px;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 10px;
-  font-size: 0.9rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: var(--border-radius);
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
 }
 
-/* Responsive */
-@media (max-width: 500px) {
-  .container {
-    padding: 1.5rem;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  .subtitle {
-    font-size: 1.1rem;
-  }
-
-  .options {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .player-btn {
-    width: 100%;
-    max-width: 200px;
-    padding: 10px;
-  }
-
-  #message {
-    font-size: 1rem;
-    padding: 10px;
-  }
+/* === Pantalla de configuración === */
+.setup-title { 
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  margin-bottom: 1.25rem; 
+  text-align: center;
+  color: var(--text-dark);
+  text-shadow: 1px 1px 0 var(--text-light);
 }
 
-
-
-h1 {
-  font-size: 1.8rem;
+.player-setup-block { 
+  border: 2px solid var(--secondary-metal); 
+  padding: 0.75rem; 
+  margin: 0.5rem 0; 
+  border-radius: var(--border-radius); 
+  background-color: var(--text-light);
+  box-shadow: var(--shadow);
 }
 
-.subtitle {
-  font-size: 1rem;
+.nick-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  margin: 0.25rem 0 0.75rem 0;
+  border-radius: 5px;
+  border: 1px solid var(--primary-metal);
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
 }
 
-.player-btn {
-  font-size: 0.9rem;
+.token-container {
+  margin: 0.75rem 0;
 }
 
-
-
-/* Estilos para pantalla de configuración */
-#setup-screen h2 {
-  margin-bottom: 6px;
-}
-
-.player-setup h3 {
-  margin: 0 0 6px 0;
-}
-
-.token-radio {
-  display: none;
-  /* ocultamos el input real */
-}
-
-/* cuando el token-radio esté checked, estilizamos su label adyacente */
-.token-radio:checked+label {
-  border-color: #6a329f;
-  background: linear-gradient(90deg, #f3e9ff, #fff);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-}
-
-/* etiqueta del token: hacemos que el label que definimos antes se vea como botón */
 .token-label {
+  margin-right: 0.75rem; 
+  cursor: pointer;
   user-select: none;
+  padding: 0.5rem;
+  border: 2px solid var(--secondary-metal);
+  border-radius: 8px;
+  transition: var(--transition);
 }
 
-
-
-/*Adicion del tablero*/
-/* styles.css - Añadir estas reglas para el tablero */
-
-.monopoly-board {
-  position: relative;
-  width: 90vw;
-  /* adaptable al ancho de la pantalla */
-  max-width: 800px;
-  aspect-ratio: 1/1;
-  /* mantiene forma cuadrada */
-  margin: 20px auto;
-  border: 2px solid #333;
-  display: grid;
-  grid-template-areas:
-    "top top top"
-    "left center right"
-    "bottom bottom bottom";
-  grid-template-columns: 1fr 4fr 1fr;
-  grid-template-rows: 1fr 4fr 1fr;
-  background-color: #f0f0f0;
+.country-label {
+  display: block;
+  margin-top: 0.75rem;
+  color: var(--text-dark);
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
 }
 
-.board-side {
-  display: flex;
+.country-select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 5px;
+  border: 1px solid var(--primary-metal);
+  margin-top: 0.25rem;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  background: var(--text-light);
 }
 
-.board-bottom {
-  grid-area: bottom;
-  flex-direction: row;
-}
-
-.board-right {
-  grid-area: right;
-  flex-direction: column;
-}
-
-.board-top {
-  grid-area: top;
-  flex-direction: row-reverse;
-}
-
-.board-left {
-  grid-area: left;
-  flex-direction: column-reverse;
-}
-
-.board-center {
-  grid-area: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #d32f2f;
-  color: white;
-  font-size: 2vw;
+.start-game-btn {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
   font-weight: bold;
-  border: 2px solid #333;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  border: none;
+  background: linear-gradient(to bottom, var(--primary-metal) 0%, var(--background-dark) 100%);
+  color: var(--text-light);
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+  pointer-events: auto;
+}
+
+.start-game-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to bottom, var(--secondary-metal) 0%, var(--background-dark) 100%);
+}
+
+/* === Pantalla de fin de partida === */
+#end-screen {
+  width: clamp(300px, 80vw, 600px);
+}
+
+#ranking-lista {
+  background: var(--text-light);
+  border: 3px solid var(--secondary-metal);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  margin: 1rem auto;
+  max-width: 90%;
+  width: clamp(300px, 80vw, 600px);
+  box-shadow: var(--shadow);
+  position: relative;
+  z-index: 1;
+}
+
+#ganador {
+  margin: 1rem auto;
+  padding: 1rem;
+  background: var(--background-dark);
+  color: var(--background-light);
+  border-radius: var(--border-radius);
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  font-weight: bold;
+  text-align: center;
+  border: 3px solid var(--secondary-metal);
+  max-width: 90%;
+  width: clamp(300px, 80vw, 600px);
+  position: relative;
+  z-index: 1;
+}
+
+#btn-volver-inicio {
+  background: linear-gradient(to bottom, var(--primary-metal) 0%, var(--background-dark) 100%);
+  color: var(--text-light);
+  border: 3px solid var(--secondary-metal);
+  padding: 0.75rem 1.5rem;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  min-width: 120px;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+  margin: 1rem auto;
+  display: block;
+  pointer-events: auto;
+}
+
+#btn-volver-inicio:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to bottom, var(--secondary-metal) 0%, var(--background-dark) 100%);
+}
+
+#btn-volver-inicio:active {
+  transform: translateY(0);
+}
+
+/* === Juego (pantalla del tablero) === */
+.juego {
+  display: grid;
+  grid-template-columns: minmax(200px, 240px) 1fr minmax(200px, 240px);
+  gap: 1.5rem;
+  padding: 1.5rem;
+  max-width: 1600px;
+  margin: 0 auto;
+  min-height: 100vh;
+  align-items: start;
+  position: relative;
+  z-index: 1;
+}
+
+/* === Tablero === */
+.tablero-contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.titulo-tablero {
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--background-light);
+  text-shadow: 3px 3px 0 var(--text-dark);
+  letter-spacing: 2px;
+  margin-bottom: 2rem;
+  text-align: center;
 }
 
 .tablero {
   display: grid;
   grid-template-columns: repeat(11, 1fr);
   grid-template-rows: repeat(11, 1fr);
-  width: 100%;
-  max-width: 800px;
-  min-width: 650px;
+  width: clamp(300px, 80vw, 800px);
   aspect-ratio: 1/1;
   background: #8B4513;
-  border: 18px solid #c29f40;
-  border-radius: 20px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
-  padding: 10px;
-  gap: 1px;
-  margin: 0 auto;
-}
-
-.board-cell {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.2em;
-  border: 1px solid #ccc;
-  background-color: white;
-  font-size: 0.8em;
-  text-align: center;
-  box-sizing: border-box;
+  border: 12px solid var(--secondary-metal);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 0;
+  gap: 0;
+  position: relative;
+  z-index: 1;
   overflow: hidden;
 }
 
-.cell-property {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.property-color {
-  width: 100%;
-  height: 15%;
-  flex-shrink: 0;
-  border-radius: 4px 4px 0 0;
-}
-
-.property-color.brown {
-  background-color: #8B4513;
-}
-
-.property-color.lightblue {
-  background-color: #87CEEB;
-}
-
-.property-color.pink {
-  background-color: #FFC0CB;
-}
-
-.property-color.orange {
-  background-color: #FFA500;
-}
-
-.property-color.red {
-  background-color: #FF0000;
-}
-
-.property-color.yellow {
-  background-color: #FFFF00;
-}
-
-.property-color.green {
-  background-color: #008000;
-}
-
-.property-color.blue {
-  background-color: #0000FF;
-}
-
-.property-name {
-  font-weight: bold;
-  font-size: 0.8em;
-  line-height: 1;
-  word-wrap: break-word;
-  /* ajusta texto largo */
-}
-
-.property-price {
-  font-size: 0.7em;
-  color: #666;
-}
-
-.cell-special,
-.cell-community_chest,
-.cell-chance,
-.cell-tax,
-.cell-jail,
-.cell-go_to_jail,
-.cell-free_parking {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 0.8em;
-  text-align: center;
-}
-
-.loading,
-.error {
-  text-align: center;
-  padding: 1em;
-  font-size: 1em;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  .board-center {
-    font-size: 4vw;
-  }
-
-  .board-cell {
-    font-size: 0.6em;
-    padding: 0.1em;
-  }
-
-  .property-price {
-    font-size: 0.6em;
-  }
-}
-
+/* === Casillas === */
 .casilla {
-  background: #f9f9f9;
-  border: 1px solid #333;
+  background: var(--text-light);
+  border: 1px solid var(--text-dark);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.85rem;
+  font-size: clamp(0.35rem, 0.9vw, 0.55rem);
+  padding: 0.2rem;
+  border-radius: 0;
+  transition: box-shadow 0.3s ease;
+  overflow: hidden;
+  line-height: 1.1;
   text-align: center;
-  position: relative;
-  padding: 6px;
-  transition: all 0.3s;
-  border-radius: 4px;
 }
 
 .casilla:hover {
-  transform: scale(1.1);
-  z-index: 10;
-  box-shadow: 0 0 20px rgba(240, 212, 131, 0.9);
-  background: #fff;
+  transform: none;
+  box-shadow: 0 0 15px rgba(178, 143, 64, 0.9);
+  background: var(--background-light);
 }
 
-.juego {
-  display: grid;
-  grid-template-columns: 240px 1fr 240px; /* Reducido de 280px */
-  gap: 20px; /* Un poco más de espacio entre paneles */
-  padding: 20px;
-  min-height: 100vh;
-  align-items: start;
-  max-width: 1600px;
-  margin: 0 auto;
-}
-
-.tablero-contenedor {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  min-height: 85vh;
+.color-strip {
   width: 100%;
+  height: 8px;
+  border-radius: 0;
+  border-bottom: 1px solid var(--text-dark);
 }
 
-.titulo-tablero {
-  text-align: center;
-  margin-bottom: 2.5rem;
-  font-size: 3rem;
+/* === Colores de propiedades === */
+.property-color.brown { background-color: #8b4513; }
+.property-color.lightblue { background-color: #87ceeb; }
+.property-color.pink { background-color: #ffc0cb; }
+.property-color.orange { background-color: #ffa500; }
+.property-color.red { background-color: #ff0000; }
+.property-color.yellow { background-color: #ffff00; }
+.property-color.green { background-color: #008000; }
+.property-color.blue { background-color: #0000ff; }
+
+.property-name {
   font-weight: bold;
-  color: #f0d483;
-  text-shadow: 4px 4px 0 #3c1361;
-  letter-spacing: 3px;
+  font-size: clamp(0.35rem, 0.9vw, 0.55rem);
+  overflow-wrap: break-word;
+  line-height: 1.1;
+  margin: 0.2rem 0;
+  max-height: 1.8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
+.property-price {
+  font-size: clamp(0.3rem, 0.8vw, 0.5rem);
+  color: #666;
+  margin-top: auto;
+}
+
+/* === Fichas === */
+.contenedor-fichas {
+  width: 100%;
+  height: 30%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.2rem;
+}
+
+.ficha {
+  width: clamp(10px, 1.2vw, 16px);
+  height: clamp(10px, 1.2vw, 16px);
+  border-radius: 50%;
+  border: 1px solid var(--text-dark);
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  position: relative;
+  z-index: 10;
+}
+
+.ficha:hover {
+  transform: scale(1.15);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* === Paneles laterales === */
 .jugadores {
-  background: #f0d483; /* Color consistente con el tema */
-  border: 4px solid #c29f40; /* Borde más delgado y elegante */
-  border-radius: 12px;
-  padding: 12px; /* Reducido de 10px */
-  min-width: 200px; /* Reducido de 220px */
+  background: var(--background-light);
+  border: 4px solid var(--secondary-metal);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  min-width: 200px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra más suave */
+  box-shadow: var(--shadow);
+  position: relative;
+  z-index: 1;
 }
 
-.jugadores h2 {
+.jugadores h2, .jugadores h3 {
   text-align: center;
-  margin-bottom: 12px; /* Reducido de 15px */
-  font-size: 1.3rem; /* Un poco más pequeño */
-  color: #3c1361;
-  text-shadow: 1px 1px 0 #fff;
+  margin-bottom: 1rem;
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  color: var(--text-dark);
+  text-shadow: 1px 1px 0 var(--text-light);
 }
 
+/* === Jugador card === */
 .jugador-card {
-  background: #fff;
-  border-radius: 10px;
-  padding: 10px; /* Reducido de 12px */
-  margin-bottom: 12px; /* Reducido de 15px */
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Sombra más sutil */
-  border-left: 5px solid var(--color-ficha, #000); /* Borde más delgado */
+  background: var(--text-light);
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  border-left: 5px solid var(--secondary-metal);
+  box-shadow: var(--shadow);
 }
 
 .jugador-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px; /* Reducido de 10px */
+  margin-bottom: 0.5rem;
 }
 
-.jugador-header .bandera {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  height: auto; /* Eliminado height fijo */
-}
-
-.jugador-header .bandera img {
-  width: 35px; /* Reducido de 40px */
-  height: 25px; /* Reducido de 30px */
-  border: 2px solid #c29f40;
+.jugador-header img {
+  width: 35px;
+  height: 25px;
+  border: 2px solid var(--secondary-metal);
   border-radius: 4px;
 }
 
 .jugador-header .iniciales {
   font-weight: bold;
-  font-size: 1.1rem; /* Reducido de 1.2rem */
-  color: #3c1361;
-  max-width: 110px; /* Reducido de 120px */
-  word-wrap: break-word;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: var(--text-dark);
 }
 
 .dinero {
   font-weight: bold;
   color: #2e7d32;
-  font-size: 1rem; /* Reducido de 1.2rem */
-  margin: 5px 0; /* Reducido de 6px */
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  margin: 0.3rem 0;
   text-align: center;
   background: rgba(46, 125, 50, 0.1);
-  padding: 5px;
-  border-radius: 5px;
+  padding: 0.5rem;
+  border-radius: 4px;
 }
 
 .propiedades {
-  margin-top: 6px; /* Reducido de 8px */
+  margin-top: 0.5rem;
 }
 
 .propiedades strong {
   display: block;
   text-align: center;
-  margin-bottom: 4px;
-  color: #3c1361;
-  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+  color: var(--text-dark);
+  font-size: clamp(0.8rem, 1.8vw, 0.9rem);
 }
 
 .propiedades ul {
-  padding-left: 16px; /* Reducido de 20px */
-  margin: 4px 0; /* Reducido de 5px */
-  font-size: 0.8rem; /* Un poco más pequeño */
+  padding-left: 1rem;
+  margin: 0.3rem 0;
+  font-size: clamp(0.7rem, 1.5vw, 0.8rem);
 }
 
 .propiedades li {
-  margin-bottom: 2px; /* Reducido de 3px */
-  padding-left: 4px;
-  border-left: 2px solid #3c1361;
-  font-size: 0.8rem;
+  margin-bottom: 0.2rem;
+  padding-left: 0.3rem;
+  border-left: 2px solid var(--text-dark);
 }
 
-
-.estado {
-  margin-top: 6px; /* Reducido de 8px */
-  font-size: 0.8rem;
-  color: #555;
-  text-align: center;
-  padding: 4px;
-  background: rgba(60, 19, 97, 0.1);
-  border-radius: 4px;
-}
-
-.casilla {
-  border: 2px solid #333;
-  background: #fafafa;
+/* === Dados === */
+.dados-container {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  font-size: 0.7rem;
-  text-align: center;
-  position: relative;
-  padding: 2px;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
-.color-strip {
-  width: 100%;
-  height: 14px;
-  border-radius: 3px 3px 0 0;
-  margin-bottom: 4px;
-  border: 1px solid rgba(0,0,0,0.1);
-}
-
-.casilla .color-strip {
-  width: 100%;
-  height: 10px;
-  border-bottom: 1px solid #333;
-  margin-bottom: 2px;
-}
-
-.casilla .estado {
-  position: absolute;
-  top: -14px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: white;
-  padding: 1px 4px;
-  border: 1px solid #333;
-  border-radius: 4px;
-  font-size: 0.65rem;
+.dado {
+  background: var(--text-light);
+  border: 2px solid var(--secondary-metal);
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
   font-weight: bold;
+  color: var(--text-dark);
+  text-align: center;
+  min-width: 50px;
+  box-shadow: var(--shadow);
 }
 
-.casilla .estado.dueño {
-  color: white;
+#resultado-dados {
+  margin-top: 1rem;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  color: var(--text-light);
+  text-align: center;
 }
 
-
+/* === Modal === */
 .modal1 {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #fff;
-  border: 2px solid #000;
-  padding: 20px;
+  background: linear-gradient(to bottom, var(--text-light) 0%, var(--primary-metal) 100%);
+  border: 3px solid var(--secondary-metal);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   z-index: 1000;
   text-align: center;
-}
-
-.modal button {
-  margin: 5px;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-/* Contenedor de fichas dentro de cada casilla */
-.contenedor-fichas {
-  position: relative;
-  /* Para posicionar las fichas dentro */
-  width: 100%;
-  height: 30%;
-  display: flex;
-  /* Para alinear varias fichas en fila */
-  flex-wrap: wrap;
-  /* Permite que las fichas se ajusten si hay muchas */
-  justify-content: center;
-  align-items: center;
-  gap: 2px;
-  /* Espacio entre fichas */
-}
-
-/* Cada ficha de jugador */
-.ficha {
-  width: 30%;
-  /* Tamaño de la ficha */
-  height: 100%;
-  border-radius: 50%;
-  /* Hace la ficha circular */
-  border: 2px solid #000;
-  /* Contorno para distinguir */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-/* Efecto al pasar el mouse */
-.ficha:hover {
-  transform: scale(1.2);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-}
-
-/* Responsive solo para el tablero */
-@media (max-width: 1400px) {
-  .juego {
-    grid-template-columns: 260px 1fr 260px;
-    gap: 20px;
-    padding: 20px;
-  }
-  
-  .tablero {
-    max-width: 750px;
-    min-width: 600px;
-  }
-}
-
-@media (max-width: 1200px) {
-  .juego {
-    grid-template-columns: 240px 1fr 240px;
-    gap: 18px;
-  }
-  
-  .tablero {
-    max-width: 700px;
-    min-width: 550px;
-  }
-  
-  .titulo-tablero {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-  }
-}
-
-@media (max-width: 1024px) {
-  .juego {
-    grid-template-columns: 220px 1fr 220px;
-  }
-  
-  .tablero {
-    max-width: 650px;
-    min-width: 500px;
-    border-width: 15px;
-  }
-}
-
-@media (max-width: 900px) {
-  .juego {
-    grid-template-columns: 200px 1fr 200px;
-  }
-  
-  .tablero {
-    max-width: 580px;
-    min-width: 450px;
-  }
-  
-  .titulo-tablero {
-    font-size: 2.2rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .juego {
-    grid-template-columns: 180px 1fr 180px;
-    gap: 15px;
-    padding: 15px;
-  }
-  
-  .tablero {
-    max-width: 500px;
-    min-width: 400px;
-    border-width: 12px;
-    padding: 8px;
-  }
-  
-  .casilla {
-    font-size: 0.75rem;
-    padding: 4px;
-  }
-  
-  .contenedor-fichas {
-    height: 35px;
-  }
-  
-  .ficha {
-    width: 18px;
-    height: 18px;
-  }
-}
-
-@media (max-width: 600px) {
-  .juego {
-    grid-template-columns: 160px 1fr 160px;
-  }
-  
-  .tablero {
-    max-width: 420px;
-    min-width: 350px;
-  }
-  
-  .titulo-tablero {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .juego {
-    grid-template-columns: 140px 1fr 140px;
-    gap: 10px;
-    padding: 10px;
-  }
-  
-  .tablero {
-    max-width: 360px;
-    min-width: 300px;
-    border-width: 10px;
-  }
-  
-  .casilla {
-    font-size: 0.7rem;
-    padding: 3px;
-  }
-  
-  .color-strip {
-    height: 12px;
-  }
-  
-  .contenedor-fichas {
-    height: 30px;
-    gap: 2px;
-  }
-  
-  .ficha {
-    width: 16px;
-    height: 16px;
-  }
-}
-
-
-/* === Ventana de Hipotecas === */
-.ventana-acciones {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #ffffff;
-  border-radius: 14px;
-  padding: 25px 30px;
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
-  z-index: 2000;
-  width: 380px;
   max-width: 90%;
-  animation: fadeIn 0.3s ease;
+  width: clamp(300px, 80vw, 450px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto;
 }
 
-.ventana-acciones h3 {
-  text-align: center;
-  margin-bottom: 15px;
-  font-size: 18px;
-  color: #333;
+.modal1 h3 {
+  font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+  color: var(--text-dark);
+  background: var(--background-light);
+  padding: 0.75rem;
+  border-radius: 5px;
+  margin: 0 0 1.5rem 0;
+  text-shadow: 2px 2px 0 var(--text-light);
+  border: 1px solid var(--secondary-metal);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  letter-spacing: 1px;
+}
+
+.modal1 button {
+  background: linear-gradient(to bottom, var(--primary-metal) 0%, var(--background-dark) 100%);
+  color: var(--text-light);
+  border: 2px solid var(--secondary-metal);
+  padding: 0.75rem 1.5rem;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
   font-weight: bold;
-}
-
-.ventana-acciones ul {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 15px 0;
-}
-
-.ventana-acciones li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #f8f9fa;
-  margin-bottom: 10px;
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 1px solid #e0e0e0;
-  font-size: 15px;
-}
-
-/* Botones de acción (hipotecar/deshipotecar) */
-.btnAccion {
-  border: none;
-  border-radius: 8px;
   cursor: pointer;
-  padding: 6px 10px;
-  font-size: 14px;
-  transition: 0.2s ease;
+  border-radius: var(--border-radius);
+  margin: 0.5rem;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+  pointer-events: auto;
+  z-index: 1001;
 }
 
-/* 💣 Hipotecar → rojo */
-.btnAccion[data-accion="hipotecar"] {
-  background: #e74c3c;
-  color: white;
+.modal1 button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to bottom, var(--secondary-metal) 0%, var(--background-dark) 100%);
 }
 
-.btnAccion[data-accion="hipotecar"]:hover {
-  background: #c0392b;
+.modal1 button:active {
+  transform: translateY(0);
 }
 
-/* 💲 Deshipotecar → verde */
-.btnAccion[data-accion="deshipotecar"] {
-  background: #2ecc71;
-  color: white;
-}
-
-.btnAccion[data-accion="deshipotecar"]:hover {
-  background: #27ae60;
-}
-
-/* ❌ Botón cerrar */
-#cerrarVentana {
-  display: block;
-  width: 100%;
-  margin-top: 10px;
-  padding: 10px;
-  border: none;
-  border-radius: 10px;
-  background: #6c757d;
-  color: white;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: bold;
-  transition: 0.2s ease;
-}
-
-#cerrarVentana:hover {
-  background: #5a6268;
-}
-
-/* Animación */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -48%) scale(0.95);
-  }
-
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-
-.hidden {
-  display: none !important;
-}
-
-.modal {
+/* === Ventana de acciones (hipotecar/deshipotecar) === */
+.ventana-acciones {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 999;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente para mejor visibilidad */
 }
 
-.modal-contenido {
-  background: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  max-width: 400px;
-  width: 90%;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+.contenido-ventana {
+  position: relative;
+  background: linear-gradient(to bottom, var(--text-light) 0%, var(--primary-metal) 100%);
+  border: 3px solid var(--secondary-metal);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
   text-align: center;
+  max-width: 90%;
+  width: clamp(300px, 80vw, 450px);
+  pointer-events: auto;
+  transform: translate(0, 0); /* Evitar transformaciones adicionales */
+}
+
+.contenido-ventana h3 {
+  font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+  color: var(--text-dark);
+  background: var(--background-light);
+  padding: 0.75rem;
+  border-radius: 5px;
+  margin: 0 0 1.5rem 0;
+  text-shadow: 2px 2px 0 var(--text-light);
+  border: 1px solid var(--secondary-metal);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  letter-spacing: 1px;
+}
+
+.lista-propiedades {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+  max-height: 250px;
+  overflow-y: auto;
+  border: 1px solid var(--primary-metal);
+  border-radius: var(--border-radius);
+  background: var(--text-light);
+}
+
+.lista-propiedades li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--primary-metal);
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  color: var(--text-dark);
+  transition: background 0.2s ease;
+}
+
+.lista-propiedades li:last-child {
+  border-bottom: none;
+}
+
+.lista-propiedades li:hover {
+  background: var(--primary-metal);
+}
+
+.btnAccion {
+  background: linear-gradient(to bottom, var(--accent-metal) 0%, var(--background-dark) 100%);
+  color: var(--text-light);
+  border: 1px solid var(--secondary-metal);
+  padding: 0.25rem 0.5rem;
+  font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+  cursor: pointer;
+  border-radius: 5px;
+  transition: var(--transition);
+  pointer-events: auto;
+  z-index: 1001;
+}
+
+.btnAccion:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to bottom, var(--secondary-metal) 0%, var(--accent-metal) 100%);
+}
+
+#cerrarVentana {
+  background: linear-gradient(to bottom, var(--primary-metal) 0%, var(--background-dark) 100%);
+  color: var(--text-light);
+  border: 2px solid var(--secondary-metal);
+  padding: 0.5rem 1rem;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  margin-top: 1rem;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+  width: 100%;
+  pointer-events: auto;
+  z-index: 1001;
+}
+
+#cerrarVentana:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to bottom, var(--secondary-metal) 0%, var(--background-dark) 100%);
+}
+
+#cerrarVentana:active {
+  transform: translateY(0);
+}
+
+.hidden {
+  display: none;
+}
+
+/* === Media Queries === */
+@media (max-width: 1200px) {
+  .juego { grid-template-columns: minmax(180px, 200px) 1fr minmax(180px, 200px); gap: 1rem; }
+  .tablero { max-width: 700px; min-width: 500px; }
+}
+
+@media (max-width: 900px) {
+  .juego { grid-template-columns: minmax(160px, 180px) 1fr minmax(160px, 180px); }
+  .tablero { max-width: 550px; min-width: 400px; }
+  .titulo-tablero { font-size: 2rem; }
+}
+
+@media (max-width: 600px) {
+  .container, #end-screen, #ranking-lista, #ganador {
+    padding: 1rem;
+    width: clamp(280px, 95vw, 400px);
+  }
+  .juego { 
+    grid-template-columns: 1fr; 
+    grid-template-rows: auto 1fr auto;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+  .jugadores.izquierda, .jugadores.derecha {
+    min-width: 100%;
+    max-height: 40vh;
+    margin: 0;
+  }
+  .tablero-contenedor {
+    padding: 1rem;
+    margin: 0;
+  }
+  .tablero { 
+    max-width: 450px; 
+    min-width: 280px; 
+    border-width: 8px; 
+  }
+  .casilla { 
+    font-size: clamp(0.3rem, 0.8vw, 0.5rem); 
+    padding: 0.15rem; 
+  }
+  .property-name { 
+    font-size: clamp(0.3rem, 0.8vw, 0.5rem); 
+    max-height: 1.6rem; 
+  }
+  .property-price { 
+    font-size: clamp(0.25rem, 0.7vw, 0.45rem); 
+  }
+  .color-strip {
+    height: 6px;
+  }
+  .ficha { 
+    width: clamp(8px, 1vw, 12px); 
+    height: clamp(8px, 1vw, 12px); 
+    border-width: 1px;
+  }
+  .contenedor-fichas {
+    gap: 0.15rem;
+    padding: 0.15rem;
+  }
+  .options { 
+    flex-direction: column; 
+    align-items: center; 
+  }
+  .player-btn, #btn-volver-inicio { 
+    width: 100%; 
+    max-width: 200px; 
+  }
+  h1 { font-size: clamp(1.5rem, 4vw, 2rem); }
+  .subtitle { font-size: clamp(0.9rem, 2.5vw, 1.1rem); }
+  .modal1, .contenido-ventana {
+    width: 280px;
+    padding: 1rem;
+  }
+  .modal1 h3, .contenido-ventana h3 {
+    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .modal1 button, .contenido-ventana button {
+    padding: 0.5rem 1rem;
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+    margin: 0.3rem;
+  }
+  .lista-propiedades li {
+    font-size: clamp(0.7rem, 1.8vw, 0.8rem);
+    padding: 0.3rem 0.5rem;
+  }
+  .btnAccion {
+    padding: 0.2rem 0.4rem;
+    font-size: clamp(0.6rem, 1.2vw, 0.7rem);
+  }
+  #cerrarVentana {
+    padding: 0.4rem 0.8rem;
+    font-size: clamp(0.7rem, 1.8vw, 0.8rem);
+  }
+}
+
+@media (max-width: 400px) {
+  .container, #end-screen, #ranking-lista, #ganador { padding: 0.75rem; }
+  .logo-container { padding: 0.5rem; }
+  .monopoly-img { max-width: 200px; }
+  .tablero { 
+    min-width: 260px; 
+  }
+  .casilla { 
+    font-size: clamp(0.28rem, 0.7vw, 0.45rem); 
+  }
+  .property-name { 
+    font-size: clamp(0.28rem, 0.7vw, 0.45rem); 
+    max-height: 1.4rem; 
+  }
+  .property-price { 
+    font-size: clamp(0.22rem, 0.6vw, 0.4rem); 
+  }
+  .ficha { 
+    width: clamp(7px, 0.9vw, 10px); 
+    height: clamp(7px, 0.9vw, 10px); 
+  }
 }

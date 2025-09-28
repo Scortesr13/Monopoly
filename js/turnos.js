@@ -82,25 +82,28 @@ function mostrarVentanaHipoteca(accion) {
   }
 
   // 🔄 Renderizar ventana
-  const contenedor = document.createElement("div");
+ const contenedor = document.createElement("div");
   contenedor.classList.add("ventana-acciones");
 
+  // Generar HTML de la ventana
   contenedor.innerHTML = `
-    <h3>${accion === "hipotecar" ? "Hipotecar propiedades" : "Liberar hipotecas"}</h3>
-    <ul>
-      ${propiedadesDisponibles
-        .map(
-          (p) => `
-        <li>
-          ${p.nombre || "Sin nombre"} - 💵 $${p.precio|| 0} - color-${p.color}
-          <button class="btnAccion" data-id="${p.id}" data-accion="${accion}">
-            ${accion === "hipotecar" ? "💣" : "💲"}
-          </button>
-        </li>`
-        )
-        .join("")}
-    </ul>
-    <button id="cerrarVentana">❌ Cerrar</button>
+    <div class=" modal1">
+      <h3>${accion === "hipotecar" ? "Hipotecar propiedades" : "Liberar hipotecas"}</h3>
+      <ul class="lista-propiedades">
+        ${propiedadesDisponibles
+          .map(
+            (p) => `
+          <li>
+            ${p.nombre || "Sin nombre"} - 💵 $${p.precio || 0} - color-${p.color}
+            <button class="btnAccion" data-id="${p.id}" data-accion="${accion}">
+              ${accion === "hipotecar" ? "💣" : "💲"}
+            </button>
+          </li>`
+          )
+          .join("")}
+      </ul>
+      <button id="cerrarVentana">❌ Cerrar</button>
+    </div>
   `;
 
   document.body.appendChild(contenedor);

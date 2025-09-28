@@ -8,45 +8,39 @@
   <link rel="stylesheet" href="css/styles.css" />
   <script type="module" src="js/game.js"></script>
   <script type="module" src="js/api.js"></script>
+  <script type="module" src="js/setup.js"></script>
 </head>
 
 <body>
   <div class="background-image">
-    <img src="resources/images/fondo.webp"/>
+    <img src="resources/images/fondo.webp" />
   </div>
 
   <!-- Pantalla de inicio -->
-  <div class="container" id="start-screen">
+  <div class="container start-screen" id="start-screen">
     <div class="logo-container">
-      <img src="resources/images/logo.webp"
-        alt="Monopoly" class="monopoly-img" />
+      <img src="resources/images/logo.webp" alt="Monopoly" class="monopoly-img" />
     </div>
 
     <h1>MONOPOLY</h1>
     <p class="subtitle">Selecciona el número de jugadores:</p>
 
-    <!-- Botones: ahora usan data-players en vez de onclick -->
+    <!-- Botones de jugadores -->
     <div class="options">
       <button class="player-btn" data-players="2">2 Jugadores</button>
       <button class="player-btn" data-players="3">3 Jugadores</button>
       <button class="player-btn" data-players="4">4 Jugadores</button>
     </div>
 
-    <div id="message">Esperando selección...</div>
+    <div id="message" class="message">Esperando selección...</div>
 
     <div class="instructions">
-      <p><strong>Instrucciones:</strong> Selecciona la cantidad de jugadores y luego configura sus nicks, fichas y
-        países.</p>
+      <p><strong>Instrucciones:</strong> Selecciona la cantidad de jugadores y luego configura sus nicks, fichas y países.</p>
     </div>
   </div>
 
-  <!-- Pantalla de configuración de jugadores: starts hidden -->
-  <div id="setup-screen" class="container" style="display:none; max-width: 700px;"></div>
-
-  <!-- JS: API + UI/Setup -->
-
-  <script type="module" src="js/setup.js"></script>
-
+  <!-- Pantalla de configuración de jugadores -->
+  <div id="setup-screen" class="container setup-screen hidden"></div>
 
 </body>
 
