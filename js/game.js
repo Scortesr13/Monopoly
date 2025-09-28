@@ -187,37 +187,42 @@ function manejarAccion(jugador, casilla, opcion, jugadores) {
   }
   break;
 
-    case "Pagar Renta":
-  if (!duenoId) return;
-  const dueno = jugadores.find((j) => j.id == duenoId);
+case "Pagar Renta":
+ if (!duenoId) return;
+const dueno = jugadores.find((j) => j.id == duenoId);
+const propiedadDueno = dueno?.properties.find((p) => p.id == casilla.id);
 
-  // 🔎 Buscar la propiedad en el dueño
-  const propiedadDueno = dueno?.properties.find((p) => p.id === casilla.id);
-
-  // 🚫 Si no existe o está hipotecada, no se cobra
-  if (!propiedadDueno || propiedadDueno.hipotecada) {
-    alert("La propiedad está hipotecada, no se paga renta.");
-    break;
-  }
-
-  // 📊 Obtener array de rentas desde la casilla
-  const rentas = JSON.parse(casilla.dataset.renta || "[0]");
-  console.log("Rentas disponibles:", rentas);
-
-  // Nivel de casas/hotel según el dueño
-  const nivel = propiedadDueno.hotel ? 5 : propiedadDueno.casas; // ej: rentas[5] para hotel
-  const renta = rentas[nivel] || 0;
-
-  if (jugador.money >= rentas) {
-    jugador.money -= rentas;
-    dueno.money += rentas;
-    alert(`${jugador.nick} pagó $${rentas} a ${dueno.nick}`);
-  } else {
-    alert(`${jugador.nick} no tiene suficiente dinero para pagar la renta de $${rentas}.`);
-  }
-
-  renderJugadores();
+if (!propiedadDueno || propiedadDueno.hipotecada) {
+  alert("La propiedad está hipotecada, no se paga renta.");
   break;
+}
+
+const rentData = JSON.parse(casilla.dataset.rent || "{}");
+const casa = parseInt(propiedadDueno.casas || "0");
+
+// 👉 si no hay casas → renta = dataset.renta (base)
+let renta;
+if (casa === 0) {
+  renta = parseInt(casilla.dataset.renta || "0");
+} else {
+  renta = rentData[casa] || 0;
+}
+
+if (renta === 0) {
+  alert(`No se cobra renta porque no hay casas construidas en ${casilla.dataset.nombre}`);
+  break;
+}
+
+if (jugador.money >= renta) {
+  jugador.money -= renta;
+  dueno.money += renta;
+  alert(`${jugador.nick} pagó $${renta} a ${dueno.nick}`);
+} else {
+  alert(`${jugador.nick} no tiene suficiente dinero para pagar la renta de $${renta}`);
+}
+
+renderJugadores();
+break;
 
 
     case "Construir Casa/Hotel":
@@ -306,37 +311,41 @@ function construirEnRailroads(jugador, casilla) {
   document.body.appendChild(modal);
 
   // evento construir
-  document.getElementById("btnConstruir").addEventListener("click", () => {
-    const propiedadR = jugador.properties.find((p) => p.id === casilla.id);
-    if (!propiedadR) return;
+ // evento construir
+document.getElementById("btnConstruir").addEventListener("click", () => {
+  const propiedadR = jugador.properties.find((p) => p.id === casilla.id);
+  if (!propiedadR) return;
 
-    if (!propiedadR.casas) propiedadR.casas = 0;
+  if (!propiedadR.casas) propiedadR.casas = 0;
 
-    const costoConstruccion = 100; // 💰 cada estación vale 100
-    if (jugador.money >= costoConstruccion) {
-      jugador.money -= costoConstruccion;
-      propiedadR.casas++; // usamos "casas" como contador de estaciones
+  // 🚫 Máximo 4 casas
+  if (propiedadR.casas >= 4) {
+    alert(`${propiedadR.nombre} ya tiene el máximo de 4 casas.`);
+    pasarTurno();
+    modal.remove();
+    return;
+  }
 
-      alert(`${jugador.nick} construyó en ${propiedadR.nombre}. Total construcciones: ${propiedadR.casas}`);
-      
-      
-      renderJugadores();
-      pasarTurno();
-    } else {
-      alert(`${jugador.nick} no tiene suficiente dinero para construir.`);
-      pasarTurno();
+  const costoConstruccion = 100; // 💰 cada casa vale 100
+  if (jugador.money >= costoConstruccion) {
+    jugador.money -= costoConstruccion;
+    propiedadR.casas++; // contador de casas
+
+    // 🔥 Actualizar también en el tablero (dataset del div)
+    const divCasilla = document.querySelector(`[data-nombre="${propiedadR.nombre}"]`);
+    if (divCasilla) {
+      divCasilla.dataset.casas = propiedadR.casas;
     }
 
-    modal.remove();
-  });
+    alert(`${jugador.nick} construyó en ${propiedadR.nombre}. Total casas: ${propiedadR.casas}`);
 
-  // evento cancelar
-  document.getElementById("btnCancelarConstruir").addEventListener("click", () => {
+    renderJugadores();
+    pasarTurno();
+  } else {
+    alert(`${jugador.nick} no tiene suficiente dinero para construir.`);
+    pasarTurno();
+  }
 
-
-pasarTurno();
-    modal.remove();
-
-    
-  });
+  modal.remove();
+});
 }

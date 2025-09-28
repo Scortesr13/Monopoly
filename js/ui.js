@@ -144,7 +144,7 @@ export function dibujarTablero(casillas) {
    div.dataset.renta = casilla.rent?.base ?? 0;
    div.dataset.banco= casilla.mortgage ||0;
    div.dataset.action = casilla.action ? JSON.stringify(casilla.action) : "";
-
+div.dataset.rent   = casilla.rent ? JSON.stringify(casilla.rent) : "{}";
 
 
 
