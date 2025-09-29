@@ -68,7 +68,6 @@ export async function enviarScore(jugador, score) {
         console.error("Error enviando score:", e);
     }
 }
-
 // 3. Función para mostrar el ranking consultando el backend
 export async function mostrarRanking() {
     try {
@@ -76,7 +75,14 @@ export async function mostrarRanking() {
         const ranking = await res.json();
         const contenedor = document.getElementById("ranking-lista");
         if (!contenedor) return;
-        contenedor.innerHTML = "<h2>Ranking</h2>";
+
+        // Título + botón regresar
+        contenedor.innerHTML = `
+            <div >
+                <h2>Ranking</h2>
+                <button id="btn-regresar" class="btn-regresar" title="Volver al juego">↩</button>
+            </div>
+        `;
 
         ranking.forEach((jugador, idx) => {
             console.log(jugador.nick_name, jugador.score, jugador.country_code);
@@ -89,10 +95,21 @@ export async function mostrarRanking() {
                 </div>
             `;
         });
+
+        // 🎯 Evento del botón regresar
+        const btnRegresar = document.getElementById("btn-regresar");
+        btnRegresar.addEventListener("click", () => {
+            window.location.href = 'finPartida.html';
+            // aquí vuelves a mostrar la lista de jugadores
+            // por ejemplo:
+            // renderJugadores();
+        });
+
     } catch (e) {
         console.error("Error obteniendo ranking:", e);
     }
 }
+
 
 // 4. Lógica para usar estas funciones al finalizar la partida
 export async function enviarRankingFinal() {

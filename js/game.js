@@ -345,7 +345,7 @@ break;
   localStorage.setItem("monopoly_players", JSON.stringify(jugadores));
 }
 
-function construirEnRailroads(jugador, casilla,pasa) {
+function construirEnRailroads(jugador, casilla) {
   const modalExistente = document.getElementById("modal-construccion");
   if (modalExistente) modalExistente.remove();
 
@@ -441,7 +441,7 @@ function construirEnPropiedad(jugador, casilla,pasarTurno) {
     }
     // 🏨 Construcción de hotel
     else if (propiedad.casas === 4 && !propiedad.hotel) {
-      const costoHotel = 200;
+      const costoHotel = 250;
       if (jugador.money >= costoHotel) {
         jugador.money -= costoHotel;
         propiedad.casas = 0;
