@@ -10,11 +10,21 @@ mostrarTurno(jugadores[turno]);
 export function tirarDados() {
   const dado1 = Math.floor(Math.random() * 6) + 1;
   const dado2 = Math.floor(Math.random() * 6) + 1;
+
   const total = parseInt(prompt("Ingresa el total de los dados:")) || 0;
+
+  //const total = dado1 + dado2;
+
+  // Validación: total fuera de rango
+  if (total < 0 || total > 12) {
+    alert("⚠️ El resultado no es válido. Vuelve a tirar.");
+    return tirarDados(); // repite la tirada sin perder turno
+  }
 
   alert(`${jugadores[turno].nick} tiró ${dado1} + ${dado2} = ${total}`);
   return total;
 }
+
 
 export function jugarTurno() {
   const jugadorActual = jugadores[turno];
