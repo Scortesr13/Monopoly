@@ -1,4 +1,4 @@
-import { obtenerJugadores, renderJugadores } from "./ui.js";
+import { obtenerJugadores, renderJugadores} from "./ui.js";
 import { jugarTurno,pasarTurno } from "./turnos.js";
 
 // Botón para finalizar la partida y redirigir a finPartida.html

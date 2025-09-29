@@ -5,11 +5,22 @@
   --accent-metal: #8b6f47; /* Bronce metalizado */
   --background-dark: #3c1361; /* Morado oscuro original */
   --background-light: #f0d483; /* Dorado claro original */
-  --text-dark: #3c1361; /* Texto morado */
+  --text-dark: #000000; /* Negro puro para máximo contraste */
   --text-light: #ffffff; /* Texto blanco */
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   --border-radius: 10px;
   --transition: all 0.3s ease;
+  --color-ficha-rojo: rgba(255, 0, 0, 0.15);
+  --color-ficha-azul: rgba(0, 0, 255, 0.534);
+  --color-ficha-verde: rgba(0, 128, 0, 0.15);
+  --color-ficha-amarillo: rgba(255, 255, 0, 0.15);
+  --color-ficha-naranja: rgba(255, 165, 0, 0.15);
+  --color-ficha-morado: rgba(128, 0, 128, 0.15);
+  --color-ficha-rosa: rgba(255, 192, 203, 0.15);
+  --color-ficha-negro: rgba(0, 0, 0, 0.1);
+  --color-ficha-blanco: rgba(255, 255, 255, 0.3);
+  --mouse-x: 50%;
+  --mouse-y: 50%;
 }
 
 /* === Reset y Base === */
@@ -20,7 +31,7 @@
 }
 
 body {
-  font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+  font-family: 'Montserrat', 'Roboto', 'Arial Rounded MT Bold', 'Arial', sans-serif;
   background: linear-gradient(135deg, var(--primary-metal) 0%, var(--background-dark) 100%);
   min-height: 100vh;
   color: var(--text-dark);
@@ -314,7 +325,15 @@ h1 {
   z-index: 1;
 }
 
-/* === Tablero === */
+.titulo-tablero {
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--background-light);
+  text-shadow: 3px 3px 0 var(--text-dark);
+  letter-spacing: 2px;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
 .tablero-contenedor {
   display: flex;
   flex-direction: column;
@@ -325,60 +344,193 @@ h1 {
   z-index: 1;
 }
 
-.titulo-tablero {
-  font-size: clamp(2rem, 5vw, 3rem);
-  color: var(--background-light);
-  text-shadow: 3px 3px 0 var(--text-dark);
-  letter-spacing: 2px;
-  margin-bottom: 2rem;
-  text-align: center;
-}
-
+/* === Tablero con efecto realista === */
 .tablero {
   display: grid;
   grid-template-columns: repeat(11, 1fr);
   grid-template-rows: repeat(11, 1fr);
   width: clamp(300px, 80vw, 800px);
   aspect-ratio: 1/1;
-  background: #8B4513;
-  border: 12px solid var(--secondary-metal);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  padding: 0;
-  gap: 0;
+  background: linear-gradient(
+    45deg,
+    rgba(0, 119, 182, 0.4), /* Azul vibrante claro */
+    rgba(0, 212, 255, 0.3), /* Turquesa claro */
+    rgba(64, 224, 208, 0.3), /* Turquesa */
+    rgba(0, 119, 182, 0.4) /* Azul vibrante claro */
+  );
+  background-size: 200% 200%;
+  animation: waterFlow 12s ease-in-out infinite;
+  border: 14px solid #1a1a1a;
+  border-radius: 18px;
+  box-shadow: 
+    inset 0 6px 10px rgba(255, 255, 255, 0.15),
+    inset 0 -6px 12px rgba(0, 0, 0, 0.8),
+    0 10px 20px rgba(0, 0, 0, 0.9);
   position: relative;
   z-index: 1;
-  overflow: hidden;
+  overflow: hidden; /* Contiene el fondo y los cuadros */
+}
+
+/* === Título MONOPOLY con cortina arcoíris === */
+.tablero::before {
+  content: "MONOPOLY";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(1.5rem, 8vw, 4rem);
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-align: center;
+  background: linear-gradient(
+    to bottom,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #7a00ff,
+    #ff00ab,
+    #ff0000
+  );
+  background-size: 100% 800%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 255, 255, 0.3);
+  animation: curtainRainbow 8s linear infinite;
+  z-index: 3; /* Por encima del fondo y los cuadros */
+}
+
+/* === Cuadros animados en el fondo === */
+.tablero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200%; /* Mayor altura para un movimiento continuo */
+  background: 
+    repeating-linear-gradient(
+      45deg,
+      rgba(0, 76, 115, 0.8), /* Azul oscuro, constante */
+      rgba(0, 76, 115, 0.8) 20px,
+      transparent 20px,
+      transparent 40px
+    );
+  animation: floatSquares 90s linear infinite; /* Lento: 20 segundos */
+  z-index: 0; /* Detrás del título y las casillas */
+}
+
+/* Animación para el fondo de agua */
+@keyframes waterFlow {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+/* Animación para el título arcoíris */
+@keyframes curtainRainbow {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 0% 100%; }
+}
+
+/* Animación para los cuadros flotantes */
+@keyframes floatSquares {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%); /* Mitad de la altura para movimiento continuo */
+  }
 }
 
 /* === Casillas === */
 .casilla {
-  background: var(--text-light);
-  border: 1px solid var(--text-dark);
+  position: relative;
+  z-index: 2; /* Encima del fondo y los cuadros, debajo del título */
+  background: linear-gradient(
+    135deg,
+    var(--primary-metal) 0%,
+    var(--secondary-metal) 100%
+  ); /* Gradiente metálico moderno */
+  border: 2px solid var(--accent-metal); /* Borde bronce */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   font-size: clamp(0.35rem, 0.9vw, 0.55rem);
-  padding: 0.2rem;
-  border-radius: 0;
-  transition: box-shadow 0.3s ease;
+  padding: 0.3rem;
+  border-radius: 4px; /* Bordes redondeados para look moderno */
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 3px rgba(255, 255, 255, 0.3); /* Sombra y brillo */
+  transition: box-shadow 0.3s ease, transform 0.3s ease, background 0.3s ease;
   overflow: hidden;
   line-height: 1.1;
   text-align: center;
+  cursor: pointer; /* Indica que es interactivo */
 }
 
 .casilla:hover {
-  transform: none;
-  box-shadow: 0 0 15px rgba(178, 143, 64, 0.9);
-  background: var(--background-light);
+  transform: scale(1.1); /* Zoom al pasar el cursor */
+  box-shadow: 
+    0 4px 12px rgba(178, 143, 64, 0.9),
+    inset 0 2px 5px rgba(255, 255, 255, 0.4); /* Brillo más intenso al hover */
+  background: linear-gradient(
+    135deg,
+    var(--secondary-metal) 0%,
+    var(--primary-metal) 100%
+  ); /* Invierte gradiente al hover */
+}
+
+.propiedad-con-dueno {
+  background: linear-gradient(
+    135deg,
+    var(--color-dueno, var(--primary-metal)) 0%,
+    var(--secondary-metal) 100%
+  ); /* Mantiene gradiente con color del dueño */
+  filter: brightness(1.4); /* Brillo para indicar propiedad tomada */
+  border: 2px solid #333; /* Borde oscuro */
+}
+
+.propiedad-con-dueno:hover {
+  transform: scale(1.1); /* Zoom al pasar el cursor */
+  box-shadow: 
+    0 4px 12px rgba(178, 143, 64, 0.9),
+    inset 0 2px 5px rgba(255, 255, 255, 0.4); /* Mismo brillo que .casilla:hover */
 }
 
 .color-strip {
   width: 100%;
   height: 8px;
-  border-radius: 0;
+  border-radius: 2px 2px 0 0; /* Redondeado solo en la parte superior */
   border-bottom: 1px solid var(--text-dark);
+}
+
+.casilla .property-name {
+  font-family: 'Montserrat', 'Roboto', sans-serif;
+  font-weight: 800; /* Extra-bold para ser más gruesa y llamativa */
+  font-size: clamp(0.5rem, 1.2vw, 0.7rem); /* Más grande para destacar */
+  color: var(--text-dark);
+  overflow-wrap: break-word;
+  line-height: 1.2; /* Más espacio para legibilidad */
+  letter-spacing: 0.5px; /* Espaciado elegante */
+  margin: 0.2rem 0;
+  max-height: 1.8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6); /* Brillo más intenso */
+}
+
+.casilla .property-price {
+  font-family: 'Montserrat', 'Roboto', sans-serif;
+  font-weight: 700; /* Bold para jerarquía y visibilidad */
+  font-size: clamp(0.45rem, 1.1vw, 0.65rem); /* Más grande para destacar */
+  color: var(--text-dark);
+  margin-top: auto;
+  letter-spacing: 0.5px; /* Espaciado elegante */
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6); /* Brillo más intenso */
 }
 
 /* === Colores de propiedades === */
@@ -390,23 +542,6 @@ h1 {
 .property-color.yellow { background-color: #ffff00; }
 .property-color.green { background-color: #008000; }
 .property-color.blue { background-color: #0000ff; }
-
-.property-name {
-  font-weight: bold;
-  font-size: clamp(0.35rem, 0.9vw, 0.55rem);
-  overflow-wrap: break-word;
-  line-height: 1.1;
-  margin: 0.2rem 0;
-  max-height: 1.8rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.property-price {
-  font-size: clamp(0.3rem, 0.8vw, 0.5rem);
-  color: #666;
-  margin-top: auto;
-}
 
 /* === Fichas === */
 .contenedor-fichas {
@@ -498,6 +633,7 @@ h1 {
   padding: 0.5rem;
   border-radius: 4px;
 }
+
 .btn-regresar {
   position: absolute;
   top: 5px;
@@ -733,6 +869,38 @@ h1 {
   background: linear-gradient(to bottom, var(--secondary-metal) 0%, var(--accent-metal) 100%);
 }
 
+.turno-actual {
+  text-align: center;
+  font-size: 1.2rem;   /* más pequeño */
+  font-weight: 700;
+  padding: 6px 12px;   /* menos relleno */
+  margin-bottom: 10px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: #fff;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  letter-spacing: 1px;
+  animation: pulse 1.5s infinite;
+  transition: all 0.3s ease;
+}
+
+/* Animación estilo “latido” */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(255,255,255,0.5);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 25px rgba(255,255,255,0.8);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(255,255,255,0.5);
+  }
+}
+
 #cerrarVentana {
   background: linear-gradient(to bottom, var(--primary-metal) 0%, var(--background-dark) 100%);
   color: var(--text-light);
@@ -774,7 +942,7 @@ h1 {
   .juego { grid-template-columns: minmax(160px, 180px) 1fr minmax(160px, 180px); }
   .tablero { max-width: 550px; min-width: 400px; }
   .titulo-tablero { font-size: 2rem; }
-    .jugadores.izquierda, .jugadores.derecha {
+  .jugadores.izquierda, .jugadores.derecha {
     min-width: 100%;
     max-height: 40vh;
     margin: 0;
@@ -809,16 +977,18 @@ h1 {
   .casilla { 
     font-size: clamp(0.3rem, 0.8vw, 0.5rem); 
     padding: 0.15rem; 
+    border-radius: 3px;
   }
-  .property-name { 
-    font-size: clamp(0.3rem, 0.8vw, 0.5rem); 
+  .casilla .property-name { 
+    font-size: clamp(0.45rem, 1.1vw, 0.65rem); 
     max-height: 1.6rem; 
   }
-  .property-price { 
-    font-size: clamp(0.25rem, 0.7vw, 0.45rem); 
+  .casilla .property-price { 
+    font-size: clamp(0.4rem, 1vw, 0.6rem); 
   }
   .color-strip {
     height: 6px;
+    border-radius: 1px 1px 0 0;
   }
   .ficha { 
     width: clamp(8px, 1vw, 12px); 
@@ -876,21 +1046,21 @@ h1 {
   }
   .casilla { 
     font-size: clamp(0.28rem, 0.7vw, 0.45rem); 
+    border-radius: 2px;
   }
-  .property-name { 
-    font-size: clamp(0.28rem, 0.7vw, 0.45rem); 
+  .casilla .property-name { 
+    font-size: clamp(0.4rem, 1vw, 0.6rem); 
     max-height: 1.4rem; 
   }
-  .property-price { 
-    font-size: clamp(0.22rem, 0.6vw, 0.4rem); 
+  .casilla .property-price { 
+    font-size: clamp(0.35rem, 0.9vw, 0.55rem); 
   }
   .ficha { 
     width: clamp(7px, 0.9vw, 10px); 
     height: clamp(7px, 0.9vw, 10px); 
-  }.propiedad-con-dueno {
-  background-color: var(--color-dueno, #eee);
-  filter: brightness(1.4); /* lo aclara para que no sea tan fuerte */
-  border: 2px solid #333;
-}
+  }
+  /* Fondo oscuro */
+
+
 
 }

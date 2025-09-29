@@ -24,8 +24,9 @@
     </aside>
 
     <!-- Tablero en el centro -->
+
     <main class="tablero-contenedor">
-      <h1 class="titulo-tablero">MONOPOLY</h1>
+      <div id="turno-actual" class="turno-actual"></div>
       <div id="tablero" class="tablero"></div>
 
       <!-- Contenedor para dados -->
@@ -36,6 +37,7 @@
       <div id="resultado-dados"></div>
     </main>
 
+
     <!-- Panel lateral derecho -->
     <aside class="jugadores derecha" id="panel-der">
       <h2>Información</h2>
@@ -43,10 +45,14 @@
 
       <h3>🎲 Acciones</h3>
       <div class="options">
-        <button class="player-btn" id="btn-tirar-dados">Tirar Dados</button>
+        
         <button class="player-btn" id="btnHipotecar">Hipotecar</button>
         <button class="player-btn" id="btnDeshipotecar">Deshipotecar</button>
         <button class="player-btn" id="btn-finPartida">Finalizar Partida</button>
+        <button class="player-btn" id="btn-tirar-dados">Tirar Dados</button>
+        <!-- Contenedor de los dados -->
+
+
       </div>
     </aside>
   </div>
@@ -60,6 +66,7 @@
 
   <!-- Contenedor para otros modales -->
   <div id="modal-container"></div>
+  
 
   <!-- Scripts al final del body para mejor rendimiento -->
   <script type="module" src="js/api.js"></script>

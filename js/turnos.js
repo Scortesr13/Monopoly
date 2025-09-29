@@ -5,6 +5,7 @@ import { renderJugadores, obtenerJugadores } from "./ui.js";
 let jugadores = obtenerJugadores();
 let turno = 0;
 const totalCasillas = 40;
+mostrarTurno(jugadores[turno]);
 
 export function tirarDados() {
   const dado1 = Math.floor(Math.random() * 6) + 1;
@@ -44,6 +45,7 @@ export function jugarTurno() {
 export function pasarTurno() {
   turno = (turno + 1) % jugadores.length;
   renderJugadores();
+  mostrarTurno(jugadores[turno]);
   alert(`Turno de ${jugadores[turno].nick}`);
 }
 
@@ -157,6 +159,13 @@ function manejarHipoteca(jugador, idProp, accion) {
   }
 
   renderJugadores();
+}
+function mostrarTurno(jugador) {
+  const turnoDiv = document.getElementById("turno-actual");
+  if (!turnoDiv) return;
+
+  turnoDiv.textContent = `🎲 Turno de: ${jugador.nick}`;
+  turnoDiv.style.background = jugador.color || "#ccc";
 }
 
 

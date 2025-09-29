@@ -223,5 +223,8 @@ export function getGridPosition(index) {
     return { row: index - 30 + 1, col: 11 }; // derecha
   }
 }
+// Función para mostrar alerta
+// Mostrar alerta con mensaje personalizado
+
 
 // 🔹 Exportar funciones que usará el tablero
