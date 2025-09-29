@@ -38,6 +38,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column; /* Ensure content stacks on smaller screens */
 }
 
 /* === Fondo con imagen === */
@@ -60,22 +61,22 @@ body {
 /* === Contenedor principal (inicio, configuración, fin de partida) === */
 .container {
   background: var(--background-light);
-  padding: 1.5rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
   text-align: center;
   max-width: 90%;
-  width: clamp(300px, 80vw, 600px);
+  width: clamp(280px, 80vw, 600px);
   border: 4px solid var(--secondary-metal);
-  margin: 1rem auto;
+  margin: clamp(0.5rem, 2vw, 1rem) auto;
   position: relative;
   z-index: 1;
 }
 
 /* === Logo === */
 .logo-container {
-  margin-bottom: 1.5rem;
-  padding: 1rem;
+  margin-bottom: clamp(1rem, 3vw, 1.5rem);
+  padding: clamp(0.5rem, 2vw, 1rem);
   background: var(--text-light);
   border-radius: var(--border-radius);
   border: 3px solid var(--secondary-metal);
@@ -84,7 +85,7 @@ body {
 
 .monopoly-img {
   width: 100%;
-  max-width: 300px;
+  max-width: clamp(200px, 50vw, 300px);
   height: auto;
   border-radius: 5px;
   display: block;
@@ -93,25 +94,25 @@ body {
 
 /* === Tipografía === */
 h1 {
-  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
   color: var(--text-dark);
-  margin-bottom: 0.5rem;
+  margin-bottom: clamp(0.3rem, 1vw, 0.5rem);
   text-shadow: 2px 2px 0 var(--text-light);
   letter-spacing: 2px;
 }
 
 .subtitle {
-  font-size: clamp(1rem, 3vw, 1.2rem);
+  font-size: clamp(0.9rem, 3vw, 1.2rem);
   color: var(--text-dark);
-  margin-bottom: 1.5rem;
+  margin-bottom: clamp(1rem, 3vw, 1.5rem);
 }
 
 /* === Opciones de jugadores === */
 .options {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  margin: 1.5rem 0;
+  gap: clamp(0.5rem, 2vw, 1rem);
+  margin: clamp(1rem, 3vw, 1.5rem) 0;
   flex-wrap: wrap;
 }
 
@@ -120,12 +121,12 @@ h1 {
   background: linear-gradient(to bottom, var(--primary-metal) 0%, var(--background-dark) 100%);
   color: var(--text-light);
   border: 3px solid var(--secondary-metal);
-  padding: 0.75rem 1.5rem;
-  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  padding: clamp(0.5rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.5rem);
+  font-size: clamp(0.8rem, 2.5vw, 1rem);
   font-weight: bold;
   cursor: pointer;
   border-radius: var(--border-radius);
-  min-width: 120px;
+  min-width: clamp(100px, 30vw, 120px);
   transition: var(--transition);
   box-shadow: var(--shadow);
   pointer-events: auto;
@@ -148,12 +149,12 @@ h1 {
 
 /* === Mensaje === */
 #message {
-  margin-top: 1.5rem;
-  padding: 1rem;
+  margin-top: clamp(1rem, 3vw, 1.5rem);
+  padding: clamp(0.5rem, 2vw, 1rem);
   background: var(--background-dark);
   color: var(--background-light);
   border-radius: var(--border-radius);
-  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  font-size: clamp(0.8rem, 2.5vw, 1.1rem);
   font-weight: bold;
   min-height: 50px;
   display: flex;
@@ -164,17 +165,17 @@ h1 {
 
 /* === Instrucciones === */
 .instructions {
-  margin-top: 1rem;
-  padding: 1rem;
+  margin-top: clamp(0.5rem, 2vw, 1rem);
+  padding: clamp(0.5rem, 2vw, 1rem);
   background: rgba(255, 255, 255, 0.7);
   border-radius: var(--border-radius);
-  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  font-size: clamp(0.7rem, 2vw, 0.9rem);
 }
 
 /* === Pantalla de configuración === */
 .setup-title { 
-  font-size: clamp(1.5rem, 4vw, 2rem);
-  margin-bottom: 1.25rem; 
+  font-size: clamp(1.2rem, 4vw, 2rem);
+  margin-bottom: clamp(0.75rem, 2vw, 1.25rem); 
   text-align: center;
   color: var(--text-dark);
   text-shadow: 1px 1px 0 var(--text-light);
@@ -182,8 +183,8 @@ h1 {
 
 .player-setup-block { 
   border: 2px solid var(--secondary-metal); 
-  padding: 0.75rem; 
-  margin: 0.5rem 0; 
+  padding: clamp(0.5rem, 2vw, 0.75rem); 
+  margin: clamp(0.3rem, 1vw, 0.5rem) 0; 
   border-radius: var(--border-radius); 
   background-color: var(--text-light);
   box-shadow: var(--shadow);
@@ -191,22 +192,22 @@ h1 {
 
 .nick-input {
   width: 100%;
-  padding: 0.5rem 0.75rem;
-  margin: 0.25rem 0 0.75rem 0;
+  padding: clamp(0.3rem, 1.5vw, 0.5rem) clamp(0.5rem, 2vw, 0.75rem);
+  margin: clamp(0.15rem, 0.5vw, 0.25rem) 0 clamp(0.5rem, 1.5vw, 0.75rem) 0;
   border-radius: 5px;
   border: 1px solid var(--primary-metal);
-  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  font-size: clamp(0.7rem, 2vw, 0.9rem);
 }
 
 .token-container {
-  margin: 0.75rem 0;
+  margin: clamp(0.5rem, 1.5vw, 0.75rem) 0;
 }
 
 .token-label {
-  margin-right: 0.75rem; 
+  margin-right: clamp(0.5rem, 1.5vw, 0.75rem); 
   cursor: pointer;
   user-select: none;
-  padding: 0.5rem;
+  padding: clamp(0.3rem, 1vw, 0.5rem);
   border: 2px solid var(--secondary-metal);
   border-radius: 8px;
   transition: var(--transition);
@@ -214,25 +215,25 @@ h1 {
 
 .country-label {
   display: block;
-  margin-top: 0.75rem;
+  margin-top: clamp(0.5rem, 1.5vw, 0.75rem);
   color: var(--text-dark);
-  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  font-size: clamp(0.7rem, 2vw, 0.9rem);
 }
 
 .country-select {
   width: 100%;
-  padding: 0.5rem 0.75rem;
+  padding: clamp(0.3rem, 1.5vw, 0.5rem) clamp(0.5rem, 2vw, 0.75rem);
   border-radius: 5px;
   border: 1px solid var(--primary-metal);
-  margin-top: 0.25rem;
-  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  margin-top: clamp(0.15rem, 0.5vw, 0.25rem);
+  font-size: clamp(0.7rem, 2vw, 0.9rem);
   background: var(--text-light);
 }
 
 .start-game-btn {
-  margin-top: 1rem;
-  padding: 0.75rem 1rem;
-  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  margin-top: clamp(0.5rem, 2vw, 1rem);
+  padding: clamp(0.5rem, 2vw, 0.75rem) clamp(0.75rem, 2.5vw, 1rem);
+  font-size: clamp(0.8rem, 2.5vw, 1rem);
   font-weight: bold;
   cursor: pointer;
   border-radius: var(--border-radius);
@@ -252,34 +253,34 @@ h1 {
 
 /* === Pantalla de fin de partida === */
 #end-screen {
-  width: clamp(300px, 80vw, 600px);
+  width: clamp(280px, 90vw, 600px);
 }
 
 #ranking-lista {
   background: var(--text-light);
   border: 3px solid var(--secondary-metal);
   border-radius: var(--border-radius);
-  padding: 1rem;
-  margin: 1rem auto;
+  padding: clamp(0.5rem, 2vw, 1rem);
+  margin: clamp(0.5rem, 2vw, 1rem) auto;
   max-width: 90%;
-  width: clamp(300px, 80vw, 600px);
+  width: clamp(280px, 90vw, 600px);
   box-shadow: var(--shadow);
   position: relative;
   z-index: 1;
 }
 
 #ganador {
-  margin: 1rem auto;
-  padding: 1rem;
+  margin: clamp(0.5rem, 2vw, 1rem) auto;
+  padding: clamp(0.5rem, 2vw, 1rem);
   background: var(--background-dark);
   color: var(--background-light);
   border-radius: var(--border-radius);
-  font-size: clamp(1rem, 3vw, 1.2rem);
+  font-size: clamp(0.9rem, 3vw, 1.2rem);
   font-weight: bold;
   text-align: center;
   border: 3px solid var(--secondary-metal);
   max-width: 90%;
-  width: clamp(300px, 80vw, 600px);
+  width: clamp(280px, 90vw, 600px);
   position: relative;
   z-index: 1;
 }
@@ -288,15 +289,15 @@ h1 {
   background: linear-gradient(to bottom, var(--primary-metal) 0%, var(--background-dark) 100%);
   color: var(--text-light);
   border: 3px solid var(--secondary-metal);
-  padding: 0.75rem 1.5rem;
-  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  padding: clamp(0.5rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.5rem);
+  font-size: clamp(0.8rem, 2.5vw, 1rem);
   font-weight: bold;
   cursor: pointer;
   border-radius: var(--border-radius);
-  min-width: 120px;
+  min-width: clamp(100px, 30vw, 120px);
   transition: var(--transition);
   box-shadow: var(--shadow);
-  margin: 1rem auto;
+  margin: clamp(0.5rem, 2vw, 1rem) auto;
   display: block;
   pointer-events: auto;
 }
@@ -314,11 +315,11 @@ h1 {
 /* === Juego (pantalla del tablero) === */
 .juego {
   display: grid;
-  grid-template-columns: minmax(200px, 240px) 1fr minmax(200px, 240px);
-  gap: 1.5rem;
-  padding: 1.5rem;
-  max-width: 1600px;
-  margin: 0 auto;
+  grid-template-columns: minmax(160px, 240px) 1fr minmax(160px, 240px);
+  gap: clamp(0.5rem, 2vw, 1.5rem);
+  padding: clamp(0.5rem, 2vw, 1.5rem);
+  max-width: 100%;
+  width: clamp(320px, 95vw, 1600px);
   min-height: 100vh;
   align-items: start;
   position: relative;
@@ -326,11 +327,11 @@ h1 {
 }
 
 .titulo-tablero {
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(1.5rem, 5vw, 3rem);
   color: var(--background-light);
   text-shadow: 3px 3px 0 var(--text-dark);
   letter-spacing: 2px;
-  margin-bottom: 2rem;
+  margin-bottom: clamp(1rem, 3vw, 2rem);
   text-align: center;
 }
 
@@ -339,7 +340,7 @@ h1 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
+  padding: clamp(0.5rem, 2vw, 1.5rem);
   position: relative;
   z-index: 1;
 }
@@ -349,26 +350,26 @@ h1 {
   display: grid;
   grid-template-columns: repeat(11, 1fr);
   grid-template-rows: repeat(11, 1fr);
-  width: clamp(300px, 80vw, 800px);
+  width: clamp(280px, 80vw, 800px);
   aspect-ratio: 1/1;
   background: linear-gradient(
     45deg,
-    rgba(0, 119, 182, 0.4), /* Azul vibrante claro */
-    rgba(0, 212, 255, 0.3), /* Turquesa claro */
-    rgba(64, 224, 208, 0.3), /* Turquesa */
-    rgba(0, 119, 182, 0.4) /* Azul vibrante claro */
+    rgba(0, 119, 182, 0.4),
+    rgba(0, 212, 255, 0.3),
+    rgba(64, 224, 208, 0.3),
+    rgba(0, 119, 182, 0.4)
   );
   background-size: 200% 200%;
   animation: waterFlow 12s ease-in-out infinite;
-  border: 14px solid #1a1a1a;
-  border-radius: 18px;
+  border: clamp(8px, 2vw, 14px) solid #1a1a1a;
+  border-radius: clamp(10px, 2vw, 18px);
   box-shadow: 
     inset 0 6px 10px rgba(255, 255, 255, 0.15),
     inset 0 -6px 12px rgba(0, 0, 0, 0.8),
     0 10px 20px rgba(0, 0, 0, 0.9);
   position: relative;
   z-index: 1;
-  overflow: hidden; /* Contiene el fondo y los cuadros */
+  overflow: hidden;
 }
 
 /* === Título MONOPOLY con cortina arcoíris === */
@@ -378,7 +379,7 @@ h1 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: clamp(1.5rem, 8vw, 4rem);
+  font-size: clamp(1rem, 8vw, 4rem);
   font-weight: 900;
   letter-spacing: 3px;
   text-align: center;
@@ -399,7 +400,7 @@ h1 {
   -webkit-text-fill-color: transparent;
   text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 255, 255, 0.3);
   animation: curtainRainbow 8s linear infinite;
-  z-index: 3; /* Por encima del fondo y los cuadros */
+  z-index: 3;
 }
 
 /* === Cuadros animados en el fondo === */
@@ -409,17 +410,17 @@ h1 {
   top: 0;
   left: 0;
   width: 100%;
-  height: 200%; /* Mayor altura para un movimiento continuo */
+  height: 200%;
   background: 
     repeating-linear-gradient(
       45deg,
-      rgba(0, 76, 115, 0.8), /* Azul oscuro, constante */
+      rgba(0, 76, 115, 0.8),
       rgba(0, 76, 115, 0.8) 20px,
       transparent 20px,
       transparent 40px
     );
-  animation: floatSquares 90s linear infinite; /* Lento: 20 segundos */
-  z-index: 0; /* Detrás del título y las casillas */
+  animation: floatSquares 90s linear infinite;
+  z-index: 0;
 }
 
 /* Animación para el fondo de agua */
@@ -437,51 +438,47 @@ h1 {
 
 /* Animación para los cuadros flotantes */
 @keyframes floatSquares {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-50%); /* Mitad de la altura para movimiento continuo */
-  }
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
 }
 
 /* === Casillas === */
 .casilla {
   position: relative;
-  z-index: 2; /* Encima del fondo y los cuadros, debajo del título */
+  z-index: 2;
   background: linear-gradient(
     135deg,
     var(--primary-metal) 0%,
     var(--secondary-metal) 100%
-  ); /* Gradiente metálico moderno */
-  border: 2px solid var(--accent-metal); /* Borde bronce */
+  );
+  border: 2px solid var(--accent-metal);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  font-size: clamp(0.35rem, 0.9vw, 0.55rem);
-  padding: 0.3rem;
-  border-radius: 4px; /* Bordes redondeados para look moderno */
+  font-size: clamp(0.3rem, 0.9vw, 0.55rem);
+  padding: clamp(0.15rem, 0.5vw, 0.3rem);
+  border-radius: 4px;
   box-shadow: 
     0 2px 8px rgba(0, 0, 0, 0.2),
-    inset 0 1px 3px rgba(255, 255, 255, 0.3); /* Sombra y brillo */
+    inset 0 1px 3px rgba(255, 255, 255, 0.3);
   transition: box-shadow 0.3s ease, transform 0.3s ease, background 0.3s ease;
   overflow: hidden;
   line-height: 1.1;
   text-align: center;
-  cursor: pointer; /* Indica que es interactivo */
+  cursor: pointer;
 }
 
 .casilla:hover {
-  transform: scale(1.1); /* Zoom al pasar el cursor */
+  transform: scale(1.1);
   box-shadow: 
     0 4px 12px rgba(178, 143, 64, 0.9),
-    inset 0 2px 5px rgba(255, 255, 255, 0.4); /* Brillo más intenso al hover */
+    inset 0 2px 5px rgba(255, 255, 255, 0.4);
   background: linear-gradient(
     135deg,
     var(--secondary-metal) 0%,
     var(--primary-metal) 100%
-  ); /* Invierte gradiente al hover */
+  );
 }
 
 .propiedad-con-dueno {
@@ -489,48 +486,48 @@ h1 {
     135deg,
     var(--color-dueno, var(--primary-metal)) 0%,
     var(--secondary-metal) 100%
-  ); /* Mantiene gradiente con color del dueño */
-  filter: brightness(1.4); /* Brillo para indicar propiedad tomada */
-  border: 2px solid #333; /* Borde oscuro */
+  );
+  filter: brightness(1.4);
+  border: 2px solid #333;
 }
 
 .propiedad-con-dueno:hover {
-  transform: scale(1.1); /* Zoom al pasar el cursor */
+  transform: scale(1.1);
   box-shadow: 
     0 4px 12px rgba(178, 143, 64, 0.9),
-    inset 0 2px 5px rgba(255, 255, 255, 0.4); /* Mismo brillo que .casilla:hover */
+    inset 0 2px 5px rgba(255, 255, 255, 0.4);
 }
 
 .color-strip {
   width: 100%;
-  height: 8px;
-  border-radius: 2px 2px 0 0; /* Redondeado solo en la parte superior */
+  height: clamp(6px, 1vw, 8px);
+  border-radius: 2px 2px 0 0;
   border-bottom: 1px solid var(--text-dark);
 }
 
 .casilla .property-name {
   font-family: 'Montserrat', 'Roboto', sans-serif;
-  font-weight: 800; /* Extra-bold para ser más gruesa y llamativa */
-  font-size: clamp(0.5rem, 1.2vw, 0.7rem); /* Más grande para destacar */
+  font-weight: 800;
+  font-size: clamp(0.45rem, 1.2vw, 0.7rem);
   color: var(--text-dark);
   overflow-wrap: break-word;
-  line-height: 1.2; /* Más espacio para legibilidad */
-  letter-spacing: 0.5px; /* Espaciado elegante */
-  margin: 0.2rem 0;
-  max-height: 1.8rem;
+  line-height: 1.2;
+  letter-spacing: 0.5px;
+  margin: clamp(0.1rem, 0.5vw, 0.2rem) 0;
+  max-height: clamp(1.4rem, 3vw, 1.8rem);
   overflow: hidden;
   text-overflow: ellipsis;
-  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6); /* Brillo más intenso */
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
 }
 
 .casilla .property-price {
   font-family: 'Montserrat', 'Roboto', sans-serif;
-  font-weight: 700; /* Bold para jerarquía y visibilidad */
-  font-size: clamp(0.45rem, 1.1vw, 0.65rem); /* Más grande para destacar */
+  font-weight: 700;
+  font-size: clamp(0.4rem, 1.1vw, 0.65rem);
   color: var(--text-dark);
   margin-top: auto;
-  letter-spacing: 0.5px; /* Espaciado elegante */
-  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6); /* Brillo más intenso */
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
 }
 
 /* === Colores de propiedades === */
@@ -551,13 +548,13 @@ h1 {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 0.2rem;
-  padding: 0.2rem;
+  gap: clamp(0.1rem, 0.5vw, 0.2rem);
+  padding: clamp(0.1rem, 0.5vw, 0.2rem);
 }
 
 .ficha {
-  width: clamp(10px, 1.2vw, 16px);
-  height: clamp(10px, 1.2vw, 16px);
+  width: clamp(8px, 1.2vw, 16px);
+  height: clamp(8px, 1.2vw, 16px);
   border-radius: 50%;
   border: 1px solid var(--text-dark);
   box-shadow: var(--shadow);
@@ -576,8 +573,8 @@ h1 {
   background: var(--background-light);
   border: 4px solid var(--secondary-metal);
   border-radius: var(--border-radius);
-  padding: 1rem;
-  min-width: 200px;
+  padding: clamp(0.5rem, 2vw, 1rem);
+  min-width: clamp(160px, 30vw, 200px);
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: var(--shadow);
@@ -587,8 +584,8 @@ h1 {
 
 .jugadores h2, .jugadores h3 {
   text-align: center;
-  margin-bottom: 1rem;
-  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  margin-bottom: clamp(0.5rem, 2vw, 1rem);
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
   color: var(--text-dark);
   text-shadow: 1px 1px 0 var(--text-light);
 }
@@ -597,8 +594,8 @@ h1 {
 .jugador-card {
   background: var(--text-light);
   border-radius: 8px;
-  padding: 0.75rem;
-  margin-bottom: 0.75rem;
+  padding: clamp(0.5rem, 1.5vw, 0.75rem);
+  margin-bottom: clamp(0.5rem, 1.5vw, 0.75rem);
   border-left: 5px solid var(--secondary-metal);
   box-shadow: var(--shadow);
 }
@@ -607,30 +604,30 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0.5rem;
+  margin-bottom: clamp(0.3rem, 1vw, 0.5rem);
 }
 
 .jugador-header img {
-  width: 35px;
-  height: 25px;
+  width: clamp(30px, 5vw, 35px);
+  height: clamp(20px, 4vw, 25px);
   border: 2px solid var(--secondary-metal);
   border-radius: 4px;
 }
 
 .jugador-header .iniciales {
   font-weight: bold;
-  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  font-size: clamp(0.8rem, 2vw, 1.1rem);
   color: var(--text-dark);
 }
 
 .dinero {
   font-weight: bold;
   color: #2e7d32;
-  font-size: clamp(0.9rem, 2vw, 1rem);
-  margin: 0.3rem 0;
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  margin: clamp(0.2rem, 0.5vw, 0.3rem) 0;
   text-align: center;
   background: rgba(46, 125, 50, 0.1);
-  padding: 0.5rem;
+  padding: clamp(0.3rem, 1vw, 0.5rem);
   border-radius: 4px;
 }
 
@@ -642,9 +639,9 @@ h1 {
   color: white;
   border: none;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  font-size: 18px;
+  width: clamp(35px, 5vw, 40px);
+  height: clamp(35px, 5vw, 40px);
+  font-size: clamp(16px, 2vw, 18px);
   font-weight: bold;
   cursor: pointer;
   display: flex;
@@ -666,26 +663,26 @@ h1 {
 }
 
 .propiedades {
-  margin-top: 0.5rem;
+  margin-top: clamp(0.3rem, 1vw, 0.5rem);
 }
 
 .propiedades strong {
   display: block;
   text-align: center;
-  margin-bottom: 0.3rem;
+  margin-bottom: clamp(0.2rem, 0.5vw, 0.3rem);
   color: var(--text-dark);
-  font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+  font-size: clamp(0.7rem, 1.8vw, 0.9rem);
 }
 
 .propiedades ul {
-  padding-left: 1rem;
-  margin: 0.3rem 0;
-  font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+  padding-left: clamp(0.5rem, 1.5vw, 1rem);
+  margin: clamp(0.2rem, 0.5vw, 0.3rem) 0;
+  font-size: clamp(0.6rem, 1.5vw, 0.8rem);
 }
 
 .propiedades li {
-  margin-bottom: 0.2rem;
-  padding-left: 0.3rem;
+  margin-bottom: clamp(0.1rem, 0.5vw, 0.2rem);
+  padding-left: clamp(0.2rem, 0.5vw, 0.3rem);
   border-left: 2px solid var(--text-dark);
 }
 
@@ -693,26 +690,26 @@ h1 {
 .dados-container {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  margin-top: 1.5rem;
+  gap: clamp(0.5rem, 2vw, 1rem);
+  margin-top: clamp(1rem, 3vw, 1.5rem);
 }
 
 .dado {
   background: var(--text-light);
   border: 2px solid var(--secondary-metal);
   border-radius: 8px;
-  padding: 0.75rem;
-  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  padding: clamp(0.5rem, 1.5vw, 0.75rem);
+  font-size: clamp(0.9rem, 2.5vw, 1.2rem);
   font-weight: bold;
   color: var(--text-dark);
   text-align: center;
-  min-width: 50px;
+  min-width: clamp(40px, 8vw, 50px);
   box-shadow: var(--shadow);
 }
 
 #resultado-dados {
-  margin-top: 1rem;
-  font-size: clamp(0.9rem, 2vw, 1rem);
+  margin-top: clamp(0.5rem, 2vw, 1rem);
+  font-size: clamp(0.8rem, 2vw, 1rem);
   color: var(--text-light);
   text-align: center;
 }
@@ -725,13 +722,13 @@ h1 {
   transform: translate(-50%, -50%);
   background: linear-gradient(to bottom, var(--text-light) 0%, var(--primary-metal) 100%);
   border: 3px solid var(--secondary-metal);
-  padding: 1.5rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
   border-radius: var(--border-radius);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   z-index: 1000;
   text-align: center;
   max-width: 90%;
-  width: clamp(300px, 80vw, 450px);
+  width: clamp(280px, 80vw, 450px);
   transition: opacity 0.3s ease, transform 0.3s ease;
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
@@ -739,12 +736,12 @@ h1 {
 }
 
 .modal1 h3 {
-  font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+  font-size: clamp(1.1rem, 3.5vw, 1.8rem);
   color: var(--text-dark);
   background: var(--background-light);
-  padding: 0.75rem;
+  padding: clamp(0.5rem, 1.5vw, 0.75rem);
   border-radius: 5px;
-  margin: 0 0 1.5rem 0;
+  margin: 0 0 clamp(1rem, 3vw, 1.5rem) 0;
   text-shadow: 2px 2px 0 var(--text-light);
   border: 1px solid var(--secondary-metal);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -755,12 +752,12 @@ h1 {
   background: linear-gradient(to bottom, var(--primary-metal) 0%, var(--background-dark) 100%);
   color: var(--text-light);
   border: 2px solid var(--secondary-metal);
-  padding: 0.75rem 1.5rem;
-  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  padding: clamp(0.5rem, 1.5vw, 0.75rem) clamp(1rem, 2.5vw, 1.5rem);
+  font-size: clamp(0.8rem, 2.5vw, 1rem);
   font-weight: bold;
   cursor: pointer;
   border-radius: var(--border-radius);
-  margin: 0.5rem;
+  margin: clamp(0.3rem, 1vw, 0.5rem);
   transition: var(--transition);
   box-shadow: var(--shadow);
   pointer-events: auto;
@@ -789,31 +786,31 @@ h1 {
   align-items: center;
   z-index: 999;
   pointer-events: none;
-  background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente para mejor visibilidad */
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .contenido-ventana {
   position: relative;
   background: linear-gradient(to bottom, var(--text-light) 0%, var(--primary-metal) 100%);
   border: 3px solid var(--secondary-metal);
-  padding: 1.5rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
   border-radius: var(--border-radius);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   z-index: 1000;
   text-align: center;
   max-width: 90%;
-  width: clamp(300px, 80vw, 450px);
+  width: clamp(280px, 80vw, 450px);
   pointer-events: auto;
-  transform: translate(0, 0); /* Evitar transformaciones adicionales */
+  transform: translate(0, 0);
 }
 
 .contenido-ventana h3 {
-  font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+  font-size: clamp(1.1rem, 3.5vw, 1.8rem);
   color: var(--text-dark);
   background: var(--background-light);
-  padding: 0.75rem;
+  padding: clamp(0.5rem, 1.5vw, 0.75rem);
   border-radius: 5px;
-  margin: 0 0 1.5rem 0;
+  margin: 0 0 clamp(1rem, 3vw, 1.5rem) 0;
   text-shadow: 2px 2px 0 var(--text-light);
   border: 1px solid var(--secondary-metal);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -823,8 +820,8 @@ h1 {
 .lista-propiedades {
   list-style: none;
   padding: 0;
-  margin: 1rem 0;
-  max-height: 250px;
+  margin: clamp(0.5rem, 2vw, 1rem) 0;
+  max-height: clamp(200px, 50vh, 250px);
   overflow-y: auto;
   border: 1px solid var(--primary-metal);
   border-radius: var(--border-radius);
@@ -835,9 +832,9 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0.75rem;
+  padding: clamp(0.3rem, 1vw, 0.5rem) clamp(0.5rem, 1.5vw, 0.75rem);
   border-bottom: 1px solid var(--primary-metal);
-  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  font-size: clamp(0.7rem, 2vw, 0.9rem);
   color: var(--text-dark);
   transition: background 0.2s ease;
 }
@@ -854,8 +851,8 @@ h1 {
   background: linear-gradient(to bottom, var(--accent-metal) 0%, var(--background-dark) 100%);
   color: var(--text-light);
   border: 1px solid var(--secondary-metal);
-  padding: 0.25rem 0.5rem;
-  font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+  padding: clamp(0.2rem, 0.5vw, 0.25rem) clamp(0.4rem, 1vw, 0.5rem);
+  font-size: clamp(0.6rem, 1.5vw, 0.8rem);
   cursor: pointer;
   border-radius: 5px;
   transition: var(--transition);
@@ -871,10 +868,10 @@ h1 {
 
 .turno-actual {
   text-align: center;
-  font-size: 1.2rem;   /* más pequeño */
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
   font-weight: 700;
-  padding: 6px 12px;   /* menos relleno */
-  margin-bottom: 10px;
+  padding: clamp(4px, 1vw, 6px) clamp(8px, 2vw, 12px);
+  margin-bottom: clamp(8px, 2vw, 10px);
   border-radius: 8px;
   background: linear-gradient(135deg, #6a11cb, #2575fc);
   color: #fff;
@@ -905,12 +902,12 @@ h1 {
   background: linear-gradient(to bottom, var(--primary-metal) 0%, var(--background-dark) 100%);
   color: var(--text-light);
   border: 2px solid var(--secondary-metal);
-  padding: 0.5rem 1rem;
-  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  padding: clamp(0.4rem, 1vw, 0.5rem) clamp(0.8rem, 2vw, 1rem);
+  font-size: clamp(0.7rem, 2vw, 0.9rem);
   font-weight: bold;
   cursor: pointer;
   border-radius: var(--border-radius);
-  margin-top: 1rem;
+  margin-top: clamp(0.5rem, 2vw, 1rem);
   transition: var(--transition);
   box-shadow: var(--shadow);
   width: 100%;
@@ -933,134 +930,243 @@ h1 {
 }
 
 /* === Media Queries === */
-@media (max-width: 1200px) {
-  .juego { grid-template-columns: minmax(180px, 200px) 1fr minmax(180px, 200px); gap: 1rem; }
-  .tablero { max-width: 700px; min-width: 500px; }
+@media (max-width: 1400px) {
+  .juego {
+    grid-template-columns: minmax(180px, 220px) 1fr minmax(180px, 220px);
+    gap: clamp(0.5rem, 1.5vw, 1rem);
+  }
+  .tablero {
+    width: clamp(300px, 75vw, 700px);
+  }
+  .tablero::before {
+    font-size: clamp(1.2rem, 7vw, 3.5rem);
+  }
 }
 
-@media (max-width: 1050px) {
-  .juego { grid-template-columns: minmax(160px, 180px) 1fr minmax(160px, 180px); }
-  .tablero { max-width: 550px; min-width: 400px; }
-  .titulo-tablero { font-size: 2rem; }
+@media (max-width: 1200px) {
+  .juego {
+    grid-template-columns: minmax(160px, 200px) 1fr minmax(160px, 200px);
+    gap: clamp(0.5rem, 1.5vw, 1rem);
+  }
+  .tablero {
+    width: clamp(300px, 70vw, 600px);
+  }
+  .casilla {
+    font-size: clamp(0.3rem, 0.8vw, 0.5rem);
+  }
+  .casilla .property-name {
+    font-size: clamp(0.4rem, 1.1vw, 0.65rem);
+  }
+  .casilla .property-price {
+    font-size: clamp(0.35rem, 1vw, 0.6rem);
+  }
+  .ficha {
+    width: clamp(8px, 1.1vw, 14px);
+    height: clamp(8px, 1.1vw, 14px);
+  }
+}
+
+@media (max-width: 900px) {
+  .juego {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    gap: clamp(0.5rem, 2vw, 1rem);
+  }
   .jugadores.izquierda, .jugadores.derecha {
     min-width: 100%;
     max-height: 40vh;
     margin: 0;
+  }
+  .tablero {
+    width: clamp(280px, 90vw, 550px);
+  }
+  .tablero-contenedor {
+    padding: clamp(0.5rem, 2vw, 1rem);
+  }
+  .titulo-tablero {
+    font-size: clamp(1.2rem, 4vw, 2rem);
+  }
+  .casilla {
+    font-size: clamp(0.28rem, 0.7vw, 0.45rem);
+    padding: clamp(0.1rem, 0.4vw, 0.2rem);
+  }
+  .casilla .property-name {
+    font-size: clamp(0.4rem, 1vw, 0.6rem);
+    max-height: clamp(1.2rem, 2.5vw, 1.6rem);
+  }
+  .casilla .property-price {
+    font-size: clamp(0.35rem, 0.9vw, 0.55rem);
+  }
+  .color-strip {
+    height: clamp(5px, 0.8vw, 6px);
+  }
+  .ficha {
+    width: clamp(7px, 1vw, 12px);
+    height: clamp(7px, 1vw, 12px);
   }
 }
 
 @media (max-width: 600px) {
   .container, #end-screen, #ranking-lista, #ganador {
-    padding: 1rem;
-    width: clamp(280px, 95vw, 400px);
+    padding: clamp(0.5rem, 2vw, 1rem);
+    width: clamp(260px, 95vw, 400px);
   }
-  .juego { 
-    grid-template-columns: 1fr; 
-    grid-template-rows: auto 1fr auto;
-    gap: 0.5rem;
-    padding: 1rem;
+  .logo-container {
+    padding: clamp(0.3rem, 1vw, 0.5rem);
   }
-  .jugadores.izquierda, .jugadores.derecha {
-    min-width: 100%;
-    max-height: 40vh;
-    margin: 0;
+  .monopoly-img {
+    max-width: clamp(150px, 45vw, 200px);
   }
-  .tablero-contenedor {
-    padding: 1rem;
-    margin: 0;
+  .juego {
+    padding: clamp(0.5rem, 2vw, 1rem);
   }
-  .tablero { 
-    max-width: 450px; 
-    min-width: 280px; 
-    border-width: 8px; 
+  .tablero {
+    width: clamp(260px, 90vw, 450px);
+    border-width: clamp(6px, 1.5vw, 8px);
   }
-  .casilla { 
-    font-size: clamp(0.3rem, 0.8vw, 0.5rem); 
-    padding: 0.15rem; 
+  .tablero::before {
+    font-size: clamp(1rem, 6vw, 2.5rem);
+  }
+  .casilla {
+    font-size: clamp(0.25rem, 0.6vw, 0.4rem);
+    padding: clamp(0.1rem, 0.3vw, 0.15rem);
     border-radius: 3px;
   }
-  .casilla .property-name { 
-    font-size: clamp(0.45rem, 1.1vw, 0.65rem); 
-    max-height: 1.6rem; 
+  .casilla .property-name {
+    font-size: clamp(0.35rem, 0.9vw, 0.55rem);
+    max-height: clamp(1rem, 2vw, 1.4rem);
   }
-  .casilla .property-price { 
-    font-size: clamp(0.4rem, 1vw, 0.6rem); 
+  .casilla .property-price {
+    font-size: clamp(0.3rem, 0.8vw, 0.5rem);
   }
   .color-strip {
-    height: 6px;
+    height: clamp(4px, 0.7vw, 5px);
     border-radius: 1px 1px 0 0;
   }
-  .ficha { 
-    width: clamp(8px, 1vw, 12px); 
-    height: clamp(8px, 1vw, 12px); 
-    border-width: 1px;
+  .ficha {
+    width: clamp(6px, 0.9vw, 10px);
+    height: clamp(6px, 0.9vw, 10px);
   }
   .contenedor-fichas {
-    gap: 0.15rem;
-    padding: 0.15rem;
+    gap: clamp(0.1rem, 0.4vw, 0.15rem);
+    padding: clamp(0.1rem, 0.4vw, 0.15rem);
   }
-  .options { 
-    flex-direction: column; 
-    align-items: center; 
+  .options {
+    flex-direction: column;
+    align-items: center;
   }
-  .player-btn, #btn-volver-inicio { 
-    width: 100%; 
-    max-width: 200px; 
+  .player-btn, #btn-volver-inicio {
+    width: 100%;
+    max-width: clamp(150px, 50vw, 200px);
   }
-  h1 { font-size: clamp(1.5rem, 4vw, 2rem); }
-  .subtitle { font-size: clamp(0.9rem, 2.5vw, 1.1rem); }
+  h1 {
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
+  }
+  .subtitle {
+    font-size: clamp(0.8rem, 2.5vw, 1rem);
+  }
   .modal1, .contenido-ventana {
-    width: 280px;
-    padding: 1rem;
+    width: clamp(250px, 90vw, 350px);
+    padding: clamp(0.5rem, 2vw, 1rem);
   }
   .modal1 h3, .contenido-ventana h3 {
-    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
-    padding: 0.5rem;
-    margin-bottom: 1rem;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    padding: clamp(0.3rem, 1vw, 0.5rem);
+    margin-bottom: clamp(0.5rem, 2vw, 1rem);
   }
   .modal1 button, .contenido-ventana button {
-    padding: 0.5rem 1rem;
-    font-size: clamp(0.8rem, 2vw, 0.9rem);
-    margin: 0.3rem;
+    padding: clamp(0.3rem, 1vw, 0.5rem) clamp(0.5rem, 1.5vw, 1rem);
+    font-size: clamp(0.7rem, 2vw, 0.9rem);
+    margin: clamp(0.2rem, 0.5vw, 0.3rem);
   }
   .lista-propiedades li {
-    font-size: clamp(0.7rem, 1.8vw, 0.8rem);
-    padding: 0.3rem 0.5rem;
+    font-size: clamp(0.6rem, 1.8vw, 0.8rem);
+    padding: clamp(0.2rem, 0.5vw, 0.3rem) clamp(0.3rem, 1vw, 0.5rem);
   }
   .btnAccion {
-    padding: 0.2rem 0.4rem;
-    font-size: clamp(0.6rem, 1.2vw, 0.7rem);
+    padding: clamp(0.15rem, 0.4vw, 0.2rem) clamp(0.3rem, 0.8vw, 0.4rem);
+    font-size: clamp(0.5rem, 1.2vw, 0.7rem);
   }
-  #cerrarVentana {
-    padding: 0.4rem 0.8rem;
-    font-size: clamp(0.7rem, 1.8vw, 0.8rem);
+  .btn-regresar {
+    width: clamp(30px, 4vw, 35px);
+    height: clamp(30px, 4vw, 35px);
+    font-size: clamp(14px, 1.8vw, 16px);
   }
 }
 
 @media (max-width: 400px) {
-  .container, #end-screen, #ranking-lista, #ganador { padding: 0.75rem; }
-  .logo-container { padding: 0.5rem; }
-  .monopoly-img { max-width: 200px; }
-  .tablero { 
-    min-width: 260px; 
+  .container, #end-screen, #ranking-lista, #ganador {
+    padding: clamp(0.5rem, 1.5vw, 0.75rem);
+    width: clamp(240px, 95vw, 360px);
   }
-  .casilla { 
-    font-size: clamp(0.28rem, 0.7vw, 0.45rem); 
+  .tablero {
+    width: clamp(240px, 90vw, 400px);
+  }
+  .tablero::before {
+    font-size: clamp(0.8rem, 5vw, 2rem);
+  }
+  .casilla {
+    font-size: clamp(0.22rem, 0.6vw, 0.35rem);
+    padding: clamp(0.08rem, 0.3vw, 0.12rem);
     border-radius: 2px;
   }
-  .casilla .property-name { 
-    font-size: clamp(0.4rem, 1vw, 0.6rem); 
-    max-height: 1.4rem; 
+  .casilla .property-name {
+    font-size: clamp(0.3rem, 0.8vw, 0.5rem);
+    max-height: clamp(0.8rem, 2vw, 1.2rem);
   }
-  .casilla .property-price { 
-    font-size: clamp(0.35rem, 0.9vw, 0.55rem); 
+  .casilla .property-price {
+    font-size: clamp(0.25rem, 0.7vw, 0.45rem);
   }
-  .ficha { 
-    width: clamp(7px, 0.9vw, 10px); 
-    height: clamp(7px, 0.9vw, 10px); 
+  .ficha {
+    width: clamp(6px, 0.8vw, 8px);
+    height: clamp(6px, 0.8vw, 8px);
   }
-  /* Fondo oscuro */
+  .modal1, .contenido-ventana {
+    width: clamp(220px, 90vw, 300px);
+  }
+}
 
+/* === Ultra-wide screens === */
+@media (min-width: 1800px) {
+  .juego {
+    grid-template-columns: minmax(260px, 300px) 1fr minmax(260px, 300px);
+    max-width: 1800px;
+  }
+  .tablero {
+    width: clamp(800px, 60vw, 1000px);
+  }
+  .tablero::before {
+    font-size: clamp(2rem, 8vw, 5rem);
+  }
+  .casilla {
+    font-size: clamp(0.5rem, 1vw, 0.7rem);
+  }
+  .casilla .property-name {
+    font-size: clamp(0.6rem, 1.3vw, 0.8rem);
+  }
+  .casilla .property-price {
+    font-size: clamp(0.5rem, 1.2vw, 0.7rem);
+  }
+  .ficha {
+    width: clamp(12px, 1.3vw, 18px);
+    height: clamp(12px, 1.3vw, 18px);
+  }
+}
 
-
+/* === Small height devices === */
+@media (max-height: 600px) {
+  .juego {
+    min-height: auto;
+    height: 100vh;
+  }
+  .jugadores {
+    max-height: 35vh;
+  }
+  .tablero {
+    width: clamp(240px, 80vw, 400px);
+  }
+  .modal1, .contenido-ventana {
+    max-height: 80vh;
+    overflow-y: auto;
+  }
 }

@@ -11,14 +11,19 @@ export function tirarDados() {
   const dado1 = Math.floor(Math.random() * 6) + 1;
   const dado2 = Math.floor(Math.random() * 6) + 1;
 
-  const total = parseInt(prompt("Ingresa el total de los dados:")) || 0;
+  const entrada = prompt("Ingresa el total de los dados:");
+  const total = parseInt(entrada, 10);
 
-  //const total = dado1 + dado2;
+  // Validación: que sea un número válido
+  if (isNaN(total)) {
+    alert("⚠️ Debes ingresar un número válido.");
+    return tirarDados(); // vuelve a pedir entrada
+  }
 
-  // Validación: total fuera de rango
+  // Validación: rango permitido (0 a 12)
   if (total < 0 || total > 12) {
-    alert("⚠️ El resultado no es válido. Vuelve a tirar.");
-    return tirarDados(); // repite la tirada sin perder turno
+    alert("⚠️ El número debe estar entre 0 y 12. Vuelve a tirar.");
+    return tirarDados();
   }
 
   alert(`${jugadores[turno].nick} tiró ${dado1} + ${dado2} = ${total}`);
