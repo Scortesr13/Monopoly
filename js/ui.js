@@ -5,16 +5,27 @@ import { colocarFichas } from "./game.js";
 export function renderJugadores() {
   const jugadores = obtenerJugadores();
   console.log("jugadores en tablero propiedades:", jugadores);
-  // 1️⃣ Actualizar el sidebar
+
   const contenedor = document.getElementById("jugadores-lista");
   contenedor.innerHTML = "";
+
+  // Colores claros para cada ficha
+  const coloresClaritos = {
+    red: "#f8d7da",
+    blue: "#d0e7ff",
+    green: "#d4edda",
+    yellow: "#fff3cd",
+  };
 
   jugadores.forEach((j) => {
     const div = document.createElement("div");
     div.classList.add("jugador-card");
     div.style.setProperty("--color-ficha", j.color || "#000");
 
-    // 🏠 Mostrar propiedades con detalles
+    // Fondo clarito según el color de ficha
+    const colorFondo = coloresClaritos[j.color] || "#f0f0f0";
+    div.style.backgroundColor = colorFondo;
+
     const listaPropiedades =
       j.properties.length > 0
         ? j.properties
@@ -23,7 +34,6 @@ export function renderJugadores() {
                 <li>
                   ${p.nombre || "Sin nombre"} 
                   - 💵 $${p.precio || 0}-${p.hipotecada ? "🔒 (Hipotecada)" : "✅ (Sin hipotecar)"}
-                  ${p.mortgage ? "🔒 (Hipotecada)" : ""}
                 </li>`
             )
             .join("")
@@ -33,9 +43,9 @@ export function renderJugadores() {
       <div class="jugador-header">
         <span class="iniciales">${j.nick.slice(0, 6).toUpperCase()}</span>
         <span class="bandera">
-        ${j.bandera}
-        <img src="https://flagsapi.com/${j.bandera}/shiny/64.png" alt="${j.bandera}"/>
-      </span>
+          ${j.bandera}
+          <img src="https://flagsapi.com/${j.bandera}/shiny/64.png" alt="${j.bandera}"/>
+        </span>
       </div>
 
       <div class="dinero">💵 $${j.money}</div>
@@ -54,9 +64,9 @@ export function renderJugadores() {
     contenedor.appendChild(div);
   });
 
-  // 2️⃣ Actualizar fichas en el tablero
   colocarFichas(jugadores);
 }
+
 
 
 export function guardarJugadores(jugadores) {

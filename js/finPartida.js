@@ -2,6 +2,7 @@ console.log("finPartida.js cargado");
 
 function obtenerJugadores() {
     const dataRaw = localStorage.getItem("monopoly_players");
+    console.log("Datos en localStorage:", dataRaw);
     return dataRaw ? JSON.parse(dataRaw) : [];
 }
 
@@ -99,16 +100,14 @@ export async function enviarRankingFinal() {
     const jugadores = obtenerJugadores();
 
     // Solo enviamos al backend si aún no fue enviado
-    if (localStorage.getItem("ranking_enviado") !== "true") {
+    
         for (const j of jugadores) {
             const patrimonio = calcularPatrimonio(j);
             await enviarScore(j, patrimonio);
-        }
+        
         localStorage.setItem("ranking_enviado", "true");
         console.log("✅ Scores enviados al backend");
-    } else {
-        console.log("Ranking ya fue enviado, no se repite ✅");
-    }
+     }
 
 
     // Mostrar ganador/empate en consola

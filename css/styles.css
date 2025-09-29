@@ -740,10 +740,15 @@ h1 {
   .tablero { max-width: 700px; min-width: 500px; }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1050px) {
   .juego { grid-template-columns: minmax(160px, 180px) 1fr minmax(160px, 180px); }
   .tablero { max-width: 550px; min-width: 400px; }
   .titulo-tablero { font-size: 2rem; }
+    .jugadores.izquierda, .jugadores.derecha {
+    min-width: 100%;
+    max-height: 40vh;
+    margin: 0;
+  }
 }
 
 @media (max-width: 600px) {
@@ -852,5 +857,10 @@ h1 {
   .ficha { 
     width: clamp(7px, 0.9vw, 10px); 
     height: clamp(7px, 0.9vw, 10px); 
-  }
+  }.propiedad-con-dueno {
+  background-color: var(--color-dueno, #eee);
+  filter: brightness(1.4); /* lo aclara para que no sea tan fuerte */
+  border: 2px solid #333;
+}
+
 }

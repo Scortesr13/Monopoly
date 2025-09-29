@@ -195,6 +195,21 @@ function manejarAccion(jugador, casilla, opcion, jugadores) {
   if (jugador.money >= precio) {
     jugador.money -= precio;
     casilla.dataset.dueno = jugador.id;
+    casilla.title = 
+    `
+    -Dueño:${jugador.nick} 
+    -Nombre:${casilla.dataset.nombre}
+    -Casas:${casilla.dataset.casas}`; 
+    const casillaDiv = document.getElementById(casilla.id);
+  const estadoDiv = casillaDiv.querySelector(".estado");
+    estadoDiv.textContent = "Comprada";
+    estadoDiv.style.background = jugador.color ;
+    estadoDiv.classList.add("propiedad-con-dueno");
+    estadoDiv.classList.add("comprada");
+  
+
+  
+
 
     // 🔄 Guardar propiedad como objeto completo con datos de la casilla
     jugador.properties.push({
